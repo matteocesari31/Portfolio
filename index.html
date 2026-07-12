@@ -43,44 +43,130 @@
       >
         ×
       </button>
-      <div class="section-panel__inner film">
-        <div class="film__grid">
-          <img src="assets/film/ns still 1.jpg" alt="Night Shift still 1" />
-          <img src="assets/film/ns still 2.jpg" alt="Night Shift still 2" />
-          <img src="assets/film/ns still 3.jpg" alt="Night Shift still 3" />
-          <img src="assets/film/ns still 4.jpg" alt="Night Shift still 4" />
-          <img src="assets/film/ns still 5.jpg" alt="Night Shift still 5" />
-          <img src="assets/film/ns still 6.jpg" alt="Night Shift still 6" />
-        </div>
 
-        <div class="film__content">
-          <h2 class="film__title">
-            <img
-              src="assets/film/night shift pandemonium.svg"
-              alt="Night Shift"
-              class="film__title-logo"
-            />
-          </h2>
+      <div class="film-viewport">
+        <div class="film-track" data-film-track>
+          <article class="film-slide">
+            <div class="film">
+              <div class="film__grid">
+                <img
+                  src="assets/film/ns still 1.jpg"
+                  alt="Night Shift still 1"
+                />
+                <img
+                  src="assets/film/ns still 2.jpg"
+                  alt="Night Shift still 2"
+                />
+                <img
+                  src="assets/film/ns still 3.jpg"
+                  alt="Night Shift still 3"
+                />
+                <img
+                  src="assets/film/ns still 4.jpg"
+                  alt="Night Shift still 4"
+                />
+                <img
+                  src="assets/film/ns still 5.jpg"
+                  alt="Night Shift still 5"
+                />
+                <img
+                  src="assets/film/ns still 6.jpg"
+                  alt="Night Shift still 6"
+                />
+              </div>
 
-          <p class="film__text">
-            uni project. i worked as director, dop, editor and producer.
-          </p>
-          <p class="film__text">
-            made by a team of 8 people and awarded as best project at the end of
-            the semester.
-          </p>
-          <p class="film__text">
-            short film in the style of sean baker. you can watch it
-            <a
-              href="https://www.youtube.com/watch?v=jV8g9L79mEk"
-              class="film__link"
-              target="_blank"
-              rel="noopener noreferrer"
-              >here</a
-            >.
-          </p>
+              <div class="film__content">
+                <h2 class="film__title">
+                  <img
+                    src="assets/film/night shift pandemonium.svg"
+                    alt="Night Shift"
+                    class="film__title-logo"
+                  />
+                </h2>
+
+                <p class="film__text">
+                  uni project. i worked as director, dop, editor and producer.
+                </p>
+                <p class="film__text">
+                  made by a team of 8 people and awarded as best project at the
+                  end of the semester.
+                </p>
+                <p class="film__text">
+                  short film in the style of sean baker. you can watch it
+                  <a
+                    href="https://www.youtube.com/watch?v=jV8g9L79mEk"
+                    class="film__link"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    >here</a
+                  >.
+                </p>
+              </div>
+            </div>
+          </article>
+
+          <article class="film-slide">
+            <div class="film">
+              <div class="film__grid">
+                <img src="assets/film/rem still 1.jpg" alt="REm still 1" />
+                <img src="assets/film/rem still 2.jpg" alt="REm still 2" />
+                <img src="assets/film/rem still 3.jpg" alt="REm still 3" />
+                <img src="assets/film/rem still 4.jpg" alt="REm still 4" />
+                <img src="assets/film/rem still 5.jpg" alt="REm still 5" />
+                <img src="assets/film/rem still 6.jpg" alt="REm still 6" />
+              </div>
+
+              <div class="film__content">
+                <h2 class="film__title">
+                  <img
+                    src="assets/film/rem pandemonium.svg"
+                    alt="REm"
+                    class="film__title-logo film__title-logo--rem"
+                  />
+                </h2>
+
+                <p class="film__text">
+                  personal project. i worked as dop, colorist, editor, sound
+                  designer and composer.
+                </p>
+                <p class="film__text">
+                  short film shot on iphone with no budget.
+                </p>
+                <p class="film__text">
+                  you can watch it
+                  <a
+                    href="https://www.youtube.com/watch?v=aBOOPJgdUA4"
+                    class="film__link"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    >here</a
+                  >.
+                </p>
+              </div>
+            </div>
+          </article>
         </div>
       </div>
+
+      <nav class="film-nav" aria-label="Film projects">
+        <button
+          type="button"
+          class="film-nav__button"
+          data-film-prev
+          aria-label="Previous film"
+          disabled
+        >
+          ←
+        </button>
+        <button
+          type="button"
+          class="film-nav__button"
+          data-film-next
+          aria-label="Next film"
+        >
+          →
+        </button>
+      </nav>
     </section>
 
     <script src="main.js"></script>
