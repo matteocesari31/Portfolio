@@ -1,0 +1,62 @@
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html,
+body {
+  height: 100%;
+}
+
+body {
+  background: #fff;
+  color: #1d1dff;
+  font-family: -apple-system, BlinkMacSystemFont, "Helvetica Neue", Helvetica,
+    Arial, sans-serif;
+  -webkit-font-smoothing: antialiased;
+}
+
+.landing {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: 100vh;
+  padding: 2rem;
+  text-align: center;
+  gap: 1.5rem;
+}
+
+.photo {
+  display: block;
+  width: 6.5rem;
+  height: 6.5rem;
+  object-fit: cover;
+}
+
+.name {
+  display: block;
+  width: min(42rem, 88vw);
+  height: auto;
+}
+
+.bio {
+  max-width: 36rem;
+  font-size: 1.125rem;
+  line-height: 1.6;
+  letter-spacing: -0.01em;
+  text-transform: lowercase;
+}
+
+.bio a {
+  color: #1d1dff;
+  text-decoration: underline;
+  text-underline-offset: 0.15em;
+}
+
+.bio a:hover {
+  opacity: 0.7;
+}
