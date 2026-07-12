@@ -60,3 +60,120 @@ body {
 .bio a:hover {
   opacity: 0.7;
 }
+
+body.panel-open {
+  overflow: hidden;
+}
+
+.section-panel {
+  position: fixed;
+  inset: 0;
+  z-index: 20;
+  background: #fff;
+  transform: translateY(100%);
+  transition: transform 0.7s cubic-bezier(0.22, 1, 0.36, 1);
+  overflow-y: auto;
+}
+
+.section-panel.is-open {
+  transform: translateY(0);
+}
+
+.section-panel__close {
+  position: absolute;
+  top: clamp(1.25rem, 3vw, 2rem);
+  right: clamp(1.25rem, 3vw, 2rem);
+  z-index: 1;
+  border: none;
+  background: none;
+  color: #1d1dff;
+  font-family: inherit;
+  font-size: 2.25rem;
+  font-weight: 300;
+  line-height: 1;
+  cursor: pointer;
+  padding: 0.25rem;
+}
+
+.section-panel__close:hover {
+  opacity: 0.7;
+}
+
+.section-panel__inner {
+  min-height: 100%;
+}
+
+.film {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+  align-items: center;
+  gap: clamp(2rem, 5vw, 5rem);
+  min-height: 100vh;
+  padding: clamp(2rem, 5vw, 4rem);
+}
+
+.film__grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  grid-template-rows: repeat(3, minmax(0, 1fr));
+  gap: 0.5rem;
+  width: 100%;
+  max-width: 36rem;
+  justify-self: center;
+}
+
+.film__grid img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  aspect-ratio: 16 / 10;
+}
+
+.film__content {
+  display: flex;
+  flex-direction: column;
+  gap: 1.25rem;
+  max-width: 34rem;
+}
+
+.film__title {
+  margin: 0;
+}
+
+.film__title-logo {
+  display: block;
+  width: min(100%, 30.42rem);
+  height: auto;
+}
+
+.film__text {
+  font-size: 1.125rem;
+  line-height: 1.55;
+  letter-spacing: -0.01em;
+  text-transform: lowercase;
+}
+
+.film__link {
+  color: #1d1dff;
+  text-decoration: underline;
+  text-underline-offset: 0.15em;
+}
+
+.film__link:hover {
+  opacity: 0.7;
+}
+
+@media (max-width: 900px) {
+  .film {
+    grid-template-columns: 1fr;
+    align-content: start;
+    padding-top: 3rem;
+    padding-bottom: 3rem;
+  }
+
+  .film__content {
+    max-width: 36rem;
+    justify-self: center;
+  }
+}

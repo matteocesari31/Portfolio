@@ -26,12 +26,63 @@
 
       <p class="bio">
         design student. i've worked in
-        <a href="#film">film</a>,
+        <a href="#" data-section="film">film</a>,
         <a href="#music-production">music production</a>,<br />
         <a href="#app-development">app development</a>
         and
         <a href="#graphic-design">graphic design</a>.
       </p>
     </main>
+
+    <section id="film" class="section-panel" aria-hidden="true">
+      <button
+        type="button"
+        class="section-panel__close"
+        aria-label="Close"
+        data-close-panel
+      >
+        ×
+      </button>
+      <div class="section-panel__inner film">
+        <div class="film__grid">
+          <img src="assets/film/ns still 1.jpg" alt="Night Shift still 1" />
+          <img src="assets/film/ns still 2.jpg" alt="Night Shift still 2" />
+          <img src="assets/film/ns still 3.jpg" alt="Night Shift still 3" />
+          <img src="assets/film/ns still 4.jpg" alt="Night Shift still 4" />
+          <img src="assets/film/ns still 5.jpg" alt="Night Shift still 5" />
+          <img src="assets/film/ns still 6.jpg" alt="Night Shift still 6" />
+        </div>
+
+        <div class="film__content">
+          <h2 class="film__title">
+            <img
+              src="assets/film/night shift pandemonium.svg"
+              alt="Night Shift"
+              class="film__title-logo"
+            />
+          </h2>
+
+          <p class="film__text">
+            uni project. i worked as director, dop, editor and producer.
+          </p>
+          <p class="film__text">
+            made by a team of 8 people and awarded as best project at the end of
+            the semester.
+          </p>
+          <p class="film__text">
+            short film in the style of sean baker. you can watch it
+            <a
+              href="https://www.youtube.com/watch?v=jV8g9L79mEk"
+              class="film__link"
+              target="_blank"
+              rel="noopener noreferrer"
+              >here</a
+            >.
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <script src="main.js"></script>
   </body>
 </html>
