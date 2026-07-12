@@ -25,12 +25,12 @@
       />
 
       <p class="bio">
-        design student. i've worked in
+        design student based in milan. i've worked in
         <a href="#" data-section="film">film</a>,
-        <a href="#music-production">music production</a>,<br />
-        <a href="#app-development">app development</a>
+        <a href="#" data-section="graphic-design">graphic design</a>,<br />
+        <a href="#app-development" class="bio__nowrap">app development</a>
         and
-        <a href="#graphic-design">graphic design</a>.
+        <a href="#" data-section="music-production">music production</a>.
       </p>
     </main>
 
@@ -169,6 +169,251 @@
       </nav>
     </section>
 
+    <section id="music-production" class="section-panel" aria-hidden="true">
+      <button
+        type="button"
+        class="section-panel__close"
+        aria-label="Close"
+        data-close-panel
+      >
+        ×
+      </button>
+
+      <div class="music">
+        <div class="music__list">
+          <button
+            type="button"
+            class="music__track"
+            data-music-track
+            data-filename="c'est la vie - speed.mp3"
+          >
+            c'est la vie - speed.mp3
+          </button>
+          <button
+            type="button"
+            class="music__track"
+            data-music-track
+            data-filename="closer remix.mp3"
+          >
+            closer remix.mp3
+          </button>
+          <button
+            type="button"
+            class="music__track"
+            data-music-track
+            data-filename="driver's seat.mp3"
+          >
+            driver's seat.mp3
+          </button>
+          <button
+            type="button"
+            class="music__track"
+            data-music-track
+            data-filename="eastpak.mp3"
+          >
+            eastpak.mp3
+          </button>
+          <button
+            type="button"
+            class="music__track"
+            data-music-track
+            data-filename="glam.mp3"
+          >
+            glam.mp3
+          </button>
+          <button
+            type="button"
+            class="music__track"
+            data-music-track
+            data-filename="instant.mp3"
+          >
+            instant.mp3
+          </button>
+          <button
+            type="button"
+            class="music__track"
+            data-music-track
+            data-filename="love ya.mp3"
+          >
+            love ya.mp3
+          </button>
+          <button
+            type="button"
+            class="music__track"
+            data-music-track
+            data-filename="mads mikkelsen.mp3"
+          >
+            mads mikkelsen.mp3
+          </button>
+          <button
+            type="button"
+            class="music__track"
+            data-music-track
+            data-filename="only one.mp3"
+          >
+            only one.mp3
+          </button>
+          <button
+            type="button"
+            class="music__track"
+            data-music-track
+            data-filename="possibile - speed.mp3"
+          >
+            possibile - speed.mp3
+          </button>
+          <button
+            type="button"
+            class="music__track"
+            data-music-track
+            data-filename="scooter braun.mp3"
+          >
+            scooter braun.mp3
+          </button>
+          <button
+            type="button"
+            class="music__track"
+            data-music-track
+            data-filename="spalding.mp3"
+          >
+            spalding.mp3
+          </button>
+          <button
+            type="button"
+            class="music__track"
+            data-music-track
+            data-filename="svalbard.mp3"
+          >
+            <span class="music__track-label">svalbard.mp3</span><span class="music__favorite" aria-hidden="true">★</span>
+          </button>
+          <button
+            type="button"
+            class="music__track"
+            data-music-track
+            data-filename="tapestry.mp3"
+          >
+            tapestry.mp3
+          </button>
+          <button
+            type="button"
+            class="music__track"
+            data-music-track
+            data-filename="uncanny valley.mp3"
+          >
+            uncanny valley.mp3
+          </button>
+        </div>
+
+        <div class="music__stage">
+          <div class="music__visualizer-frame">
+            <img
+              class="music__visualizer"
+              src="assets/music/ascii-tiger-gif.gif"
+              alt=""
+              aria-hidden="true"
+            />
+          </div>
+
+          <div class="music__player">
+            <p class="music__now-playing" data-music-now-playing>
+              select a track
+            </p>
+            <div class="music__transport">
+              <button
+                type="button"
+                class="music__play-pause"
+                data-music-play-pause
+                aria-label="Play"
+                disabled
+              >
+                <svg
+                  class="music__icon music__icon--play"
+                  viewBox="0 0 12 14"
+                  aria-hidden="true"
+                >
+                  <path d="M0 0 L12 7 L0 14 Z" fill="currentColor" />
+                </svg>
+                <svg
+                  class="music__icon music__icon--pause"
+                  viewBox="0 0 12 14"
+                  aria-hidden="true"
+                >
+                  <rect x="0" y="0" width="4" height="14" fill="currentColor" />
+                  <rect x="8" y="0" width="4" height="14" fill="currentColor" />
+                </svg>
+              </button>
+              <div
+                class="music__progress"
+                data-music-progress
+                role="slider"
+                aria-label="Track progress"
+                aria-valuemin="0"
+                aria-valuemax="100"
+                aria-valuenow="0"
+              >
+                <div class="music__progress-track" data-music-progress-track>
+                  <div
+                    class="music__progress-thumb"
+                    data-music-progress-thumb
+                  ></div>
+                </div>
+              </div>
+            </div>
+            <audio data-music-audio preload="none" hidden></audio>
+          </div>
+        </div>
+
+        <div class="music__content">
+          <p class="music__text">
+            small selection of recent instrumentals and work done with artists.
+          </p>
+          <p class="music__text">
+            more of a hobby than anything but i've learned skills that translate
+            well into sound design, recording, and composition.
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <section id="graphic-design" class="section-panel" aria-hidden="true">
+      <button
+        type="button"
+        class="section-panel__close"
+        aria-label="Close"
+        data-close-panel
+      >
+        ×
+      </button>
+
+      <div class="design">
+        <div class="design__grid">
+          <img src="assets/graphic-design/esodo 1.jpg" alt="Esodo spread 1" />
+          <img src="assets/graphic-design/esodo 2.jpg" alt="Esodo spread 2" />
+          <img src="assets/graphic-design/esodo 3.jpg" alt="Esodo spread 3" />
+          <img src="assets/graphic-design/esodo 4.jpg" alt="Esodo spread 4" />
+          <img src="assets/graphic-design/esodo 5.jpg" alt="Esodo spread 5" />
+          <img src="assets/graphic-design/esodo 6.jpg" alt="Esodo spread 6" />
+        </div>
+
+        <div class="design__content">
+          <h2 class="design__title">
+            <img
+              src="assets/graphic-design/esodo pandemonium.svg"
+              alt="Esodo"
+              class="design__title-logo"
+            />
+          </h2>
+
+          <p class="design__text">editorial design project for uni.</p>
+          <p class="design__text">
+            magazine about global migrations, the issues migrants face upon
+            departure, on the road, and on arrival, and case studies from
+            around the world.
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <script src="music.js"></script>
     <script src="main.js"></script>
   </body>
 </html>

@@ -1,5 +1,7 @@
 const panels = {
   film: document.getElementById("film"),
+  "music-production": document.getElementById("music-production"),
+  "graphic-design": document.getElementById("graphic-design"),
 };
 
 const filmTrack = document.querySelector("[data-film-track]");
@@ -27,13 +29,27 @@ function resetFilmCarousel() {
   updateFilmCarousel();
 }
 
+function stopMusicPanel() {
+  window.musicPanel?.stop();
+}
+
 function openPanel(id) {
-  const panel = panels[id];
-  if (!panel) return;
+  Object.entries(panels).forEach(([panelId, panel]) => {
+    if (!panel || panelId === id) return;
+    panel.classList.remove("is-open");
+    panel.setAttribute("aria-hidden", "true");
+  });
+
+  if (id !== "music-production") {
+    stopMusicPanel();
+  }
 
   if (id === "film") {
     resetFilmCarousel();
   }
+
+  const panel = panels[id];
+  if (!panel) return;
 
   panel.classList.add("is-open");
   panel.setAttribute("aria-hidden", "false");
@@ -42,11 +58,13 @@ function openPanel(id) {
 
 function closePanels() {
   Object.values(panels).forEach((panel) => {
+    if (!panel) return;
     panel.classList.remove("is-open");
     panel.setAttribute("aria-hidden", "true");
   });
   document.body.classList.remove("panel-open");
   resetFilmCarousel();
+  stopMusicPanel();
 }
 
 document.querySelectorAll("[data-close-panel]").forEach((button) => {
