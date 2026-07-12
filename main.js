@@ -2,7 +2,10 @@ const panels = {
   film: document.getElementById("film"),
   "music-production": document.getElementById("music-production"),
   "graphic-design": document.getElementById("graphic-design"),
+  "app-development": document.getElementById("app-development"),
 };
+
+const appVideos = document.querySelectorAll("[data-app-video]");
 
 const filmTrack = document.querySelector("[data-film-track]");
 const filmPrev = document.querySelector("[data-film-prev]");
@@ -33,6 +36,12 @@ function stopMusicPanel() {
   window.musicPanel?.stop();
 }
 
+function stopAppPanel() {
+  appVideos.forEach((video) => {
+    video.pause();
+  });
+}
+
 function openPanel(id) {
   Object.entries(panels).forEach(([panelId, panel]) => {
     if (!panel || panelId === id) return;
@@ -42,6 +51,10 @@ function openPanel(id) {
 
   if (id !== "music-production") {
     stopMusicPanel();
+  }
+
+  if (id !== "app-development") {
+    stopAppPanel();
   }
 
   if (id === "film") {
@@ -65,6 +78,7 @@ function closePanels() {
   document.body.classList.remove("panel-open");
   resetFilmCarousel();
   stopMusicPanel();
+  stopAppPanel();
 }
 
 document.querySelectorAll("[data-close-panel]").forEach((button) => {
