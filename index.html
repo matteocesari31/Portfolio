@@ -8,177 +8,260 @@
     <link rel="stylesheet" href="styles.css" />
   </head>
   <body>
-    <main class="landing">
+    <nav class="nav" aria-label="Primary">
       <img
-        class="photo"
-        src="assets/matteo bambino.jpg"
-        alt="Matteo Cesari"
-        width="120"
-        height="120"
+        class="nav__base"
+        src="assets/landing/nav-base.png"
+        alt=""
+        aria-hidden="true"
       />
-
-      <img
-        class="name"
-        src="assets/matteo cesari pandemonium.svg"
-        alt="Matteo Cesari"
-        width="700"
-        height="100"
-      />
-
-      <p class="bio">
-        design student based in milan. i've worked in
-        <a href="#" data-section="film">film</a>,
-        <a href="#" data-section="graphic-design">graphic design</a>,<br />
-        <a href="#" data-section="app-development" class="bio__nowrap">app development</a>
-        and
-        <a href="#" data-section="music-production">music production</a>.
-      </p>
-    </main>
-
-    <section id="film" class="section-panel" aria-hidden="true">
-      <button
-        type="button"
-        class="section-panel__close"
-        aria-label="Close"
-        data-close-panel
-      >
-        ×
-      </button>
-
-      <div class="film-viewport">
-        <div class="film-track" data-film-track>
-          <article class="film-slide">
-            <div class="film">
-              <div class="film__grid">
-                <img
-                  src="assets/film/ns still 1.jpg"
-                  alt="Night Shift still 1"
-                />
-                <img
-                  src="assets/film/ns still 2.jpg"
-                  alt="Night Shift still 2"
-                />
-                <img
-                  src="assets/film/ns still 3.jpg"
-                  alt="Night Shift still 3"
-                />
-                <img
-                  src="assets/film/ns still 4.jpg"
-                  alt="Night Shift still 4"
-                />
-                <img
-                  src="assets/film/ns still 5.jpg"
-                  alt="Night Shift still 5"
-                />
-                <img
-                  src="assets/film/ns still 6.jpg"
-                  alt="Night Shift still 6"
-                />
-              </div>
-
-              <div class="film__content">
-                <h2 class="film__title">
-                  <img
-                    src="assets/film/night shift pandemonium.svg"
-                    alt="Night Shift"
-                    class="film__title-logo"
-                  />
-                </h2>
-
-                <p class="film__text">
-                  uni project. i worked as director, dop, editor and producer.
-                </p>
-                <p class="film__text">
-                  made by a team of 8 people and awarded as best project at the
-                  end of the semester.
-                </p>
-                <p class="film__text">
-                  short film in the style of sean baker. you can watch it
-                  <a
-                    href="https://www.youtube.com/watch?v=aWv-l4s5DL8"
-                    class="film__link"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    >here</a
-                  >.
-                </p>
-              </div>
-            </div>
-          </article>
-
-          <article class="film-slide">
-            <div class="film">
-              <div class="film__grid">
-                <img src="assets/film/rem still 1.jpg" alt="REm still 1" />
-                <img src="assets/film/rem still 2.jpg" alt="REm still 2" />
-                <img src="assets/film/rem still 3.jpg" alt="REm still 3" />
-                <img src="assets/film/rem still 4.jpg" alt="REm still 4" />
-                <img src="assets/film/rem still 5.jpg" alt="REm still 5" />
-                <img src="assets/film/rem still 6.jpg" alt="REm still 6" />
-              </div>
-
-              <div class="film__content">
-                <h2 class="film__title">
-                  <img
-                    src="assets/film/rem pandemonium.svg"
-                    alt="REm"
-                    class="film__title-logo film__title-logo--rem"
-                  />
-                </h2>
-
-                <p class="film__text">
-                  personal project. i worked as dop, colorist, editor, sound
-                  designer and composer.
-                </p>
-                <p class="film__text">
-                  short film shot on iphone with no budget.
-                </p>
-                <p class="film__text">
-                  you can watch it
-                  <a
-                    href="https://www.youtube.com/watch?v=aBOOPJgdUA4"
-                    class="film__link"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    >here</a
-                  >.
-                </p>
-              </div>
-            </div>
-          </article>
+      <div class="nav__track">
+        <div class="nav__items" data-nav-track>
+          <span class="nav__pill" data-nav-pill aria-hidden="true"></span>
+          <button
+            type="button"
+            class="nav__item is-active"
+            data-nav="home"
+            aria-current="page"
+          >
+            home
+          </button>
+          <button type="button" class="nav__item" data-nav="film">
+            film
+          </button>
+          <button type="button" class="nav__item" data-nav="app-development">
+            apps
+          </button>
+          <button type="button" class="nav__item" data-nav="graphic-design">
+            graphic design
+          </button>
         </div>
       </div>
+    </nav>
 
-      <nav class="film-nav" aria-label="Film projects">
-        <button
-          type="button"
-          class="film-nav__button"
-          data-film-prev
-          aria-label="Previous film"
-          disabled
-        >
-          ←
-        </button>
-        <button
-          type="button"
-          class="film-nav__button"
-          data-film-next
-          aria-label="Next film"
-        >
-          →
-        </button>
-      </nav>
+    <main class="pages">
+      <section id="home" class="page page--home is-active" data-page-section aria-hidden="false">
+        <div class="landing__center">
+          <img
+            class="landing__title"
+            src="assets/landing/matteo-cesari-title.png"
+            alt="Matteo Cesari"
+          />
+          <p class="landing__subtitle">communication design, based in milan</p>
+        </div>
+
+        <img
+          class="landing__hills"
+          src="assets/landing/hills.png"
+          alt=""
+          aria-hidden="true"
+        />
+      </section>
+
+    <section id="film" class="page" data-page-section aria-hidden="true">
+      <div class="film-stack">
+        <article class="film">
+          <div class="film__grid">
+            <button
+              type="button"
+              class="media-thumb"
+              data-full="assets/film/ns still 1.jpg"
+              aria-label="Open Night Shift still 1"
+            >
+              <img
+                src="assets/film/thumbs/ns still 1.jpg"
+                alt="Night Shift still 1"
+              />
+            </button>
+            <button
+              type="button"
+              class="media-thumb"
+              data-full="assets/film/ns still 2.jpg"
+              aria-label="Open Night Shift still 2"
+            >
+              <img
+                src="assets/film/thumbs/ns still 2.jpg"
+                alt="Night Shift still 2"
+              />
+            </button>
+            <button
+              type="button"
+              class="media-thumb"
+              data-full="assets/film/ns still 3.jpg"
+              aria-label="Open Night Shift still 3"
+            >
+              <img
+                src="assets/film/thumbs/ns still 3.jpg"
+                alt="Night Shift still 3"
+              />
+            </button>
+            <button
+              type="button"
+              class="media-thumb"
+              data-full="assets/film/ns still 4.jpg"
+              aria-label="Open Night Shift still 4"
+            >
+              <img
+                src="assets/film/thumbs/ns still 4.jpg"
+                alt="Night Shift still 4"
+              />
+            </button>
+            <button
+              type="button"
+              class="media-thumb"
+              data-full="assets/film/ns still 5.jpg"
+              aria-label="Open Night Shift still 5"
+            >
+              <img
+                src="assets/film/thumbs/ns still 5.jpg"
+                alt="Night Shift still 5"
+              />
+            </button>
+            <button
+              type="button"
+              class="media-thumb"
+              data-full="assets/film/ns still 6.jpg"
+              aria-label="Open Night Shift still 6"
+            >
+              <img
+                src="assets/film/thumbs/ns still 6.jpg"
+                alt="Night Shift still 6"
+              />
+            </button>
+          </div>
+
+          <div class="film__content">
+            <h2 class="visually-hidden">Night Shift</h2>
+
+            <p class="film__text">
+              uni project. i worked as
+              <span class="film__em">director, dop, editor</span> and
+              <span class="film__em">producer.</span>
+            </p>
+            <p class="film__text">
+              made by a team of 8 people and
+              <span class="film__em">awarded as best project</span> at the end
+              of the semester.
+            </p>
+            <p class="film__text">
+              short film
+              <span class="film__em">in the style of sean baker.</span>
+            </p>
+          </div>
+
+          <img
+            class="film__ticket"
+            src="assets/film/night shift ticket.png"
+            alt=""
+            aria-hidden="true"
+            draggable="false"
+            data-film-ticket
+            data-ticket-label="Night Shift ticket"
+            data-watch-url="https://www.youtube.com/watch?v=aWv-l4s5DL8"
+          />
+        </article>
+
+        <article class="film film--rem">
+          <img
+            class="film__ticket"
+            src="assets/film/rem ticket.png"
+            alt=""
+            aria-hidden="true"
+            draggable="false"
+            data-film-ticket
+            data-ticket-label="REm ticket"
+            data-watch-url="https://www.youtube.com/watch?v=aBOOPJgdUA4"
+          />
+
+          <div class="film__content">
+            <h2 class="visually-hidden">REm</h2>
+
+            <p class="film__text">
+              personal project. i worked as
+              <span class="film__em"
+                >dop, colorist, editor, sound designer</span
+              >
+              and <span class="film__em">composer.</span>
+            </p>
+            <p class="film__text">
+              short film <span class="film__em">shot on iphone</span> with no
+              budget.
+            </p>
+          </div>
+
+          <div class="film__grid">
+            <button
+              type="button"
+              class="media-thumb"
+              data-full="assets/film/rem still 1.jpg"
+              aria-label="Open REm still 1"
+            >
+              <img
+                src="assets/film/thumbs/rem still 1.jpg"
+                alt="REm still 1"
+              />
+            </button>
+            <button
+              type="button"
+              class="media-thumb"
+              data-full="assets/film/rem still 2.jpg"
+              aria-label="Open REm still 2"
+            >
+              <img
+                src="assets/film/thumbs/rem still 2.jpg"
+                alt="REm still 2"
+              />
+            </button>
+            <button
+              type="button"
+              class="media-thumb"
+              data-full="assets/film/rem still 3.jpg"
+              aria-label="Open REm still 3"
+            >
+              <img
+                src="assets/film/thumbs/rem still 3.jpg"
+                alt="REm still 3"
+              />
+            </button>
+            <button
+              type="button"
+              class="media-thumb"
+              data-full="assets/film/rem still 4.jpg"
+              aria-label="Open REm still 4"
+            >
+              <img
+                src="assets/film/thumbs/rem still 4.jpg"
+                alt="REm still 4"
+              />
+            </button>
+            <button
+              type="button"
+              class="media-thumb"
+              data-full="assets/film/rem still 5.jpg"
+              aria-label="Open REm still 5"
+            >
+              <img
+                src="assets/film/thumbs/rem still 5.jpg"
+                alt="REm still 5"
+              />
+            </button>
+            <button
+              type="button"
+              class="media-thumb"
+              data-full="assets/film/rem still 6.jpg"
+              aria-label="Open REm still 6"
+            >
+              <img
+                src="assets/film/thumbs/rem still 6.jpg"
+                alt="REm still 6"
+              />
+            </button>
+          </div>
+        </article>
+      </div>
     </section>
 
-    <section id="music-production" class="section-panel" aria-hidden="true">
-      <button
-        type="button"
-        class="section-panel__close"
-        aria-label="Close"
-        data-close-panel
-      >
-        ×
-      </button>
+    <section id="music-production" class="page" data-page-section aria-hidden="true">
 
       <div class="music">
         <div class="music__list">
@@ -252,7 +335,7 @@
             data-music-track
             data-filename="sunshine.mp3"
           >
-            <span class="music__track-label">sunshine.mp3</span><span class="music__favorite" aria-hidden="true">★</span>
+            sunshine.mp3
           </button>
           <button
             type="button"
@@ -260,7 +343,7 @@
             data-music-track
             data-filename="svalbard.mp3"
           >
-            svalbard.mp3
+            <span class="music__track-label">svalbard.mp3</span><span class="music__favorite" aria-hidden="true">★</span>
           </button>
           <button
             type="button"
@@ -347,54 +430,95 @@
       </div>
     </section>
 
-    <section id="graphic-design" class="section-panel" aria-hidden="true">
-      <button
-        type="button"
-        class="section-panel__close"
-        aria-label="Close"
-        data-close-panel
-      >
-        ×
-      </button>
+    <section id="graphic-design" class="page" data-page-section aria-hidden="true">
 
       <div class="design">
         <div class="design__grid">
-          <img src="assets/graphic-design/esodo 1.jpg" alt="Esodo spread 1" />
-          <img src="assets/graphic-design/esodo 2.jpg" alt="Esodo spread 2" />
-          <img src="assets/graphic-design/esodo 3.jpg" alt="Esodo spread 3" />
-          <img src="assets/graphic-design/esodo 4.jpg" alt="Esodo spread 4" />
-          <img src="assets/graphic-design/esodo 5.jpg" alt="Esodo spread 5" />
-          <img src="assets/graphic-design/esodo 6.jpg" alt="Esodo spread 6" />
+          <button
+            type="button"
+            class="media-thumb"
+            data-full="assets/graphic-design/esodo 1.jpg"
+            aria-label="Open Esodo spread 1"
+          >
+            <img
+              src="assets/graphic-design/thumbs/esodo 1.jpg"
+              alt="Esodo spread 1"
+            />
+          </button>
+          <button
+            type="button"
+            class="media-thumb"
+            data-full="assets/graphic-design/esodo 2.jpg"
+            aria-label="Open Esodo spread 2"
+          >
+            <img
+              src="assets/graphic-design/thumbs/esodo 2.jpg"
+              alt="Esodo spread 2"
+            />
+          </button>
+          <button
+            type="button"
+            class="media-thumb"
+            data-full="assets/graphic-design/esodo 3.jpg"
+            aria-label="Open Esodo spread 3"
+          >
+            <img
+              src="assets/graphic-design/thumbs/esodo 3.jpg"
+              alt="Esodo spread 3"
+            />
+          </button>
+          <button
+            type="button"
+            class="media-thumb"
+            data-full="assets/graphic-design/esodo 4.jpg"
+            aria-label="Open Esodo spread 4"
+          >
+            <img
+              src="assets/graphic-design/thumbs/esodo 4.jpg"
+              alt="Esodo spread 4"
+            />
+          </button>
+          <button
+            type="button"
+            class="media-thumb"
+            data-full="assets/graphic-design/esodo 5.jpg"
+            aria-label="Open Esodo spread 5"
+          >
+            <img
+              src="assets/graphic-design/thumbs/esodo 5.jpg"
+              alt="Esodo spread 5"
+            />
+          </button>
+          <button
+            type="button"
+            class="media-thumb"
+            data-full="assets/graphic-design/esodo 6.jpg"
+            aria-label="Open Esodo spread 6"
+          >
+            <img
+              src="assets/graphic-design/thumbs/esodo 6.jpg"
+              alt="Esodo spread 6"
+            />
+          </button>
         </div>
 
         <div class="design__content">
-          <h2 class="design__title">
-            <img
-              src="assets/graphic-design/esodo pandemonium.svg"
-              alt="Esodo"
-              class="design__title-logo"
-            />
-          </h2>
+          <h2 class="visually-hidden">Esodo</h2>
 
-          <p class="design__text">editorial design project for uni.</p>
           <p class="design__text">
-            magazine about global migrations, the issues migrants face upon
-            departure, on the road, and on arrival, and case studies from
-            around the world.
+            <span class="design__em">editorial design</span> project for uni.
+          </p>
+          <p class="design__text">
+            magazine about
+            <span class="design__em">global migrations</span>, the issues
+            migrants face upon departure, on the road, and on arrival, and case
+            studies from around the world.
           </p>
         </div>
       </div>
     </section>
 
-    <section id="app-development" class="section-panel" aria-hidden="true">
-      <button
-        type="button"
-        class="section-panel__close"
-        aria-label="Close"
-        data-close-panel
-      >
-        ×
-      </button>
+    <section id="app-development" class="page" data-page-section aria-hidden="true">
 
       <div class="app">
         <div class="app__media">
@@ -410,37 +534,50 @@
         </div>
 
         <div class="app__content">
-          <h2 class="app__title">
-            <img
-              src="assets/app-development/flatlist pandemonium.svg"
-              alt="Flatlist - 2026"
-              class="app__title-logo"
-            />
-          </h2>
+          <h2 class="visually-hidden">Flatlist</h2>
 
-          <p class="app__text">personal project. designed and developed on my own.</p>
           <p class="app__text">
-            web app that let users save apartments from any website with one
-            click through a chrome extension and evaluated listings with ai
+            <span class="app__em">personal project.</span> designed and
+            developed on my own.
+          </p>
+          <p class="app__text">
+            web app that let users
+            <span class="app__em">save apartments from any website</span> with
+            one click through a chrome extension and evaluated listings with ai
             based on the user's preferences.
-          </p>
-          <p class="app__text">
-            the web version had a few users (acquired through a meta ad campaign)
-            but has been shut down. you can see what that looked like
-            <a
-              href="https://flatlist.app"
-              class="app__link"
-              target="_blank"
-              rel="noopener noreferrer"
-              >here</a
-            >.
-          </p>
-          <p class="app__text">
-            i'm currently working on an ios version of the app.
           </p>
         </div>
       </div>
     </section>
+
+    </main>
+
+    <button
+      type="button"
+      class="ticket-scrim"
+      data-ticket-scrim
+      hidden
+      aria-label="Close ticket detail"
+    ></button>
+
+    <div
+      class="lightbox"
+      data-lightbox
+      hidden
+      role="dialog"
+      aria-modal="true"
+      aria-label="Image detail"
+    >
+      <button
+        type="button"
+        class="lightbox__close"
+        data-lightbox-close
+        aria-label="Close image"
+      >
+        ×
+      </button>
+      <img class="lightbox__image" data-lightbox-image alt="" />
+    </div>
 
     <script src="music.js"></script>
     <script src="main.js"></script>
