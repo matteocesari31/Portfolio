@@ -624,11 +624,68 @@ window.addEventListener("resize", () => {
   moveNavPill(active, false);
 });
 
+function createHireChunk(template, { decorative = false } = {}) {
+  const chunk = template.content.firstElementChild.cloneNode(true);
+  if (decorative) {
+    chunk.setAttribute("aria-hidden", "true");
+    chunk.querySelectorAll("a").forEach((link) => {
+      link.tabIndex = -1;
+    });
+  }
+  return chunk;
+}
+
+function setupHireBar() {
+  const track = document.querySelector("[data-hire-track]");
+  const template = document.querySelector("#hire-chunk-template");
+  if (!track || !template?.content?.firstElementChild) return;
+
+  const fill = () => {
+    track.classList.add("is-paused");
+    track.replaceChildren(createHireChunk(template));
+
+    // Keep adding units until one loop segment is at least as wide as the screen.
+    let guard = 0;
+    while (track.scrollWidth < window.innerWidth && guard < 40) {
+      track.appendChild(createHireChunk(template, { decorative: true }));
+      guard += 1;
+    }
+
+    // Duplicate the whole segment so -50% translate loops seamlessly.
+    const copies = [...track.children].map((child) => {
+      const copy = child.cloneNode(true);
+      copy.setAttribute("aria-hidden", "true");
+      copy.querySelectorAll("a").forEach((link) => {
+        link.tabIndex = -1;
+      });
+      return copy;
+    });
+    copies.forEach((copy) => track.appendChild(copy));
+
+    void track.offsetWidth;
+    track.classList.remove("is-paused");
+  };
+
+  fill();
+
+  if (!setupHireBar.bound) {
+    setupHireBar.bound = true;
+    let resizeTimer = null;
+    window.addEventListener("resize", () => {
+      clearTimeout(resizeTimer);
+      resizeTimer = setTimeout(fill, 150);
+    });
+  }
+
+  return fill;
+}
+
 if (window.location.hash) {
   history.replaceState(null, "", window.location.pathname + window.location.search);
 }
 
 deferHeavyMedia();
+const refillHireBar = setupHireBar();
 
 pages.forEach((page) => {
   const isHome = page.id === "home";
@@ -644,5 +701,8 @@ function syncNavPill(animate = false) {
 requestAnimationFrame(() => syncNavPill(false));
 
 if (document.fonts?.ready) {
-  document.fonts.ready.then(() => syncNavPill(false));
+  document.fonts.ready.then(() => {
+    syncNavPill(false);
+    refillHireBar?.();
+  });
 }

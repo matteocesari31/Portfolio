@@ -140,6 +140,10 @@ body {
   will-change: transform;
 }
 
+.hire-bar__track.is-paused {
+  animation: none;
+}
+
 .hire-bar__chunk {
   margin: 0;
   flex: 0 0 auto;
