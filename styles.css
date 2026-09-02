@@ -237,7 +237,8 @@ body {
   color: #000;
   font-family: "Figtree", sans-serif;
   font-weight: 500;
-  font-size: 30px;
+  /* Scale with the title image: same min(52rem, 92vw) ratio as .landing__title. */
+  font-size: min(1.875rem, calc(1.875rem * 92vw / 52rem));
   letter-spacing: -0.05em;
   line-height: 1.3;
   text-transform: lowercase;
