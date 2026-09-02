@@ -229,6 +229,10 @@ body {
   text-transform: lowercase;
 }
 
+.landing__subtitle-break {
+  display: none;
+}
+
 .landing__hills {
   position: absolute;
   left: 0;
@@ -849,7 +853,7 @@ body {
   }
 
   .nav__item {
-    font-size: 0.78rem;
+    font-size: 0.9rem;
     padding: 0.48rem 0.65rem;
     padding-left: calc(0.65rem + 0.05em);
     padding-right: calc(0.65rem - 0.05em);
@@ -871,6 +875,12 @@ body {
 
   .landing__subtitle {
     font-size: clamp(1.25rem, calc(1.875rem * (100vw - 0.4rem) / 52rem), 1.875rem);
+    text-align: center;
+    line-height: 1.25;
+  }
+
+  .landing__subtitle-break {
+    display: block;
   }
 }
 
