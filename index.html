@@ -42,11 +42,17 @@
     <main class="pages">
       <section id="home" class="page page--home is-active" data-page-section aria-hidden="false">
         <div class="landing__center">
-          <img
-            class="landing__title"
-            src="assets/landing/matteo-cesari-title.png"
-            alt="Matteo Cesari"
-          />
+          <picture>
+            <source
+              media="(max-width: 720px)"
+              srcset="assets/landing/matteo-cesari-title-mobile.png"
+            />
+            <img
+              class="landing__title"
+              src="assets/landing/matteo-cesari-title.png"
+              alt="Matteo Cesari"
+            />
+          </picture>
           <p class="landing__subtitle">communication design, based in milan</p>
         </div>
 
