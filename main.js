@@ -640,45 +640,64 @@ function setupHireBar() {
   const template = document.querySelector("#hire-chunk-template");
   if (!track || !template?.content?.firstElementChild) return;
 
-  let hireAnimation = null;
+  let rafId = 0;
+  let segmentWidth = 0;
+  let offset = 0;
+  let lastTime = 0;
   const reduceMotion = window.matchMedia?.(
     "(prefers-reduced-motion: reduce)"
   )?.matches;
+  // Slow continuous drift (~42px/sec).
+  const speed = 42;
 
-  const startMotion = () => {
-    hireAnimation?.cancel();
-    hireAnimation = null;
+  const stopMotion = () => {
+    if (rafId) {
+      cancelAnimationFrame(rafId);
+      rafId = 0;
+    }
+    lastTime = 0;
+  };
 
-    if (reduceMotion) {
-      track.style.transform = "translate3d(0,0,0)";
+  const tick = (time) => {
+    if (!segmentWidth) {
+      rafId = 0;
       return;
     }
 
-    const distance = track.scrollWidth / 2;
-    if (!distance) return;
+    if (!lastTime) lastTime = time;
+    const dt = Math.min(0.064, (time - lastTime) / 1000);
+    lastTime = time;
 
-    // Pixel-based WAAPI is more reliable than CSS % animation on iOS Safari.
-    hireAnimation = track.animate(
-      [
-        { transform: "translate3d(0, 0, 0)" },
-        { transform: `translate3d(${-distance}px, 0, 0)` },
-      ],
-      {
-        duration: Math.max(28000, distance * 22),
-        iterations: Infinity,
-        easing: "linear",
-      }
-    );
+    offset += speed * dt;
+    if (offset >= segmentWidth) {
+      offset -= segmentWidth;
+    }
+
+    track.style.transform = `translate3d(${-offset}px, 0, 0)`;
+    rafId = requestAnimationFrame(tick);
+  };
+
+  const startMotion = () => {
+    stopMotion();
+    segmentWidth = track.scrollWidth / 2;
+    offset = 0;
+    track.style.transform = "translate3d(0, 0, 0)";
+
+    if (reduceMotion || !segmentWidth) return;
+
+    rafId = requestAnimationFrame(tick);
   };
 
   const fill = () => {
-    hireAnimation?.cancel();
-    hireAnimation = null;
-    track.style.transform = "translate3d(0,0,0)";
+    stopMotion();
+    track.style.transform = "translate3d(0, 0, 0)";
     track.replaceChildren(createHireChunk(template));
 
-    const viewportWidth =
-      window.visualViewport?.width || document.documentElement.clientWidth;
+    const viewportWidth = Math.max(
+      window.visualViewport?.width || 0,
+      document.documentElement.clientWidth || 0,
+      window.innerWidth || 0
+    );
 
     // Keep adding units until one loop segment is at least as wide as the screen.
     let guard = 0;
@@ -698,6 +717,7 @@ function setupHireBar() {
     });
     copies.forEach((copy) => track.appendChild(copy));
 
+    // Wait a frame so layout/fonts settle before measuring & starting.
     requestAnimationFrame(() => {
       requestAnimationFrame(startMotion);
     });
@@ -708,13 +728,19 @@ function setupHireBar() {
   if (!setupHireBar.bound) {
     setupHireBar.bound = true;
     let resizeTimer = null;
-    window.addEventListener("resize", () => {
+    const onResize = () => {
       clearTimeout(resizeTimer);
       resizeTimer = setTimeout(fill, 150);
-    });
-    window.visualViewport?.addEventListener("resize", () => {
-      clearTimeout(resizeTimer);
-      resizeTimer = setTimeout(fill, 150);
+    };
+    window.addEventListener("resize", onResize);
+    window.visualViewport?.addEventListener("resize", onResize);
+    document.addEventListener("visibilitychange", () => {
+      if (document.visibilityState === "visible") {
+        lastTime = 0;
+        if (!rafId && segmentWidth && !reduceMotion) {
+          rafId = requestAnimationFrame(tick);
+        }
+      }
     });
   }
 
