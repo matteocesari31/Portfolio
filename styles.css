@@ -898,13 +898,19 @@ body {
   }
 
   .landing__subtitle {
-    font-size: clamp(1.25rem, calc(1.875rem * (100vw - 0.4rem) / 52rem), 1.875rem);
+    font-size: clamp(1.45rem, calc(2.15rem * (100vw - 0.4rem) / 52rem), 2rem);
     text-align: center;
     line-height: 1.25;
   }
 
   .landing__subtitle-break {
     display: block;
+  }
+
+  .landing__hills {
+    bottom: -7vh;
+    height: 92vh;
+    object-position: center 48%;
   }
 }
 
