@@ -888,11 +888,11 @@ body {
   .film {
     grid-template-columns: 1fr;
     align-content: start;
-    padding: 3rem clamp(1.5rem, 5vw, 2rem);
+    padding: 6rem clamp(1.5rem, 5vw, 2rem) 3rem;
   }
 
   .film--rem {
-    padding: 3rem clamp(1.5rem, 5vw, 2rem);
+    padding: 6rem clamp(1.5rem, 5vw, 2rem) 3rem;
   }
 
   .film__ticket {
@@ -915,7 +915,7 @@ body {
   .design {
     grid-template-columns: 1fr;
     align-content: start;
-    padding-top: 3rem;
+    padding-top: 6rem;
     padding-bottom: 3rem;
   }
 
@@ -927,7 +927,7 @@ body {
   .app {
     grid-template-columns: 1fr;
     align-content: start;
-    padding-top: 3rem;
+    padding-top: 6rem;
     padding-bottom: 3rem;
   }
 
