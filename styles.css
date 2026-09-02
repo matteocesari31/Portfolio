@@ -131,17 +131,19 @@ body {
   background: #0073eb;
   padding: 0.7rem 0;
   pointer-events: none;
-  /* Keep the ticker on its own compositor layer (helps iOS Safari). */
-  transform: translateZ(0);
-  -webkit-transform: translateZ(0);
 }
 
 .hire-bar__track {
   display: flex;
   width: max-content;
+  -webkit-animation: hire-marquee 40s linear infinite;
+  animation: hire-marquee 40s linear infinite;
   will-change: transform;
-  backface-visibility: hidden;
-  -webkit-backface-visibility: hidden;
+}
+
+.hire-bar__group {
+  display: flex;
+  flex: 0 0 auto;
 }
 
 .hire-bar__chunk {
@@ -166,6 +168,28 @@ body {
 .hire-bar__mail:hover {
   text-decoration: underline;
   text-underline-offset: 0.15em;
+}
+
+@-webkit-keyframes hire-marquee {
+  from {
+    -webkit-transform: translateX(0);
+    transform: translateX(0);
+  }
+
+  to {
+    -webkit-transform: translateX(-50%);
+    transform: translateX(-50%);
+  }
+}
+
+@keyframes hire-marquee {
+  from {
+    transform: translateX(0);
+  }
+
+  to {
+    transform: translateX(-50%);
+  }
 }
 
 .pages {

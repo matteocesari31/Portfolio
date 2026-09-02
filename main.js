@@ -624,135 +624,11 @@ window.addEventListener("resize", () => {
   moveNavPill(active, false);
 });
 
-function createHireChunk(template, { decorative = false } = {}) {
-  const chunk = template.content.firstElementChild.cloneNode(true);
-  if (decorative) {
-    chunk.setAttribute("aria-hidden", "true");
-    chunk.querySelectorAll("a").forEach((link) => {
-      link.tabIndex = -1;
-    });
-  }
-  return chunk;
-}
-
-function setupHireBar() {
-  const track = document.querySelector("[data-hire-track]");
-  const template = document.querySelector("#hire-chunk-template");
-  if (!track || !template?.content?.firstElementChild) return;
-
-  let rafId = 0;
-  let segmentWidth = 0;
-  let offset = 0;
-  let lastTime = 0;
-  const reduceMotion = window.matchMedia?.(
-    "(prefers-reduced-motion: reduce)"
-  )?.matches;
-  // Slow continuous drift (~42px/sec).
-  const speed = 42;
-
-  const stopMotion = () => {
-    if (rafId) {
-      cancelAnimationFrame(rafId);
-      rafId = 0;
-    }
-    lastTime = 0;
-  };
-
-  const tick = (time) => {
-    if (!segmentWidth) {
-      rafId = 0;
-      return;
-    }
-
-    if (!lastTime) lastTime = time;
-    const dt = Math.min(0.064, (time - lastTime) / 1000);
-    lastTime = time;
-
-    offset += speed * dt;
-    if (offset >= segmentWidth) {
-      offset -= segmentWidth;
-    }
-
-    track.style.transform = `translate3d(${-offset}px, 0, 0)`;
-    rafId = requestAnimationFrame(tick);
-  };
-
-  const startMotion = () => {
-    stopMotion();
-    segmentWidth = track.scrollWidth / 2;
-    offset = 0;
-    track.style.transform = "translate3d(0, 0, 0)";
-
-    if (reduceMotion || !segmentWidth) return;
-
-    rafId = requestAnimationFrame(tick);
-  };
-
-  const fill = () => {
-    stopMotion();
-    track.style.transform = "translate3d(0, 0, 0)";
-    track.replaceChildren(createHireChunk(template));
-
-    const viewportWidth = Math.max(
-      window.visualViewport?.width || 0,
-      document.documentElement.clientWidth || 0,
-      window.innerWidth || 0
-    );
-
-    // Keep adding units until one loop segment is at least as wide as the screen.
-    let guard = 0;
-    while (track.scrollWidth < viewportWidth && guard < 40) {
-      track.appendChild(createHireChunk(template, { decorative: true }));
-      guard += 1;
-    }
-
-    // Duplicate the whole segment so the loop can scroll by exactly half.
-    const copies = [...track.children].map((child) => {
-      const copy = child.cloneNode(true);
-      copy.setAttribute("aria-hidden", "true");
-      copy.querySelectorAll("a").forEach((link) => {
-        link.tabIndex = -1;
-      });
-      return copy;
-    });
-    copies.forEach((copy) => track.appendChild(copy));
-
-    // Wait a frame so layout/fonts settle before measuring & starting.
-    requestAnimationFrame(() => {
-      requestAnimationFrame(startMotion);
-    });
-  };
-
-  fill();
-
-  if (!setupHireBar.bound) {
-    setupHireBar.bound = true;
-    let resizeTimer = null;
-    const onResize = () => {
-      clearTimeout(resizeTimer);
-      resizeTimer = setTimeout(fill, 150);
-    };
-    window.addEventListener("resize", onResize);
-    window.visualViewport?.addEventListener("resize", onResize);
-    document.addEventListener("visibilitychange", () => {
-      if (document.visibilityState === "visible") {
-        lastTime = 0;
-        if (!rafId && segmentWidth && !reduceMotion) {
-          rafId = requestAnimationFrame(tick);
-        }
-      }
-    });
-  }
-
-  return fill;
-}
-
 if (window.location.hash) {
   history.replaceState(null, "", window.location.pathname + window.location.search);
 }
 
 deferHeavyMedia();
-const refillHireBar = setupHireBar();
 
 pages.forEach((page) => {
   const isHome = page.id === "home";
@@ -770,13 +646,11 @@ requestAnimationFrame(() => syncNavPill(false));
 if (document.fonts?.ready) {
   document.fonts.ready.then(() => {
     syncNavPill(false);
-    refillHireBar?.();
   });
 }
 
 window.addEventListener("orientationchange", () => {
   setTimeout(() => {
     syncNavPill(false);
-    refillHireBar?.();
   }, 200);
 });
