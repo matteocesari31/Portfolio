@@ -131,17 +131,17 @@ body {
   background: #0073eb;
   padding: 0.7rem 0;
   pointer-events: none;
+  /* Keep the ticker on its own compositor layer (helps iOS Safari). */
+  transform: translateZ(0);
+  -webkit-transform: translateZ(0);
 }
 
 .hire-bar__track {
   display: flex;
   width: max-content;
-  animation: hire-marquee 55s linear infinite;
   will-change: transform;
-}
-
-.hire-bar__track.is-paused {
-  animation: none;
+  backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
 }
 
 .hire-bar__chunk {
@@ -166,22 +166,6 @@ body {
 .hire-bar__mail:hover {
   text-decoration: underline;
   text-underline-offset: 0.15em;
-}
-
-@keyframes hire-marquee {
-  from {
-    transform: translate3d(0, 0, 0);
-  }
-
-  to {
-    transform: translate3d(-50%, 0, 0);
-  }
-}
-
-@media (prefers-reduced-motion: reduce) {
-  .hire-bar__track {
-    animation: none;
-  }
 }
 
 .pages {
@@ -220,7 +204,7 @@ body {
   flex-direction: column;
   align-items: center;
   /* Extra gap only when the title is viewport-scaled down. */
-  gap: clamp(0.1rem, calc((52rem - 92vw) * 0.03), 0.95rem);
+  gap: clamp(0.1rem, calc((52rem - 96vw) * 0.03), 0.95rem);
   padding: 0 1.5rem;
   text-align: center;
   transform: translate(-50%, -50%);
@@ -229,9 +213,9 @@ body {
 
 .landing__title {
   display: block;
-  width: min(52rem, 92vw);
+  width: min(52rem, 96vw);
   height: auto;
-  transform: translateY(clamp(0.45rem, calc(1.25rem * 92vw / 52rem), 1.25rem));
+  transform: translateY(clamp(0.45rem, calc(1.25rem * 96vw / 52rem), 1.25rem));
 }
 
 .landing__subtitle {
@@ -239,7 +223,7 @@ body {
   font-family: "Figtree", sans-serif;
   font-weight: 500;
   /* Scale with the title, but never smaller than 1.25rem. */
-  font-size: clamp(1.25rem, calc(1.875rem * 92vw / 52rem), 1.875rem);
+  font-size: clamp(1.25rem, calc(1.875rem * 96vw / 52rem), 1.875rem);
   letter-spacing: -0.05em;
   line-height: 1.3;
   text-transform: lowercase;
@@ -837,6 +821,43 @@ body {
   line-height: 1.55;
   letter-spacing: -0.01em;
   text-transform: lowercase;
+}
+
+@media (max-width: 720px) {
+  /* PNG capsule can't grow with labels — use a matching CSS pill on mobile. */
+  .nav {
+    width: fit-content;
+    max-width: calc(100vw - 0.75rem);
+  }
+
+  .nav__base {
+    display: none;
+  }
+
+  .nav__track {
+    position: relative;
+    inset: auto;
+    background: #fff;
+    border-radius: 999px;
+    box-shadow: 0 8px 18px rgba(0, 0, 0, 0.08);
+    padding: 0.3rem 0.45rem;
+  }
+
+  .nav__items {
+    margin-top: 0;
+    gap: 0.15rem;
+  }
+
+  .nav__item {
+    font-size: 0.78rem;
+    padding: 0.48rem 0.55rem;
+    padding-left: calc(0.55rem + 0.05em);
+    padding-right: calc(0.55rem - 0.05em);
+  }
+
+  .nav__pill {
+    height: 1.8rem;
+  }
 }
 
 @media (max-width: 900px) {

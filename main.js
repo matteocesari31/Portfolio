@@ -640,18 +640,54 @@ function setupHireBar() {
   const template = document.querySelector("#hire-chunk-template");
   if (!track || !template?.content?.firstElementChild) return;
 
+  let hireAnimation = null;
+  const reduceMotion = window.matchMedia?.(
+    "(prefers-reduced-motion: reduce)"
+  )?.matches;
+
+  const startMotion = () => {
+    hireAnimation?.cancel();
+    hireAnimation = null;
+
+    if (reduceMotion) {
+      track.style.transform = "translate3d(0,0,0)";
+      return;
+    }
+
+    const distance = track.scrollWidth / 2;
+    if (!distance) return;
+
+    // Pixel-based WAAPI is more reliable than CSS % animation on iOS Safari.
+    hireAnimation = track.animate(
+      [
+        { transform: "translate3d(0, 0, 0)" },
+        { transform: `translate3d(${-distance}px, 0, 0)` },
+      ],
+      {
+        duration: Math.max(28000, distance * 22),
+        iterations: Infinity,
+        easing: "linear",
+      }
+    );
+  };
+
   const fill = () => {
-    track.classList.add("is-paused");
+    hireAnimation?.cancel();
+    hireAnimation = null;
+    track.style.transform = "translate3d(0,0,0)";
     track.replaceChildren(createHireChunk(template));
+
+    const viewportWidth =
+      window.visualViewport?.width || document.documentElement.clientWidth;
 
     // Keep adding units until one loop segment is at least as wide as the screen.
     let guard = 0;
-    while (track.scrollWidth < window.innerWidth && guard < 40) {
+    while (track.scrollWidth < viewportWidth && guard < 40) {
       track.appendChild(createHireChunk(template, { decorative: true }));
       guard += 1;
     }
 
-    // Duplicate the whole segment so -50% translate loops seamlessly.
+    // Duplicate the whole segment so the loop can scroll by exactly half.
     const copies = [...track.children].map((child) => {
       const copy = child.cloneNode(true);
       copy.setAttribute("aria-hidden", "true");
@@ -662,8 +698,9 @@ function setupHireBar() {
     });
     copies.forEach((copy) => track.appendChild(copy));
 
-    void track.offsetWidth;
-    track.classList.remove("is-paused");
+    requestAnimationFrame(() => {
+      requestAnimationFrame(startMotion);
+    });
   };
 
   fill();
@@ -672,6 +709,10 @@ function setupHireBar() {
     setupHireBar.bound = true;
     let resizeTimer = null;
     window.addEventListener("resize", () => {
+      clearTimeout(resizeTimer);
+      resizeTimer = setTimeout(fill, 150);
+    });
+    window.visualViewport?.addEventListener("resize", () => {
       clearTimeout(resizeTimer);
       resizeTimer = setTimeout(fill, 150);
     });
@@ -706,3 +747,10 @@ if (document.fonts?.ready) {
     refillHireBar?.();
   });
 }
+
+window.addEventListener("orientationchange", () => {
+  setTimeout(() => {
+    syncNavPill(false);
+    refillHireBar?.();
+  }, 200);
+});
