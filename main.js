@@ -1,5 +1,4 @@
 const pages = [...document.querySelectorAll("[data-page-section]")];
-const appVideos = [...document.querySelectorAll("[data-app-video]")];
 
 const navTrack = document.querySelector("[data-nav-track]");
 const navPill = document.querySelector("[data-nav-pill]");
@@ -17,21 +16,6 @@ const pageReady = new Map();
 
 function stopMusicPanel() {
   window.musicPanel?.stop();
-}
-
-function pauseAppVideos() {
-  appVideos.forEach((video) => {
-    video.pause();
-  });
-}
-
-function wakeAppVideos() {
-  appVideos.forEach((video) => {
-    if (video.dataset.src && !video.getAttribute("src")) {
-      video.src = video.dataset.src;
-      video.preload = "metadata";
-    }
-  });
 }
 
 function warmImage(url) {
@@ -122,10 +106,6 @@ function pendingImages(images) {
 function ensurePageReady(pageId) {
   if (pageId === "home") {
     return Promise.resolve();
-  }
-
-  if (pageId === "app-development") {
-    wakeAppVideos();
   }
 
   const readyKey = currentReadyKey(pageId);
@@ -448,12 +428,6 @@ document.addEventListener("keydown", (event) => {
 
 function releasePage(pageId) {
   if (!pageId || pageId === "home") return;
-
-  // Keep media src after first hydrate so return visits stay instant.
-  // Only pause video so it stops decoding frames while hidden.
-  if (pageId === "app-development") {
-    pauseAppVideos();
-  }
 
   if (pageId === "music-production") {
     stopMusicPanel();

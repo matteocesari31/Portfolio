@@ -600,7 +600,7 @@ body {
 .app {
   display: grid;
   grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
-  align-items: center;
+  align-items: start;
   gap: clamp(1.5rem, 3vw, 3rem);
   min-height: 100vh;
   min-height: 100dvh;
@@ -614,17 +614,14 @@ body {
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: center;
-  gap: 0.85rem;
   width: 100%;
   max-width: min(36rem, 46vw);
   justify-self: center;
-  align-self: center;
 }
 
 .app__grid {
   display: grid;
-  grid-template-columns: repeat(2, minmax(0, 1fr));
+  grid-template-columns: 1fr;
   gap: 0.5rem;
   width: 100%;
 }
@@ -638,18 +635,11 @@ body {
   box-shadow: 0 6px 18px rgba(0, 0, 0, 0.1);
 }
 
-.app__video {
-  display: block;
-  width: 100%;
-  height: auto;
-}
-
 .app__content {
   display: flex;
   flex-direction: column;
   gap: 1.5rem;
   max-width: 34rem;
-  align-self: center;
 }
 
 .app__text {
