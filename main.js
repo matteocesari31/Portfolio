@@ -418,7 +418,6 @@ lightbox?.addEventListener("click", (event) => {
 
 const aboutOpen = document.querySelector("[data-about-open]");
 const aboutPanel = document.querySelector("[data-about-panel]");
-const aboutClose = document.querySelector("[data-about-close]");
 let aboutLastFocus = null;
 
 function closeAboutPanel() {
@@ -441,11 +440,6 @@ function openAboutPanel() {
 
 aboutOpen?.addEventListener("click", () => {
   openAboutPanel();
-});
-
-aboutClose?.addEventListener("click", (event) => {
-  event.stopPropagation();
-  closeAboutPanel();
 });
 
 aboutPanel?.addEventListener("click", (event) => {
