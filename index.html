@@ -39,7 +39,15 @@
       </div>
     </nav>
 
-    <button type="button" class="about-me" aria-label="About me">
+    <button
+      type="button"
+      class="about-me"
+      data-about-open
+      aria-label="About me"
+      aria-haspopup="dialog"
+      aria-controls="about-panel"
+      aria-expanded="false"
+    >
       <span class="about-me__art" aria-hidden="true">
         <img
           class="about-me__img about-me__img--inactive"
@@ -717,6 +725,33 @@
         ×
       </button>
       <img class="lightbox__image" data-lightbox-image alt="" />
+    </div>
+
+    <div
+      id="about-panel"
+      class="about-panel"
+      data-about-panel
+      hidden
+      role="dialog"
+      aria-modal="true"
+      aria-labelledby="about-panel-title"
+    >
+      <div class="about-panel__card">
+        <h2 id="about-panel-title" class="visually-hidden">About me</h2>
+        <button
+          type="button"
+          class="about-panel__close"
+          data-about-close
+          aria-label="Close about me"
+        >
+          ×
+        </button>
+        <p class="about-panel__text">
+          italian and finnish 🇮🇹🇫🇮 third year communication design student at
+          politecnico di milano.
+        </p>
+        <p class="about-panel__text">i make digital products and films.</p>
+      </div>
     </div>
 
     <script src="music.js"></script>

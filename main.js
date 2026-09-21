@@ -416,10 +416,53 @@ lightbox?.addEventListener("click", (event) => {
   }
 });
 
+const aboutOpen = document.querySelector("[data-about-open]");
+const aboutPanel = document.querySelector("[data-about-panel]");
+const aboutClose = document.querySelector("[data-about-close]");
+let aboutLastFocus = null;
+
+function closeAboutPanel() {
+  if (!aboutPanel || aboutPanel.hidden) return;
+
+  aboutPanel.hidden = true;
+  aboutOpen?.setAttribute("aria-expanded", "false");
+  aboutLastFocus?.focus?.();
+  aboutLastFocus = null;
+}
+
+function openAboutPanel() {
+  if (!aboutPanel) return;
+
+  closeLightbox();
+  aboutLastFocus = document.activeElement;
+  aboutPanel.hidden = false;
+  aboutOpen?.setAttribute("aria-expanded", "true");
+  aboutClose?.focus();
+}
+
+aboutOpen?.addEventListener("click", () => {
+  openAboutPanel();
+});
+
+aboutClose?.addEventListener("click", (event) => {
+  event.stopPropagation();
+  closeAboutPanel();
+});
+
+aboutPanel?.addEventListener("click", (event) => {
+  if (event.target === aboutPanel) {
+    closeAboutPanel();
+  }
+});
+
 document.addEventListener("keydown", (event) => {
   if (event.key === "Escape") {
     if (ticketSession) {
       closeTicketDetail();
+      return;
+    }
+    if (aboutPanel && !aboutPanel.hidden) {
+      closeAboutPanel();
       return;
     }
     closeLightbox();
@@ -523,6 +566,7 @@ function setActiveNav(id, animatePill = true) {
 function revealPage(pageId) {
   closeTicketDetail({ instant: true });
   closeLightbox();
+  closeAboutPanel();
 
   if (activePageId && activePageId !== pageId) {
     releasePage(activePageId);
