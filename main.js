@@ -421,7 +421,28 @@ const aboutPanel = document.querySelector("[data-about-panel]");
 const aboutDesktopHost = document.querySelector("[data-about-desktop-host]");
 const aboutHomeSlot = document.querySelector("[data-about-home-slot]");
 const aboutMobileQuery = window.matchMedia("(max-width: 720px)");
+const aboutReduceMotionQuery = window.matchMedia(
+  "(prefers-reduced-motion: reduce)"
+);
 let aboutLastFocus = null;
+let aboutSwapTimer = null;
+
+function stopAboutMeSwap() {
+  if (aboutSwapTimer) {
+    clearInterval(aboutSwapTimer);
+    aboutSwapTimer = null;
+  }
+  aboutOpen?.classList.remove("is-swapped");
+}
+
+function startAboutMeSwap() {
+  stopAboutMeSwap();
+  if (!aboutOpen || aboutReduceMotionQuery.matches) return;
+
+  aboutSwapTimer = setInterval(() => {
+    aboutOpen.classList.toggle("is-swapped");
+  }, 1200);
+}
 
 function placeAboutMe() {
   if (!aboutOpen || !aboutDesktopHost || !aboutHomeSlot) return;
@@ -429,9 +450,15 @@ function placeAboutMe() {
   if (aboutMobileQuery.matches) {
     aboutOpen.classList.remove("is-fixed");
     aboutHomeSlot.appendChild(aboutOpen);
+    if (activePageId === "home") {
+      startAboutMeSwap();
+    } else {
+      stopAboutMeSwap();
+    }
     return;
   }
 
+  stopAboutMeSwap();
   aboutOpen.classList.add("is-fixed");
   aboutDesktopHost.appendChild(aboutOpen);
 }
@@ -473,6 +500,11 @@ if (aboutMobileQuery.addEventListener) {
   aboutMobileQuery.addEventListener("change", placeAboutMe);
 } else {
   aboutMobileQuery.addListener(placeAboutMe);
+}
+if (aboutReduceMotionQuery.addEventListener) {
+  aboutReduceMotionQuery.addEventListener("change", placeAboutMe);
+} else {
+  aboutReduceMotionQuery.addListener(placeAboutMe);
 }
 
 document.addEventListener("keydown", (event) => {
@@ -600,6 +632,7 @@ function revealPage(pageId) {
 
   activePageId = pageId;
   window.scrollTo(0, 0);
+  placeAboutMe();
 }
 
 function afterNextPaint(callback) {

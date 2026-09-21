@@ -175,9 +175,15 @@ body {
   transition: opacity 0.15s ease;
 }
 
-.about-me:hover .about-me__img--active,
-.about-me:focus-visible .about-me__img--active {
+.about-me.is-swapped .about-me__img--active {
   opacity: 1;
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .about-me:hover .about-me__img--active,
+  .about-me:focus-visible .about-me__img--active {
+    opacity: 1;
+  }
 }
 
 .about-me__label {
@@ -972,34 +978,6 @@ body {
   text-transform: lowercase;
 }
 
-@-webkit-keyframes about-me-swap {
-  0%,
-  42% {
-    opacity: 0;
-  }
-  50%,
-  92% {
-    opacity: 1;
-  }
-  100% {
-    opacity: 0;
-  }
-}
-
-@keyframes about-me-swap {
-  0%,
-  42% {
-    opacity: 0;
-  }
-  50%,
-  92% {
-    opacity: 1;
-  }
-  100% {
-    opacity: 0;
-  }
-}
-
 @media (max-width: 720px) {
   .about-me.is-fixed {
     display: none;
@@ -1011,22 +989,7 @@ body {
   }
 
   .landing__center .about-me__img--active {
-    transition: none;
-    -webkit-animation: about-me-swap 2.4s ease-in-out infinite;
-    animation: about-me-swap 2.4s ease-in-out infinite;
-  }
-
-  .landing__center .about-me:hover .about-me__img--active,
-  .landing__center .about-me:focus-visible .about-me__img--active {
-    opacity: unset;
-  }
-
-  @media (prefers-reduced-motion: reduce) {
-    .landing__center .about-me__img--active {
-      -webkit-animation: none;
-      animation: none;
-      opacity: 0;
-    }
+    transition: opacity 0.2s ease;
   }
 
   .about-me__art {
