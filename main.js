@@ -437,7 +437,6 @@ function openAboutPanel() {
   aboutLastFocus = document.activeElement;
   aboutPanel.hidden = false;
   aboutOpen?.setAttribute("aria-expanded", "true");
-  aboutClose?.focus();
 }
 
 aboutOpen?.addEventListener("click", () => {
