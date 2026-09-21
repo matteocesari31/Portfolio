@@ -966,8 +966,15 @@ body {
 
 @media (max-width: 720px) {
   .about-me {
-    top: 0.65rem;
-    right: 0.55rem;
+    display: none;
+    top: calc(clamp(1.25rem, 3vw, 2rem) + 3.35rem);
+    right: auto;
+    left: 50%;
+    transform: translateX(-50%);
+  }
+
+  body:has(#home.page.is-active) .about-me {
+    display: flex;
   }
 
   .about-me__art {
