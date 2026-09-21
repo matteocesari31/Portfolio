@@ -39,35 +39,7 @@
       </div>
     </nav>
 
-    <button
-      type="button"
-      class="about-me"
-      data-about-open
-      aria-label="About me"
-      aria-haspopup="dialog"
-      aria-controls="about-panel"
-      aria-expanded="false"
-    >
-      <span class="about-me__art" aria-hidden="true">
-        <img
-          class="about-me__img about-me__img--inactive"
-          src="assets/landing/matteo-character-inactive.png"
-          alt=""
-          width="1040"
-          height="1008"
-          draggable="false"
-        />
-        <img
-          class="about-me__img about-me__img--active"
-          src="assets/landing/matteo-character-active.png"
-          alt=""
-          width="1040"
-          height="1008"
-          draggable="false"
-        />
-      </span>
-      <span class="about-me__label">about me</span>
-    </button>
+    <div data-about-desktop-host></div>
 
     <main class="pages">
       <section id="home" class="page page--home is-active" data-page-section aria-hidden="false">
@@ -87,6 +59,37 @@
             communication design,<br class="landing__subtitle-break" />
             based in milan
           </p>
+          <div data-about-home-slot>
+            <button
+              type="button"
+              class="about-me"
+              data-about-open
+              aria-label="About me"
+              aria-haspopup="dialog"
+              aria-controls="about-panel"
+              aria-expanded="false"
+            >
+              <span class="about-me__art" aria-hidden="true">
+                <img
+                  class="about-me__img about-me__img--inactive"
+                  src="assets/landing/matteo-character-inactive.png"
+                  alt=""
+                  width="1040"
+                  height="1008"
+                  draggable="false"
+                />
+                <img
+                  class="about-me__img about-me__img--active"
+                  src="assets/landing/matteo-character-active.png"
+                  alt=""
+                  width="1040"
+                  height="1008"
+                  draggable="false"
+                />
+              </span>
+              <span class="about-me__label">about me</span>
+            </button>
+          </div>
         </div>
 
         <img

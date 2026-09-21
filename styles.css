@@ -122,9 +122,6 @@ body {
 }
 
 .about-me {
-  position: fixed;
-  top: clamp(0.85rem, 2.2vw, 1.35rem);
-  right: clamp(0.85rem, 2.8vw, 2rem);
   z-index: 30;
   display: flex;
   flex-direction: column;
@@ -138,6 +135,17 @@ body {
   appearance: none;
   -webkit-appearance: none;
   -webkit-tap-highlight-color: transparent;
+}
+
+.about-me.is-fixed {
+  position: fixed;
+  top: clamp(0.85rem, 2.2vw, 1.35rem);
+  right: clamp(0.85rem, 2.8vw, 2rem);
+}
+
+.landing__center .about-me {
+  position: relative;
+  margin-top: 0.85rem;
 }
 
 .about-me__art {
@@ -965,16 +973,13 @@ body {
 }
 
 @media (max-width: 720px) {
-  .about-me {
+  .about-me.is-fixed {
     display: none;
-    top: calc(clamp(1.25rem, 3vw, 2rem) + 3.35rem);
-    right: auto;
-    left: 50%;
-    transform: translateX(-50%);
   }
 
-  body:has(#home.page.is-active) .about-me {
+  .landing__center .about-me {
     display: flex;
+    margin-top: 1rem;
   }
 
   .about-me__art {

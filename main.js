@@ -418,13 +418,33 @@ lightbox?.addEventListener("click", (event) => {
 
 const aboutOpen = document.querySelector("[data-about-open]");
 const aboutPanel = document.querySelector("[data-about-panel]");
+const aboutDesktopHost = document.querySelector("[data-about-desktop-host]");
+const aboutHomeSlot = document.querySelector("[data-about-home-slot]");
+const aboutMobileQuery = window.matchMedia("(max-width: 720px)");
 let aboutLastFocus = null;
+
+function placeAboutMe() {
+  if (!aboutOpen || !aboutDesktopHost || !aboutHomeSlot) return;
+
+  if (aboutMobileQuery.matches) {
+    aboutOpen.classList.remove("is-fixed");
+    aboutHomeSlot.appendChild(aboutOpen);
+    return;
+  }
+
+  aboutOpen.classList.add("is-fixed");
+  aboutDesktopHost.appendChild(aboutOpen);
+}
+
+function setAboutExpanded(expanded) {
+  aboutOpen?.setAttribute("aria-expanded", expanded ? "true" : "false");
+}
 
 function closeAboutPanel() {
   if (!aboutPanel || aboutPanel.hidden) return;
 
   aboutPanel.hidden = true;
-  aboutOpen?.setAttribute("aria-expanded", "false");
+  setAboutExpanded(false);
   aboutLastFocus?.focus?.();
   aboutLastFocus = null;
 }
@@ -435,7 +455,7 @@ function openAboutPanel() {
   closeLightbox();
   aboutLastFocus = document.activeElement;
   aboutPanel.hidden = false;
-  aboutOpen?.setAttribute("aria-expanded", "true");
+  setAboutExpanded(true);
 }
 
 aboutOpen?.addEventListener("click", () => {
@@ -447,6 +467,13 @@ aboutPanel?.addEventListener("click", (event) => {
     closeAboutPanel();
   }
 });
+
+placeAboutMe();
+if (aboutMobileQuery.addEventListener) {
+  aboutMobileQuery.addEventListener("change", placeAboutMe);
+} else {
+  aboutMobileQuery.addListener(placeAboutMe);
+}
 
 document.addEventListener("keydown", (event) => {
   if (event.key === "Escape") {
