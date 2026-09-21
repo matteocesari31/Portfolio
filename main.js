@@ -421,27 +421,45 @@ const aboutPanel = document.querySelector("[data-about-panel]");
 const aboutDesktopHost = document.querySelector("[data-about-desktop-host]");
 const aboutHomeSlot = document.querySelector("[data-about-home-slot]");
 const aboutMobileQuery = window.matchMedia("(max-width: 720px)");
-const aboutReduceMotionQuery = window.matchMedia(
-  "(prefers-reduced-motion: reduce)"
-);
+const aboutInactiveImg = aboutOpen?.querySelector(".about-me__img--inactive");
+const aboutActiveImg = aboutOpen?.querySelector(".about-me__img--active");
 let aboutLastFocus = null;
 let aboutSwapTimer = null;
+let aboutSwapShowActive = false;
+
+function setAboutMeFrame(showActive) {
+  aboutSwapShowActive = !!showActive;
+  // Inline styles so this still works when iOS Reduce Motion suppresses CSS animations.
+  if (aboutInactiveImg) {
+    aboutInactiveImg.style.setProperty("opacity", aboutSwapShowActive ? "0" : "1", "important");
+  }
+  if (aboutActiveImg) {
+    aboutActiveImg.style.setProperty("opacity", aboutSwapShowActive ? "1" : "0", "important");
+    aboutActiveImg.style.setProperty("animation", "none", "important");
+  }
+}
 
 function stopAboutMeSwap() {
   if (aboutSwapTimer) {
     clearInterval(aboutSwapTimer);
     aboutSwapTimer = null;
   }
-  aboutOpen?.classList.remove("is-swapped");
+  aboutSwapShowActive = false;
+  if (aboutInactiveImg) aboutInactiveImg.style.removeProperty("opacity");
+  if (aboutActiveImg) {
+    aboutActiveImg.style.removeProperty("opacity");
+    aboutActiveImg.style.removeProperty("animation");
+  }
 }
 
 function startAboutMeSwap() {
   stopAboutMeSwap();
-  if (!aboutOpen || aboutReduceMotionQuery.matches) return;
+  if (!aboutOpen || !aboutInactiveImg || !aboutActiveImg) return;
 
+  setAboutMeFrame(false);
   aboutSwapTimer = setInterval(() => {
-    aboutOpen.classList.toggle("is-swapped");
-  }, 1200);
+    setAboutMeFrame(!aboutSwapShowActive);
+  }, 900);
 }
 
 function placeAboutMe() {
@@ -500,11 +518,6 @@ if (aboutMobileQuery.addEventListener) {
   aboutMobileQuery.addEventListener("change", placeAboutMe);
 } else {
   aboutMobileQuery.addListener(placeAboutMe);
-}
-if (aboutReduceMotionQuery.addEventListener) {
-  aboutReduceMotionQuery.addEventListener("change", placeAboutMe);
-} else {
-  aboutReduceMotionQuery.addListener(placeAboutMe);
 }
 
 document.addEventListener("keydown", (event) => {
