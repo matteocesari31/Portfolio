@@ -4,8 +4,12 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Matteo Cesari</title>
-    <link rel="icon" href="assets/matteo bambino.jpg" type="image/jpeg" />
-    <link rel="stylesheet" href="styles.css?v=film-tickets-mobile-1" />
+    <link
+      rel="icon"
+      href="assets/landing/matteo-character-inactive.png"
+      type="image/png"
+    />
+    <link rel="stylesheet" href="styles.css?v=flatlist-doc-1" />
   </head>
   <body>
     <nav class="nav" aria-label="Primary">
@@ -626,6 +630,22 @@
             based on the user's preferences.
           </p>
         </div>
+
+        <button
+          type="button"
+          class="app__doc"
+          data-doc-open
+          aria-label="Open Flatlist Product Thesis"
+          aria-haspopup="dialog"
+          aria-controls="doc-panel"
+          aria-expanded="false"
+        >
+          <img
+            src="assets/app-development/flatlist doc graphic v2.png"
+            alt=""
+            draggable="false"
+          />
+        </button>
       </div>
     </section>
 
@@ -749,7 +769,168 @@
       </div>
     </div>
 
+    <div
+      id="doc-panel"
+      class="doc-panel"
+      data-doc-panel
+      hidden
+      role="dialog"
+      aria-modal="true"
+      aria-labelledby="doc-panel-title"
+    >
+      <div class="doc-panel__card">
+        <article class="doc-panel__doc">
+          <h2 id="doc-panel-title" class="doc-panel__title">
+            Flatlist Product Thesis and Technical Architecture
+          </h2>
+
+          <h3 class="doc-panel__heading">Problem &amp; Thesis</h3>
+          <p>
+            Searching for an apartment rarely happens on a single platform.
+            Listings are scattered across different portals and shared in group
+            chats. The search quickly breaks down into a mess of open tabs,
+            screenshots, and scattered message threads. More importantly, the
+            details that determine a final decision are buried in inconsistent
+            prose and photo galleries across platforms that format information
+            differently.
+          </p>
+          <p>
+            Flatlist does not attempt to be another listing portal or crawl the
+            open market. Instead, it starts the moment someone decides to keep a
+            listing. It acts as a
+            <strong>unified private catalog</strong> that captures scattered
+            listings, standardizes their details into comparable records, and
+            ranks them against a personal description of the user’s “dream
+            apartment.”
+          </p>
+          <p>
+            The core target audience includes students, couples, and roommates
+            navigating fragmented rental markets. While it began with Italian
+            rentals, the data model supports multiple currencies and measurement
+            units, making it globally adaptable.
+          </p>
+
+          <h3 class="doc-panel__heading">How the Product Works</h3>
+          <ol class="doc-panel__list">
+            <li>
+              <strong>One-Click Capture:</strong> Rather than asking people to
+              abandon the portals they already use, Flatlist provides a browser
+              extension with a capture button. Clicking it instantly extracts the
+              listing’s URL, raw text, and images.
+            </li>
+            <li>
+              <strong>Asynchronous Enrichment:</strong> Once saved, background AI
+              processes turn the unformatted listing into structured hard facts
+              (price, address, beds, baths) and inferred qualities (renovation
+              status, natural light, noise levels, pet friendliness). Every
+              inference retains an excerpt from the listing as proof.
+            </li>
+            <li>
+              <strong>The Dream Apartment:</strong> Users write a plain-language
+              sentence describing what they want (e.g.,
+              <em
+                >“Quiet top-floor flat near line M2 with natural light”</em
+              >). Flatlist scores every saved apartment from 0 to 100 against that
+              description, complete with an explanation.
+            </li>
+            <li>
+              <strong>Collaboration:</strong> A shortlist often becomes a
+              household project. Flatlist allows partners or roommates to share a
+              catalog, take private notes, and view the owner's dream description
+              and match scores to align on decisions.
+            </li>
+          </ol>
+
+          <h3 class="doc-panel__heading">Architecture and Data Flow</h3>
+          <p>
+            Flatlist runs across two client surfaces powered by a single Supabase
+            backend:
+          </p>
+          <ul class="doc-panel__list">
+            <li>
+              <strong>Chrome Extension (Manifest V3):</strong> The primary capture
+              tool on the open web.
+            </li>
+            <li>
+              <strong>Web App (Next.js 16, React 19, Tailwind 4):</strong> The hub
+              for reviewing catalogs, viewing listings on a Mapbox map, managing
+              settings, and handling invites and payments.
+            </li>
+          </ul>
+
+          <h3 class="doc-panel__heading">Core Engineering Principles</h3>
+          <ul class="doc-panel__list">
+            <li>
+              <strong>Raw Content is Canonical:</strong> Flatlist stores the raw
+              text and images from listing pages. Because portal layouts and AI
+              prompts evolve, structured metadata is treated as a downstream
+              projection that can be regenerated without asking the user to
+              re-save the listing.
+            </li>
+            <li>
+              <strong>Speed First:</strong> Saving must feel instant. Enrichment
+              happens asynchronously in the background so the user is never stuck
+              waiting on the listing page.
+            </li>
+            <li>
+              <strong>Strict Security via RLS:</strong> All client access relies
+              on Postgres Row-Level Security (RLS) under the user's token.
+              Privileged background operations use the Supabase service role
+              exclusively inside isolated edge functions.
+            </li>
+            <li>
+              <strong>Deterministic Filtering:</strong> Natural-language search
+              translates human prompts into explicit filter parameters applied
+              against already-stored metadata, ensuring the AI cannot hallucinate
+              non-existent listings.
+            </li>
+          </ul>
+
+          <h3 class="doc-panel__heading">The Processing Pipeline</h3>
+          <ol class="doc-panel__list">
+            <li>
+              <strong>Save:</strong> The extension hits an edge function that
+              validates the user's plan limit, creates or assigns the catalog,
+              saves the raw page content, and immediately returns a success status
+              marked pending.
+            </li>
+            <li>
+              <strong>Enrich:</strong> An asynchronous edge function samples the
+              text, calls OpenAI to extract structured facts and vibe inferences,
+              and geocodes the address using Nominatim. The status updates to done
+              (or failed). If geocoding fails, the apartment remains saved without
+              map coordinates.
+            </li>
+            <li>
+              <strong>Score:</strong> A comparison edge function evaluates the
+              listing against the user's dream apartment description, writing a
+              0–100 score and rationale into a dedicated comparison table.
+              Changing the dream apartment description triggers a re-scoring
+              across the catalog.
+            </li>
+          </ol>
+
+          <h3 class="doc-panel__heading">Business Model</h3>
+          <p>Flatlist operates on a freemium model:</p>
+          <ul class="doc-panel__list">
+            <li>
+              <strong>Free Plan (€0):</strong> Up to 12 saved listings for a
+              single user, including AI search. It is designed to help solo
+              searchers build the habit of centralizing their favorites.
+            </li>
+            <li>
+              <strong>Premium Plan (€5.99/month):</strong> Unlimited saves and
+              shared access for collaborators, aimed at households and partners
+              running a collective search. Billing is handled via Polar, and
+              free-tier limits are enforced on the backend at the moment of
+              saving.
+            </li>
+          </ul>
+        </article>
+      </div>
+    </div>
+
     <script src="music.js"></script>
-    <script src="main.js?v=about-swap-3"></script>
+    <script src="main.js?v=flatlist-doc-1"></script>
   </body>
 </html>
