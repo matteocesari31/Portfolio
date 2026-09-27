@@ -302,7 +302,7 @@ body {
   font-size: clamp(0.95rem, 1.6vw, 1.05rem);
   font-weight: 400;
   line-height: 1.55;
-  letter-spacing: -0.01em;
+  letter-spacing: -0.05em;
 }
 
 .doc-panel__title {
@@ -310,7 +310,7 @@ body {
   font-size: clamp(1.35rem, 2.8vw, 1.85rem);
   font-weight: 700;
   line-height: 1.2;
-  letter-spacing: -0.03em;
+  letter-spacing: -0.05em;
   text-align: center;
 }
 
@@ -319,7 +319,7 @@ body {
   font-size: clamp(1.1rem, 2vw, 1.25rem);
   font-weight: 700;
   line-height: 1.25;
-  letter-spacing: -0.02em;
+  letter-spacing: -0.05em;
 }
 
 .doc-panel__doc p {
@@ -836,7 +836,7 @@ body {
   overflow: visible;
   padding: clamp(5.5rem, 10vw, 7rem) clamp(2rem, 5vw, 4rem)
     clamp(2rem, 5vw, 3rem);
-  padding-right: clamp(7rem, 20vw, 16rem);
+  padding-right: clamp(5.5rem, 15vw, 12rem);
 }
 
 .app__media {
@@ -874,9 +874,9 @@ body {
 .app__doc {
   position: absolute;
   top: 50%;
-  right: 0;
+  right: clamp(0.75rem, 2.5vw, 2rem);
   z-index: 2;
-  width: clamp(9.5rem, 14vw, 12.5rem);
+  width: clamp(12rem, 18vw, 16rem);
   margin: 0;
   padding: 0;
   border: 0;
@@ -886,7 +886,7 @@ body {
   -webkit-appearance: none;
   -webkit-tap-highlight-color: transparent;
   filter: drop-shadow(0 18px 30px rgba(0, 0, 0, 0.16));
-  transform: translate(28%, -52%) rotate(-17deg);
+  transform: translate(6%, -52%) rotate(-17deg);
   transition:
     transform 0.45s cubic-bezier(0.22, 1, 0.36, 1),
     filter 0.45s cubic-bezier(0.22, 1, 0.36, 1);
@@ -894,7 +894,7 @@ body {
 }
 
 .app__doc:hover {
-  transform: translate(28%, -58%) scale(1.06) rotate(-22deg);
+  transform: translate(6%, -58%) scale(1.06) rotate(-22deg);
   filter: drop-shadow(0 24px 36px rgba(0, 0, 0, 0.2));
 }
 
@@ -1297,7 +1297,7 @@ body {
     position: relative;
     top: auto;
     right: auto;
-    width: min(11.5rem, 48vw);
+    width: min(13.5rem, 56vw);
     margin: 1.75rem auto 0.25rem;
     justify-self: center;
     order: 3;
