@@ -498,6 +498,7 @@ function openAboutPanel() {
   if (!aboutPanel) return;
 
   closeLightbox();
+  closeDocPanel();
   aboutLastFocus = document.activeElement;
   aboutPanel.hidden = false;
   setAboutExpanded(true);
@@ -513,6 +514,43 @@ aboutPanel?.addEventListener("click", (event) => {
   }
 });
 
+const docOpen = document.querySelector("[data-doc-open]");
+const docPanel = document.querySelector("[data-doc-panel]");
+let docLastFocus = null;
+
+function setDocExpanded(expanded) {
+  docOpen?.setAttribute("aria-expanded", expanded ? "true" : "false");
+}
+
+function closeDocPanel() {
+  if (!docPanel || docPanel.hidden) return;
+
+  docPanel.hidden = true;
+  setDocExpanded(false);
+  docLastFocus?.focus?.();
+  docLastFocus = null;
+}
+
+function openDocPanel() {
+  if (!docPanel) return;
+
+  closeLightbox();
+  closeAboutPanel();
+  docLastFocus = document.activeElement;
+  docPanel.hidden = false;
+  setDocExpanded(true);
+}
+
+docOpen?.addEventListener("click", () => {
+  openDocPanel();
+});
+
+docPanel?.addEventListener("click", (event) => {
+  if (event.target === docPanel) {
+    closeDocPanel();
+  }
+});
+
 placeAboutMe();
 if (aboutMobileQuery.addEventListener) {
   aboutMobileQuery.addEventListener("change", placeAboutMe);
@@ -524,6 +562,10 @@ document.addEventListener("keydown", (event) => {
   if (event.key === "Escape") {
     if (ticketSession) {
       closeTicketDetail();
+      return;
+    }
+    if (docPanel && !docPanel.hidden) {
+      closeDocPanel();
       return;
     }
     if (aboutPanel && !aboutPanel.hidden) {
@@ -632,6 +674,7 @@ function revealPage(pageId) {
   closeTicketDetail({ instant: true });
   closeLightbox();
   closeAboutPanel();
+  closeDocPanel();
 
   if (activePageId && activePageId !== pageId) {
     releasePage(activePageId);
