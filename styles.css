@@ -300,15 +300,16 @@ body {
   color: #000;
   font-family: "Figtree", sans-serif;
   font-size: clamp(0.95rem, 1.6vw, 1.05rem);
-  font-weight: 400;
+  font-weight: 500;
   line-height: 1.55;
   letter-spacing: -0.05em;
 }
 
 .doc-panel__title {
   margin: 0 0 1.75rem;
+  font-family: "Figtree", sans-serif;
   font-size: clamp(1.35rem, 2.8vw, 1.85rem);
-  font-weight: 700;
+  font-weight: 500;
   line-height: 1.2;
   letter-spacing: -0.05em;
   text-align: center;
@@ -316,23 +317,30 @@ body {
 
 .doc-panel__heading {
   margin: 1.75rem 0 0.85rem;
+  font-family: "Figtree", sans-serif;
   font-size: clamp(1.1rem, 2vw, 1.25rem);
-  font-weight: 700;
+  font-weight: 500;
   line-height: 1.25;
   letter-spacing: -0.05em;
 }
 
 .doc-panel__doc p {
   margin: 0 0 0.9rem;
+  font-family: "Figtree", sans-serif;
+  letter-spacing: -0.05em;
 }
 
 .doc-panel__list {
   margin: 0 0 0.9rem;
   padding-left: 1.35rem;
+  font-family: "Figtree", sans-serif;
+  letter-spacing: -0.05em;
 }
 
 .doc-panel__list li {
   margin: 0 0 0.75rem;
+  font-family: "Figtree", sans-serif;
+  letter-spacing: -0.05em;
 }
 
 .doc-panel__list li:last-child {
@@ -340,11 +348,15 @@ body {
 }
 
 .doc-panel__doc strong {
-  font-weight: 700;
+  font-family: "Figtree", sans-serif;
+  font-weight: 500;
+  letter-spacing: -0.05em;
 }
 
 .doc-panel__doc em {
+  font-family: "Figtree", sans-serif;
   font-style: italic;
+  letter-spacing: -0.05em;
 }
 
 .hire-bar {
