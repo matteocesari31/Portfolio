@@ -185,7 +185,7 @@ body {
 
 .about-me__label {
   font-family: "Figtree", sans-serif;
-  font-size: clamp(0.85rem, 1.7vw, 1.05rem);
+  font-size: clamp(0.95rem, 1.9vw, 1.2rem);
   font-weight: 400;
   letter-spacing: -0.05em;
   line-height: 1;
@@ -1209,7 +1209,7 @@ body {
   }
 
   .about-me__label {
-    font-size: 1rem;
+    font-size: 1.1rem;
   }
 
   /* PNG capsule can't grow with labels — use a matching CSS pill on mobile. */
