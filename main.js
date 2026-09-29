@@ -516,10 +516,30 @@ aboutPanel?.addEventListener("click", (event) => {
 
 const docOpen = document.querySelector("[data-doc-open]");
 const docPanel = document.querySelector("[data-doc-panel]");
+const docPages = [...document.querySelectorAll("[data-doc-page]")];
+const docPagesWrap = document.querySelector("[data-doc-pages]");
+const docPrev = document.querySelector("[data-doc-prev]");
+const docNext = document.querySelector("[data-doc-next]");
 let docLastFocus = null;
+let docPageIndex = 0;
 
 function setDocExpanded(expanded) {
   docOpen?.setAttribute("aria-expanded", expanded ? "true" : "false");
+}
+
+function setDocPage(index) {
+  if (!docPages.length) return;
+
+  docPageIndex = Math.max(0, Math.min(docPages.length - 1, index));
+  docPages.forEach((page, i) => {
+    const active = i === docPageIndex;
+    page.hidden = !active;
+    page.classList.toggle("is-active", active);
+  });
+
+  if (docPrev) docPrev.disabled = docPageIndex === 0;
+  if (docNext) docNext.disabled = docPageIndex === docPages.length - 1;
+  if (docPagesWrap) docPagesWrap.scrollTop = 0;
 }
 
 function closeDocPanel() {
@@ -539,6 +559,7 @@ function openDocPanel() {
   docLastFocus = document.activeElement;
   docPanel.hidden = false;
   setDocExpanded(true);
+  setDocPage(0);
 }
 
 docOpen?.addEventListener("click", () => {
@@ -551,6 +572,16 @@ docPanel?.addEventListener("click", (event) => {
   }
 });
 
+docPrev?.addEventListener("click", (event) => {
+  event.stopPropagation();
+  setDocPage(docPageIndex - 1);
+});
+
+docNext?.addEventListener("click", (event) => {
+  event.stopPropagation();
+  setDocPage(docPageIndex + 1);
+});
+
 placeAboutMe();
 if (aboutMobileQuery.addEventListener) {
   aboutMobileQuery.addEventListener("change", placeAboutMe);
@@ -559,6 +590,19 @@ if (aboutMobileQuery.addEventListener) {
 }
 
 document.addEventListener("keydown", (event) => {
+  if (docPanel && !docPanel.hidden) {
+    if (event.key === "ArrowLeft") {
+      event.preventDefault();
+      setDocPage(docPageIndex - 1);
+      return;
+    }
+    if (event.key === "ArrowRight") {
+      event.preventDefault();
+      setDocPage(docPageIndex + 1);
+      return;
+    }
+  }
+
   if (event.key === "Escape") {
     if (ticketSession) {
       closeTicketDetail();

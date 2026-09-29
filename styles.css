@@ -281,9 +281,11 @@ body {
 
 .doc-panel__card {
   position: relative;
+  display: flex;
+  flex-direction: column;
   width: min(48rem, 100%);
   max-height: min(88vh, 88dvh);
-  overflow: auto;
+  overflow: hidden;
   padding: clamp(1.5rem, 3.5vw, 2.75rem);
   border: 1px solid rgba(255, 255, 255, 0.55);
   border-radius: 1.35rem;
@@ -293,7 +295,17 @@ body {
   box-shadow:
     0 1px 0 rgba(255, 255, 255, 0.65) inset,
     0 18px 48px rgba(0, 0, 0, 0.1);
+}
+
+.doc-panel__pages {
+  flex: 1 1 auto;
+  min-height: 0;
+  overflow: auto;
   -webkit-overflow-scrolling: touch;
+}
+
+.doc-panel__page[hidden] {
+  display: none;
 }
 
 .doc-panel__doc {
@@ -322,6 +334,10 @@ body {
   font-weight: 500;
   line-height: 1.25;
   letter-spacing: -0.05em;
+}
+
+.doc-panel__heading--lead {
+  margin-top: 0;
 }
 
 .doc-panel__doc p {
@@ -357,6 +373,44 @@ body {
   font-family: "Figtree", sans-serif;
   font-style: italic;
   letter-spacing: -0.05em;
+}
+
+.doc-panel__nav {
+  flex: 0 0 auto;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 1.5rem;
+  margin-top: 1.25rem;
+  padding-top: 0.85rem;
+}
+
+.doc-panel__arrow {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 2.5rem;
+  height: 2.5rem;
+  padding: 0;
+  border: 0;
+  background: transparent;
+  color: #000;
+  font-family: "Figtree", sans-serif;
+  font-size: 1.6rem;
+  line-height: 1;
+  letter-spacing: -0.05em;
+  cursor: pointer;
+  appearance: none;
+  -webkit-appearance: none;
+}
+
+.doc-panel__arrow:hover:not(:disabled) {
+  color: #0073eb;
+}
+
+.doc-panel__arrow:disabled {
+  opacity: 0.28;
+  cursor: default;
 }
 
 .hire-bar {
