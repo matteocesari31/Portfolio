@@ -855,25 +855,8 @@
           <section class="doc-panel__page" data-doc-page hidden>
             <article class="doc-panel__doc">
               <h3 class="doc-panel__heading doc-panel__heading--lead">
-                Architecture and Data Flow
+                Core Engineering Principles
               </h3>
-              <p>
-                Flatlist runs across two client surfaces powered by a single
-                Supabase backend:
-              </p>
-              <ul class="doc-panel__list">
-                <li>
-                  <strong>Chrome Extension (Manifest V3):</strong> The primary
-                  capture tool on the open web.
-                </li>
-                <li>
-                  <strong>Web App (Next.js 16, React 19, Tailwind 4):</strong>
-                  The hub for reviewing catalogs, viewing listings on a Mapbox
-                  map, managing settings, and handling invites and payments.
-                </li>
-              </ul>
-
-              <h3 class="doc-panel__heading">Core Engineering Principles</h3>
               <ul class="doc-panel__list">
                 <li>
                   <strong>Raw Content is Canonical:</strong> Flatlist stores the
@@ -930,23 +913,6 @@
                   re-scoring across the catalog.
                 </li>
               </ol>
-
-              <h3 class="doc-panel__heading">Business Model</h3>
-              <p>Flatlist operates on a freemium model:</p>
-              <ul class="doc-panel__list">
-                <li>
-                  <strong>Free Plan (€0):</strong> Up to 12 saved listings for a
-                  single user, including AI search. It is designed to help solo
-                  searchers build the habit of centralizing their favorites.
-                </li>
-                <li>
-                  <strong>Premium Plan (€5.99/month):</strong> Unlimited saves
-                  and shared access for collaborators, aimed at households and
-                  partners running a collective search. Billing is handled via
-                  Polar, and free-tier limits are enforced on the backend at the
-                  moment of saving.
-                </li>
-              </ul>
             </article>
           </section>
         </div>
