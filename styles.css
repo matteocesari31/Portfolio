@@ -103,7 +103,7 @@ body {
   background: none;
   color: #000;
   font-family: "Figtree", sans-serif;
-  font-weight: 400;
+  font-weight: 500;
   font-size: clamp(0.85rem, 1.7vw, 1.05rem);
   letter-spacing: -0.05em;
   line-height: 1;
@@ -537,9 +537,8 @@ body {
 .landing__subtitle {
   color: #000;
   font-family: "Figtree", sans-serif;
-  font-weight: 500;
-  /* Scale with the title, but never smaller than 1.25rem. */
-  font-size: clamp(1.25rem, calc(1.875rem * 96vw / 52rem), 1.875rem);
+  font-weight: 400;
+  font-size: clamp(0.85rem, 1.7vw, 1.05rem);
   letter-spacing: -0.05em;
   line-height: 1.3;
   text-transform: lowercase;
@@ -1258,7 +1257,7 @@ body {
   }
 
   .landing__subtitle {
-    font-size: clamp(1.45rem, calc(2.15rem * (100vw - 0.4rem) / 52rem), 2rem);
+    font-size: 1rem;
     text-align: center;
     line-height: 1.25;
   }
