@@ -502,6 +502,7 @@ function openAboutPanel() {
   aboutLastFocus = document.activeElement;
   aboutPanel.hidden = false;
   setAboutExpanded(true);
+  loadSpotifyNow();
 }
 
 aboutOpen?.addEventListener("click", () => {
@@ -513,6 +514,72 @@ aboutPanel?.addEventListener("click", (event) => {
     closeAboutPanel();
   }
 });
+
+const spotifyNow = document.querySelector("[data-spotify-now]");
+const spotifyArt = document.querySelector("[data-spotify-art]");
+const spotifyLabel = document.querySelector("[data-spotify-label]");
+const spotifyTitle = document.querySelector("[data-spotify-title]");
+const spotifyArtist = document.querySelector("[data-spotify-artist]");
+let spotifyRequestId = 0;
+
+function hideSpotifyNow() {
+  if (!spotifyNow) return;
+  spotifyNow.hidden = true;
+  spotifyNow.removeAttribute("href");
+}
+
+async function loadSpotifyNow() {
+  if (!spotifyNow) return;
+
+  const requestId = ++spotifyRequestId;
+
+  try {
+    const response = await fetch("/api/spotify", { cache: "no-store" });
+    if (!response.ok) {
+      hideSpotifyNow();
+      return;
+    }
+
+    const data = await response.json();
+    if (requestId !== spotifyRequestId) return;
+
+    const track = data?.track;
+    if (!track?.title) {
+      hideSpotifyNow();
+      return;
+    }
+
+    if (spotifyLabel) {
+      spotifyLabel.textContent = track.isPlaying ? "now playing" : "last played";
+    }
+    if (spotifyTitle) spotifyTitle.textContent = track.title;
+    if (spotifyArtist) spotifyArtist.textContent = track.artist || "";
+
+    if (spotifyArt) {
+      if (track.image) {
+        spotifyArt.hidden = false;
+        spotifyArt.src = track.image;
+        spotifyArt.alt = track.album
+          ? `${track.album} cover`
+          : `${track.title} cover`;
+      } else {
+        spotifyArt.removeAttribute("src");
+        spotifyArt.alt = "";
+        spotifyArt.hidden = true;
+      }
+    }
+
+    if (track.url) {
+      spotifyNow.href = track.url;
+    } else {
+      spotifyNow.removeAttribute("href");
+    }
+
+    spotifyNow.hidden = false;
+  } catch {
+    if (requestId === spotifyRequestId) hideSpotifyNow();
+  }
+}
 
 const docOpen = document.querySelector("[data-doc-open]");
 const docPanel = document.querySelector("[data-doc-panel]");
