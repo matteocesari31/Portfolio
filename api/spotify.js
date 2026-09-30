@@ -62,6 +62,7 @@ function mapTrack(track, { isPlaying = false, playedAt = null } = {}) {
     null;
 
   return {
+    id: track.id || null,
     isPlaying,
     playedAt,
     title: track.name || "",

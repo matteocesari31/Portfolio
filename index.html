@@ -19,7 +19,7 @@
       rel="apple-touch-icon"
       href="assets/landing/apple-touch-icon.png?v=3"
     />
-    <link rel="stylesheet" href="styles.css?v=spotify-4" />
+    <link rel="stylesheet" href="styles.css?v=spotify-5" />
   </head>
   <body>
     <nav class="nav" aria-label="Primary">
@@ -777,29 +777,19 @@
         </p>
         <p class="about-panel__text">i make digital products and films.</p>
 
-        <a
-          class="spotify-now"
-          data-spotify-now
-          href="#"
-          target="_blank"
-          rel="noopener noreferrer"
-          hidden
-        >
+        <div class="spotify-now" data-spotify-now hidden>
           <span class="spotify-now__heading">what i'm listening to</span>
-          <span class="spotify-now__track">
-            <img
-              class="spotify-now__art"
-              data-spotify-art
-              alt=""
-              width="64"
-              height="64"
-            />
-            <span class="spotify-now__copy">
-              <span class="spotify-now__title" data-spotify-title></span>
-              <span class="spotify-now__artist" data-spotify-artist></span>
-            </span>
-          </span>
-        </a>
+          <iframe
+            class="spotify-now__embed"
+            data-spotify-embed
+            title="Spotify player"
+            src="about:blank"
+            width="300"
+            height="80"
+            allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture"
+            loading="lazy"
+          ></iframe>
+        </div>
       </div>
     </div>
 
@@ -975,6 +965,6 @@
     </div>
 
     <script src="music.js"></script>
-    <script src="main.js?v=spotify-2"></script>
+    <script src="main.js?v=spotify-5"></script>
   </body>
 </html>

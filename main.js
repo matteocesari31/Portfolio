@@ -516,19 +516,17 @@ aboutPanel?.addEventListener("click", (event) => {
 });
 
 const spotifyNow = document.querySelector("[data-spotify-now]");
-const spotifyArt = document.querySelector("[data-spotify-art]");
-const spotifyTitle = document.querySelector("[data-spotify-title]");
-const spotifyArtist = document.querySelector("[data-spotify-artist]");
+const spotifyEmbed = document.querySelector("[data-spotify-embed]");
 let spotifyRequestId = 0;
 
 function hideSpotifyNow() {
   if (!spotifyNow) return;
   spotifyNow.hidden = true;
-  spotifyNow.removeAttribute("href");
+  if (spotifyEmbed) spotifyEmbed.src = "about:blank";
 }
 
 async function loadSpotifyNow() {
-  if (!spotifyNow) return;
+  if (!spotifyNow || !spotifyEmbed) return;
 
   const requestId = ++spotifyRequestId;
 
@@ -543,32 +541,17 @@ async function loadSpotifyNow() {
     if (requestId !== spotifyRequestId) return;
 
     const track = data?.track;
-    if (!track?.title) {
+    if (!track?.id) {
       hideSpotifyNow();
       return;
     }
 
-    if (spotifyTitle) spotifyTitle.textContent = track.title;
-    if (spotifyArtist) spotifyArtist.textContent = track.artist || "";
+    const embedSrc = `https://open.spotify.com/embed/track/${encodeURIComponent(
+      track.id
+    )}?utm_source=generator`;
 
-    if (spotifyArt) {
-      if (track.image) {
-        spotifyArt.hidden = false;
-        spotifyArt.src = track.image;
-        spotifyArt.alt = track.album
-          ? `${track.album} cover`
-          : `${track.title} cover`;
-      } else {
-        spotifyArt.removeAttribute("src");
-        spotifyArt.alt = "";
-        spotifyArt.hidden = true;
-      }
-    }
-
-    if (track.url) {
-      spotifyNow.href = track.url;
-    } else {
-      spotifyNow.removeAttribute("href");
+    if (spotifyEmbed.src !== embedSrc) {
+      spotifyEmbed.src = embedSrc;
     }
 
     spotifyNow.hidden = false;

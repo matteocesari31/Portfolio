@@ -269,8 +269,6 @@ body {
   margin-top: 0.35rem;
   padding-top: 1rem;
   border-top: 1px solid rgba(0, 0, 0, 0.08);
-  color: inherit;
-  text-decoration: none;
 }
 
 .spotify-now[hidden] {
@@ -290,55 +288,29 @@ body {
   text-transform: lowercase;
 }
 
-.spotify-now__track {
-  display: flex;
-  align-items: center;
-  gap: 0.75rem;
-  flex: 0 1 auto;
-  min-width: 0;
-  max-width: min(16rem, 52%);
-}
-
-.spotify-now__art {
+.spotify-now__embed {
   display: block;
-  width: 4.5rem;
-  height: 4.5rem;
-  flex: 0 0 auto;
-  object-fit: cover;
-  border-radius: 0.4rem;
-  background: rgba(0, 0, 0, 0.06);
-}
-
-.spotify-now__copy {
-  display: flex;
-  flex-direction: column;
-  gap: 0.15rem;
-  min-width: 0;
-}
-
-.spotify-now__title,
-.spotify-now__artist {
-  font-family: "Figtree", sans-serif;
-  font-size: clamp(1rem, 2vw, 1.15rem);
-  font-weight: 500;
-  letter-spacing: -0.05em;
-  text-transform: lowercase;
-  line-height: 1.2;
-  white-space: nowrap;
+  flex: 0 1 20rem;
+  width: min(20rem, 52%);
+  max-width: 100%;
+  height: 80px;
+  border: 0;
+  border-radius: 12px;
   overflow: hidden;
-  text-overflow: ellipsis;
+  background: transparent;
 }
 
-.spotify-now__title {
-  color: #000;
-}
+@media (max-width: 700px) {
+  .spotify-now {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 0.85rem;
+  }
 
-.spotify-now__artist {
-  color: #6d6d6d;
-}
-
-.spotify-now:hover .spotify-now__title {
-  color: #0073eb;
+  .spotify-now__embed {
+    width: 100%;
+    flex-basis: auto;
+  }
 }
 
 .doc-panel {
