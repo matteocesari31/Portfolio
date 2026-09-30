@@ -280,13 +280,14 @@ body {
 .spotify-now__heading {
   flex: 1 1 auto;
   min-width: 0;
-  font-family: "Figtree", sans-serif;
-  letter-spacing: -0.05em;
-  text-transform: lowercase;
-  line-height: 1.2;
+  margin: 0;
   color: #000;
-  font-size: clamp(1rem, 2vw, 1.15rem);
-  font-weight: 400;
+  font-family: "Figtree", sans-serif;
+  font-size: clamp(1.15rem, 2.4vw, 1.55rem);
+  font-weight: 500;
+  line-height: 1.35;
+  letter-spacing: -0.04em;
+  text-transform: lowercase;
 }
 
 .spotify-now__track {
