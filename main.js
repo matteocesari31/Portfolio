@@ -517,7 +517,6 @@ aboutPanel?.addEventListener("click", (event) => {
 
 const spotifyNow = document.querySelector("[data-spotify-now]");
 const spotifyArt = document.querySelector("[data-spotify-art]");
-const spotifyLabel = document.querySelector("[data-spotify-label]");
 const spotifyTitle = document.querySelector("[data-spotify-title]");
 const spotifyArtist = document.querySelector("[data-spotify-artist]");
 let spotifyRequestId = 0;
@@ -549,9 +548,6 @@ async function loadSpotifyNow() {
       return;
     }
 
-    if (spotifyLabel) {
-      spotifyLabel.textContent = track.isPlaying ? "now playing" : "last played";
-    }
     if (spotifyTitle) spotifyTitle.textContent = track.title;
     if (spotifyArtist) spotifyArtist.textContent = track.artist || "";
 

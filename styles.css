@@ -262,10 +262,10 @@ body {
 }
 
 .spotify-now {
-  display: grid;
-  grid-template-columns: 3.5rem minmax(0, 1fr);
+  display: flex;
   align-items: center;
-  gap: 0.85rem;
+  justify-content: space-between;
+  gap: 1rem;
   margin-top: 0.35rem;
   padding-top: 1rem;
   border-top: 1px solid rgba(0, 0, 0, 0.08);
@@ -277,10 +277,32 @@ body {
   display: none;
 }
 
+.spotify-now__heading {
+  flex: 1 1 auto;
+  min-width: 0;
+  font-family: "Figtree", sans-serif;
+  letter-spacing: -0.05em;
+  text-transform: lowercase;
+  line-height: 1.2;
+  color: #000;
+  font-size: clamp(1rem, 2vw, 1.15rem);
+  font-weight: 400;
+}
+
+.spotify-now__track {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  flex: 0 1 auto;
+  min-width: 0;
+  max-width: min(16rem, 52%);
+}
+
 .spotify-now__art {
   display: block;
-  width: 3.5rem;
-  height: 3.5rem;
+  width: 3.25rem;
+  height: 3.25rem;
+  flex: 0 0 auto;
   object-fit: cover;
   border-radius: 0.35rem;
   background: rgba(0, 0, 0, 0.06);
@@ -293,37 +315,27 @@ body {
   min-width: 0;
 }
 
-.spotify-now__label,
 .spotify-now__title,
 .spotify-now__artist {
   font-family: "Figtree", sans-serif;
   letter-spacing: -0.05em;
   text-transform: lowercase;
   line-height: 1.2;
-}
-
-.spotify-now__label {
-  color: #6d6d6d;
-  font-size: 0.8rem;
-  font-weight: 400;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 .spotify-now__title {
   color: #000;
   font-size: clamp(1rem, 2vw, 1.15rem);
   font-weight: 500;
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
 }
 
 .spotify-now__artist {
   color: #6d6d6d;
   font-size: clamp(0.9rem, 1.8vw, 1rem);
   font-weight: 400;
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
 }
 
 .spotify-now:hover .spotify-now__title {
