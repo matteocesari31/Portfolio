@@ -301,11 +301,11 @@ body {
 
 .spotify-now__art {
   display: block;
-  width: 3.25rem;
-  height: 3.25rem;
+  width: 4.5rem;
+  height: 4.5rem;
   flex: 0 0 auto;
   object-fit: cover;
-  border-radius: 0.35rem;
+  border-radius: 0.4rem;
   background: rgba(0, 0, 0, 0.06);
 }
 
@@ -319,6 +319,8 @@ body {
 .spotify-now__title,
 .spotify-now__artist {
   font-family: "Figtree", sans-serif;
+  font-size: clamp(1rem, 2vw, 1.15rem);
+  font-weight: 500;
   letter-spacing: -0.05em;
   text-transform: lowercase;
   line-height: 1.2;
@@ -329,14 +331,10 @@ body {
 
 .spotify-now__title {
   color: #000;
-  font-size: clamp(1rem, 2vw, 1.15rem);
-  font-weight: 500;
 }
 
 .spotify-now__artist {
   color: #6d6d6d;
-  font-size: clamp(0.9rem, 1.8vw, 1rem);
-  font-weight: 400;
 }
 
 .spotify-now:hover .spotify-now__title {
