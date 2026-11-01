@@ -1082,6 +1082,10 @@ body {
   text-transform: lowercase;
 }
 
+.discs__em {
+  color: #000;
+}
+
 .disc {
   display: flex;
   flex-direction: column;
