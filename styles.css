@@ -41,7 +41,8 @@ body {
   left: 0;
   right: 0;
   z-index: 30;
-  width: min(34rem, 88vw);
+  width: fit-content;
+  max-width: calc(100vw - 1.5rem);
   margin-inline: auto;
   flex-shrink: 0;
   /* Keep nav chrome off the content layout/paint path. */
@@ -50,22 +51,20 @@ body {
   transform: translateZ(0);
 }
 
-.nav__base {
-  display: block;
-  width: 100%;
-  height: auto;
-  margin-inline: auto;
-  pointer-events: none;
-  user-select: none;
-  filter: drop-shadow(0 8px 18px rgba(0, 0, 0, 0.08));
-}
-
 .nav__track {
-  position: absolute;
-  inset: 0;
+  position: relative;
   display: flex;
   align-items: center;
   justify-content: center;
+  padding: 0.4rem 0.85rem;
+  border: 1px solid rgba(255, 255, 255, 0.55);
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.42);
+  -webkit-backdrop-filter: blur(28px) saturate(1.35);
+  backdrop-filter: blur(28px) saturate(1.35);
+  box-shadow:
+    0 1px 0 rgba(255, 255, 255, 0.65) inset,
+    0 8px 24px rgba(0, 0, 0, 0.1);
 }
 
 .nav__items {
@@ -74,7 +73,6 @@ body {
   align-items: center;
   justify-content: center;
   gap: clamp(1.4rem, 3.2vw, 2.4rem);
-  margin-top: -0.7rem;
 }
 
 .nav__pill {
@@ -1264,27 +1262,15 @@ body {
     font-size: 1.1rem;
   }
 
-  /* PNG capsule can't grow with labels — use a matching CSS pill on mobile. */
   .nav {
-    width: fit-content;
     max-width: calc(100vw - 0.75rem);
   }
 
-  .nav__base {
-    display: none;
-  }
-
   .nav__track {
-    position: relative;
-    inset: auto;
-    background: #fff;
-    border-radius: 999px;
-    box-shadow: 0 8px 18px rgba(0, 0, 0, 0.08);
     padding: 0.35rem 0.55rem;
   }
 
   .nav__items {
-    margin-top: 0;
     gap: 0.55rem;
   }
 
