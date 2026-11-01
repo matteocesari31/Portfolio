@@ -188,7 +188,16 @@ function discArt(button) {
   return button?.querySelector(".disc__art") || null;
 }
 
-function stopDiscSpin(button) {
+function pauseDiscSpin(button) {
+  const art = discArt(button);
+  const spin = art ? discSpins.get(art) : null;
+  if (spin && spin.playState === "running") {
+    spin.pause();
+  }
+  button?.classList.remove("is-playing");
+}
+
+function clearDiscSpin(button) {
   const art = discArt(button);
   const spin = art ? discSpins.get(art) : null;
   if (spin) {
@@ -205,7 +214,20 @@ function startDiscSpin(button) {
   const art = discArt(button);
   if (!art) return;
 
-  stopDiscSpin(button);
+  const existing = discSpins.get(art);
+  if (existing) {
+    if (existing.playState === "paused") {
+      existing.play();
+      button.classList.add("is-playing");
+      return;
+    }
+    if (existing.playState === "running") {
+      button.classList.add("is-playing");
+      return;
+    }
+    existing.cancel();
+    discSpins.delete(art);
+  }
 
   const spin = art.animate(
     [{ transform: "rotate(0deg)" }, { transform: "rotate(360deg)" }],
@@ -226,7 +248,7 @@ function setDiscPlaying(button, playing) {
     if (isActive) {
       startDiscSpin(disc);
     } else {
-      stopDiscSpin(disc);
+      pauseDiscSpin(disc);
     }
     disc.setAttribute(
       "aria-label",
@@ -237,16 +259,15 @@ function setDiscPlaying(button, playing) {
 }
 
 function stopDiscs() {
-  if (!discAudio) {
-    setDiscPlaying(null, false);
-    return;
-  }
+  discButtons.forEach((disc) => clearDiscSpin(disc));
+  activeDisc = null;
+
+  if (!discAudio) return;
 
   discAudio.pause();
   discAudio.removeAttribute("src");
   delete discAudio.dataset.trackSrc;
   discAudio.load();
-  setDiscPlaying(null, false);
 }
 
 function waitForDiscCanPlay(audio) {
