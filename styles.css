@@ -1043,6 +1043,87 @@ body {
   color: #000;
 }
 
+.discs {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 100vh;
+  min-height: 100dvh;
+  box-sizing: border-box;
+  padding: clamp(5.5rem, 10vw, 7rem) clamp(1.25rem, 4vw, 3rem)
+    clamp(2rem, 5vw, 4rem);
+}
+
+.discs__grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: clamp(1.25rem, 3.5vw, 2.75rem) clamp(1.5rem, 4vw, 3.5rem);
+  width: min(52rem, 100%);
+}
+
+.disc {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.75rem;
+  border: 0;
+  padding: 0;
+  background: transparent;
+  color: #000;
+  cursor: pointer;
+  appearance: none;
+  -webkit-appearance: none;
+  -webkit-tap-highlight-color: transparent;
+  font: inherit;
+}
+
+.disc__art {
+  display: block;
+  width: min(100%, 14rem);
+  aspect-ratio: 1;
+  border-radius: 50%;
+  overflow: hidden;
+  transform: translateZ(0);
+  will-change: transform;
+}
+
+.disc__art img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  pointer-events: none;
+  user-select: none;
+}
+
+.disc.is-playing .disc__art {
+  animation: disc-spin 3.6s linear infinite;
+}
+
+.disc__name {
+  max-width: 100%;
+  color: #000;
+  font-family: "Figtree", sans-serif;
+  font-size: clamp(0.95rem, 1.8vw, 1.15rem);
+  font-weight: 400;
+  letter-spacing: -0.05em;
+  line-height: 1.2;
+  text-align: center;
+  text-transform: lowercase;
+}
+
+@keyframes disc-spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .disc.is-playing .disc__art {
+    animation: none;
+  }
+}
+
 #music-production {
   overflow: hidden;
 }
@@ -1313,6 +1394,23 @@ body {
     bottom: -7vh;
     height: 92vh;
     object-position: center 48%;
+  }
+
+  .discs {
+    padding: 6rem 1rem 2.5rem;
+    align-items: flex-start;
+  }
+
+  .discs__grid {
+    gap: 1.15rem 0.85rem;
+  }
+
+  .disc {
+    gap: 0.55rem;
+  }
+
+  .disc__name {
+    font-size: 0.92rem;
   }
 }
 

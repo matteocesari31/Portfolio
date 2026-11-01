@@ -669,7 +669,7 @@ document.addEventListener("keydown", (event) => {
 function releasePage(pageId) {
   if (!pageId || pageId === "home") return;
 
-  if (pageId === "music-production") {
+  if (pageId === "music-production" || pageId === "music") {
     stopMusicPanel();
   }
 }

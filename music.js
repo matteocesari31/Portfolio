@@ -179,6 +179,75 @@ progressTrack?.addEventListener("pointercancel", () => {
   isDraggingProgress = false;
 });
 
+const discButtons = [...document.querySelectorAll("[data-disc]")];
+const discAudio = document.querySelector("[data-disc-audio]");
+let activeDisc = null;
+
+function setDiscPlaying(button, playing) {
+  discButtons.forEach((disc) => {
+    const isActive = playing && disc === button;
+    disc.classList.toggle("is-playing", isActive);
+    disc.setAttribute(
+      "aria-label",
+      `${isActive ? "Pause" : "Play"} ${disc.querySelector(".disc__name")?.textContent?.trim() || "track"}`
+    );
+  });
+  activeDisc = playing ? button : null;
+}
+
+function stopDiscs() {
+  if (!discAudio) return;
+
+  discAudio.pause();
+  discAudio.removeAttribute("src");
+  delete discAudio.dataset.trackSrc;
+  discAudio.load();
+  setDiscPlaying(null, false);
+}
+
+async function playDisc(button) {
+  if (!discAudio || !button?.dataset.src) return;
+
+  // Avoid fighting the legacy music-production player.
+  resetMusic();
+
+  if (activeDisc === button && !discAudio.paused) {
+    discAudio.pause();
+    setDiscPlaying(button, false);
+    return;
+  }
+
+  const nextSrc = button.dataset.src;
+  const needsLoad = discAudio.dataset.trackSrc !== nextSrc;
+
+  if (needsLoad) {
+    discAudio.dataset.trackSrc = nextSrc;
+    discAudio.src = encodeURI(nextSrc);
+    discAudio.load();
+  }
+
+  setDiscPlaying(button, true);
+
+  try {
+    await discAudio.play();
+  } catch {
+    setDiscPlaying(button, false);
+  }
+}
+
+discButtons.forEach((button) => {
+  button.addEventListener("click", () => {
+    playDisc(button);
+  });
+});
+
+discAudio?.addEventListener("ended", () => {
+  setDiscPlaying(activeDisc, false);
+});
+
 window.musicPanel = {
-  stop: resetMusic,
+  stop: () => {
+    resetMusic();
+    stopDiscs();
+  },
 };

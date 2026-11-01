@@ -19,7 +19,7 @@
       rel="apple-touch-icon"
       href="assets/landing/apple-touch-icon.png?v=3"
     />
-    <link rel="stylesheet" href="styles.css?v=nav-glass-2" />
+    <link rel="stylesheet" href="styles.css?v=music-discs-1" />
   </head>
   <body>
     <nav class="nav" aria-label="Primary">
@@ -571,7 +571,85 @@
       </div>
     </section>
 
-    <section id="music" class="page" data-page-section aria-hidden="true"></section>
+    <section id="music" class="page" data-page-section aria-hidden="true">
+      <div class="discs">
+        <div class="discs__grid">
+          <button
+            type="button"
+            class="disc"
+            data-disc
+            data-src="assets/music/portfolio/accident.mp3"
+            aria-label="Play accident"
+          >
+            <span class="disc__art">
+              <img src="assets/music/portfolio/cd.png" alt="" aria-hidden="true" />
+            </span>
+            <span class="disc__name">accident</span>
+          </button>
+          <button
+            type="button"
+            class="disc"
+            data-disc
+            data-src="assets/music/portfolio/dragon ball mountains.mp3"
+            aria-label="Play dragon ball mountains"
+          >
+            <span class="disc__art">
+              <img src="assets/music/portfolio/cd.png" alt="" aria-hidden="true" />
+            </span>
+            <span class="disc__name">dragon ball mountains</span>
+          </button>
+          <button
+            type="button"
+            class="disc"
+            data-disc
+            data-src="assets/music/portfolio/possibile - speed.mp3"
+            aria-label="Play possibile - speed"
+          >
+            <span class="disc__art">
+              <img src="assets/music/portfolio/cd.png" alt="" aria-hidden="true" />
+            </span>
+            <span class="disc__name">possibile - speed</span>
+          </button>
+          <button
+            type="button"
+            class="disc"
+            data-disc
+            data-src="assets/music/portfolio/svalbard.mp3"
+            aria-label="Play svalbard"
+          >
+            <span class="disc__art">
+              <img src="assets/music/portfolio/cd.png" alt="" aria-hidden="true" />
+            </span>
+            <span class="disc__name">svalbard</span>
+          </button>
+          <button
+            type="button"
+            class="disc"
+            data-disc
+            data-src="assets/music/portfolio/swap it out.mp3"
+            aria-label="Play swap it out"
+          >
+            <span class="disc__art">
+              <img src="assets/music/portfolio/cd.png" alt="" aria-hidden="true" />
+            </span>
+            <span class="disc__name">swap it out</span>
+          </button>
+          <button
+            type="button"
+            class="disc"
+            data-disc
+            data-src="assets/music/portfolio/vivaticket.mp3"
+            aria-label="Play vivaticket"
+          >
+            <span class="disc__art">
+              <img src="assets/music/portfolio/cd.png" alt="" aria-hidden="true" />
+            </span>
+            <span class="disc__name">vivaticket</span>
+          </button>
+        </div>
+        <audio data-disc-audio preload="none" hidden></audio>
+      </div>
+    </section>
 
     <section id="app-development" class="page" data-page-section aria-hidden="true">
 
@@ -963,7 +1041,7 @@
       </div>
     </div>
 
-    <script src="music.js"></script>
-    <script src="main.js?v=spotify-5"></script>
+    <script src="music.js?v=music-discs-1"></script>
+    <script src="main.js?v=music-discs-1"></script>
   </body>
 </html>
