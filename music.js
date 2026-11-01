@@ -181,12 +181,53 @@ progressTrack?.addEventListener("pointercancel", () => {
 
 const discButtons = [...document.querySelectorAll("[data-disc]")];
 const discAudio = document.querySelector("[data-disc-audio]");
+const discSpins = new WeakMap();
 let activeDisc = null;
+
+function discArt(button) {
+  return button?.querySelector(".disc__art") || null;
+}
+
+function stopDiscSpin(button) {
+  const art = discArt(button);
+  const spin = art ? discSpins.get(art) : null;
+  if (spin) {
+    spin.cancel();
+    discSpins.delete(art);
+  }
+  if (art) {
+    art.style.transform = "";
+  }
+  button?.classList.remove("is-playing");
+}
+
+function startDiscSpin(button) {
+  const art = discArt(button);
+  if (!art) return;
+
+  stopDiscSpin(button);
+
+  const spin = art.animate(
+    [{ transform: "rotate(0deg)" }, { transform: "rotate(360deg)" }],
+    {
+      duration: 3600,
+      iterations: Infinity,
+      easing: "linear",
+    }
+  );
+
+  discSpins.set(art, spin);
+  button.classList.add("is-playing");
+}
 
 function setDiscPlaying(button, playing) {
   discButtons.forEach((disc) => {
     const isActive = playing && disc === button;
-    disc.classList.toggle("is-playing", isActive);
+    if (isActive) {
+      startDiscSpin(disc);
+    } else {
+      stopDiscSpin(disc);
+    }
     disc.setAttribute(
       "aria-label",
       `${isActive ? "Pause" : "Play"} ${disc.querySelector(".disc__name")?.textContent?.trim() || "track"}`
@@ -196,13 +237,37 @@ function setDiscPlaying(button, playing) {
 }
 
 function stopDiscs() {
-  if (!discAudio) return;
+  if (!discAudio) {
+    setDiscPlaying(null, false);
+    return;
+  }
 
   discAudio.pause();
   discAudio.removeAttribute("src");
   delete discAudio.dataset.trackSrc;
   discAudio.load();
   setDiscPlaying(null, false);
+}
+
+function waitForDiscCanPlay(audio) {
+  if (audio.readyState >= 2) return Promise.resolve();
+
+  return new Promise((resolve, reject) => {
+    const onReady = () => {
+      cleanup();
+      resolve();
+    };
+    const onError = () => {
+      cleanup();
+      reject(new Error("disc audio failed to load"));
+    };
+    const cleanup = () => {
+      audio.removeEventListener("canplay", onReady);
+      audio.removeEventListener("error", onError);
+    };
+    audio.addEventListener("canplay", onReady, { once: true });
+    audio.addEventListener("error", onError, { once: true });
+  });
 }
 
 async function playDisc(button) {
@@ -226,10 +291,10 @@ async function playDisc(button) {
     discAudio.load();
   }
 
-  setDiscPlaying(button, true);
-
   try {
+    await waitForDiscCanPlay(discAudio);
     await discAudio.play();
+    setDiscPlaying(button, true);
   } catch {
     setDiscPlaying(button, false);
   }

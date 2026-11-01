@@ -1083,8 +1083,9 @@ body {
   aspect-ratio: 1;
   border-radius: 50%;
   overflow: hidden;
-  transform: translateZ(0);
+  transform-origin: 50% 50%;
   will-change: transform;
+  backface-visibility: hidden;
 }
 
 .disc__art img {
@@ -1094,10 +1095,6 @@ body {
   object-fit: cover;
   pointer-events: none;
   user-select: none;
-}
-
-.disc.is-playing .disc__art {
-  animation: disc-spin 3.6s linear infinite;
 }
 
 .disc__name {
@@ -1110,18 +1107,6 @@ body {
   line-height: 1.2;
   text-align: center;
   text-transform: lowercase;
-}
-
-@keyframes disc-spin {
-  to {
-    transform: rotate(360deg);
-  }
-}
-
-@media (prefers-reduced-motion: reduce) {
-  .disc.is-playing .disc__art {
-    animation: none;
-  }
 }
 
 #music-production {
