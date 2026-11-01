@@ -45,10 +45,6 @@ body {
   max-width: calc(100vw - 1.5rem);
   margin-inline: auto;
   flex-shrink: 0;
-  /* Keep nav chrome off the content layout/paint path. */
-  contain: layout style;
-  isolation: isolate;
-  transform: translateZ(0);
 }
 
 .nav__track {
@@ -1268,6 +1264,14 @@ body {
 
   .nav__track {
     padding: 0.35rem 0.55rem;
+    border: 1px solid rgba(255, 255, 255, 0.55);
+    border-radius: 999px;
+    background: rgba(255, 255, 255, 0.42);
+    -webkit-backdrop-filter: blur(28px) saturate(1.35);
+    backdrop-filter: blur(28px) saturate(1.35);
+    box-shadow:
+      0 1px 0 rgba(255, 255, 255, 0.65) inset,
+      0 8px 24px rgba(0, 0, 0, 0.1);
   }
 
   .nav__items {
