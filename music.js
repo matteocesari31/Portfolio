@@ -181,8 +181,30 @@ progressTrack?.addEventListener("pointercancel", () => {
 
 const discButtons = [...document.querySelectorAll("[data-disc]")];
 const discAudio = document.querySelector("[data-disc-audio]");
+const discProgress = document.querySelector("[data-disc-progress]");
+const discProgressFill = document.querySelector("[data-disc-progress-fill]");
 const discSpins = new WeakMap();
 let activeDisc = null;
+
+function setDiscProgress(percent) {
+  const value = Math.max(0, Math.min(100, percent || 0));
+  if (discProgressFill) {
+    discProgressFill.style.width = `${value}%`;
+  }
+  discProgress?.setAttribute("aria-valuenow", String(Math.round(value)));
+}
+
+function resetDiscProgress() {
+  setDiscProgress(0);
+}
+
+function updateDiscProgress() {
+  if (!discAudio?.duration) {
+    resetDiscProgress();
+    return;
+  }
+  setDiscProgress((discAudio.currentTime / discAudio.duration) * 100);
+}
 
 function discArt(button) {
   return button?.querySelector(".disc__art") || null;
@@ -261,6 +283,7 @@ function setDiscPlaying(button, playing) {
 function stopDiscs() {
   discButtons.forEach((disc) => clearDiscSpin(disc));
   activeDisc = null;
+  resetDiscProgress();
 
   if (!discAudio) return;
 
@@ -307,6 +330,7 @@ async function playDisc(button) {
   const needsLoad = discAudio.dataset.trackSrc !== nextSrc;
 
   if (needsLoad) {
+    resetDiscProgress();
     discAudio.dataset.trackSrc = nextSrc;
     discAudio.src = encodeURI(nextSrc);
     discAudio.load();
@@ -327,7 +351,11 @@ discButtons.forEach((button) => {
   });
 });
 
+discAudio?.addEventListener("timeupdate", updateDiscProgress);
+discAudio?.addEventListener("loadedmetadata", updateDiscProgress);
+
 discAudio?.addEventListener("ended", () => {
+  setDiscProgress(100);
   setDiscPlaying(activeDisc, false);
 });
 

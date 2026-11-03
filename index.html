@@ -19,7 +19,7 @@
       rel="apple-touch-icon"
       href="assets/landing/apple-touch-icon.png?v=3"
     />
-    <link rel="stylesheet" href="styles.css?v=music-discs-5" />
+    <link rel="stylesheet" href="styles.css?v=music-discs-6" />
   </head>
   <body>
     <nav class="nav" aria-label="Primary">
@@ -654,6 +654,17 @@
             <span class="discs__em">selection of tracks</span> i recently
             produced, for myself or for artists.
           </p>
+          <div
+            class="discs__progress"
+            data-disc-progress
+            role="progressbar"
+            aria-label="Track progress"
+            aria-valuemin="0"
+            aria-valuemax="100"
+            aria-valuenow="0"
+          >
+            <div class="discs__progress-fill" data-disc-progress-fill></div>
+          </div>
         </div>
 
         <audio data-disc-audio preload="none" hidden></audio>
@@ -1050,7 +1061,7 @@
       </div>
     </div>
 
-    <script src="music.js?v=music-discs-4"></script>
-    <script src="main.js?v=music-discs-4"></script>
+    <script src="music.js?v=music-discs-6"></script>
+    <script src="main.js?v=music-discs-6"></script>
   </body>
 </html>
