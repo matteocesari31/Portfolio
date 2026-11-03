@@ -990,28 +990,14 @@
                 Problem &amp; Thesis
               </h3>
               <p>
-                Searching for an apartment rarely happens on a single platform.
-                Listings are scattered across different portals and shared in
-                group chats. The search quickly breaks down into a mess of open
-                tabs, screenshots, and scattered message threads. More
-                importantly, the details that determine a final decision are
-                buried in inconsistent prose and photo galleries across
-                platforms that format information differently.
-              </p>
-              <p>
-                Flatlist does not attempt to be another listing portal or crawl
-                the open market. Instead, it starts the moment someone decides to
-                keep a listing. It acts as a
-                <strong>unified private catalog</strong> that captures scattered
-                listings, standardizes their details into comparable records, and
-                ranks them against a personal description of the user’s “dream
-                apartment.”
-              </p>
-              <p>
-                The core target audience includes students, couples, and
-                roommates navigating fragmented rental markets. While it began
-                with Italian rentals, the data model supports multiple currencies
-                and measurement units, making it globally adaptable.
+                Apartment hunting is chaotic, relying on scattered tabs,
+                screenshots, and group chats across portals with inconsistent
+                formats. Flatlist isn't another rental portal; it’s a
+                <strong>unified private catalog</strong> that starts the moment
+                you save a listing. It captures fragmented listings, standardizes
+                their details, and ranks them against your ideal apartment
+                description. Built primarily for students and roommates, its
+                adaptable data model supports global currencies and metrics.
               </p>
             </article>
           </section>
@@ -1023,32 +1009,26 @@
               </h3>
               <ol class="doc-panel__list">
                 <li>
-                  <strong>One-Click Capture:</strong> Rather than asking people
-                  to abandon the portals they already use, Flatlist provides a
-                  browser extension with a capture button. Clicking it instantly
-                  extracts the listing’s URL, raw text, and images.
+                  <strong>One-Click Capture:</strong> A browser extension
+                  instantly extracts a listing's URL, text, and images directly
+                  from any existing portal.
                 </li>
                 <li>
-                  <strong>Asynchronous Enrichment:</strong> Once saved,
-                  background AI processes turn the unformatted listing into
-                  structured hard facts (price, address, beds, baths) and
-                  inferred qualities (renovation status, natural light, noise
-                  levels, pet friendliness). Every inference retains an excerpt
-                  from the listing as proof.
+                  <strong>AI Enrichment:</strong> Background processes convert
+                  raw text into structured facts (price, layout) and inferred
+                  qualities (natural light, noise), retaining original excerpts
+                  as proof.
                 </li>
                 <li>
-                  <strong>The Dream Apartment:</strong> Users write a
-                  plain-language sentence describing what they want (e.g.,
-                  <em
-                    >“Quiet top-floor flat near line M2 with natural light”</em
-                  >). Flatlist scores every saved apartment from 0 to 100 against
-                  that description, complete with an explanation.
+                  <strong>The Dream Apartment Match:</strong> Users describe
+                  their ideal home in plain English. Flatlist scores every saved
+                  listing from 0–100 against this prompt and explains the
+                  rationale.
                 </li>
                 <li>
-                  <strong>Collaboration:</strong> A shortlist often becomes a
-                  household project. Flatlist allows partners or roommates to
-                  share a catalog, take private notes, and view the owner's dream
-                  description and match scores to align on decisions.
+                  <strong>Collaboration:</strong> Roommates can share catalogs,
+                  leave private notes, and compare match scores to make aligned
+                  decisions.
                 </li>
               </ol>
             </article>
@@ -1061,28 +1041,25 @@
               </h3>
               <ul class="doc-panel__list">
                 <li>
-                  <strong>Raw Content is Canonical:</strong> Flatlist stores the
-                  raw text and images from listing pages. Because portal layouts
-                  and AI prompts evolve, structured metadata is treated as a
-                  downstream projection that can be regenerated without asking
-                  the user to re-save the listing.
+                  <strong>Raw Content is Canonical:</strong> Flatlist stores raw
+                  text and images. Structured metadata is a regenerable
+                  downstream projection, protecting against evolving portal
+                  layouts and AI prompts.
                 </li>
                 <li>
-                  <strong>Speed First:</strong> Saving must feel instant.
-                  Enrichment happens asynchronously in the background so the user
-                  is never stuck waiting on the listing page.
+                  <strong>Speed First:</strong> Saving feels instant because AI
+                  enrichment happens asynchronously in the background.
                 </li>
                 <li>
-                  <strong>Strict Security via RLS:</strong> All client access
-                  relies on Postgres Row-Level Security (RLS) under the user's
-                  token. Privileged background operations use the Supabase
-                  service role exclusively inside isolated edge functions.
+                  <strong>Strict Security:</strong> Client access relies on
+                  Postgres Row-Level Security (RLS). Privileged background
+                  operations use Supabase service roles exclusively inside
+                  isolated edge functions.
                 </li>
                 <li>
                   <strong>Deterministic Filtering:</strong> Natural-language
-                  search translates human prompts into explicit filter parameters
-                  applied against already-stored metadata, ensuring the AI cannot
-                  hallucinate non-existent listings.
+                  searches translate into explicit filter parameters against
+                  stored metadata, preventing AI hallucinations.
                 </li>
               </ul>
             </article>
@@ -1095,24 +1072,20 @@
               </h3>
               <ol class="doc-panel__list">
                 <li>
-                  <strong>Save:</strong> The extension hits an edge function that
-                  validates the user's plan limit, creates or assigns the
-                  catalog, saves the raw page content, and immediately returns a
-                  success status marked pending.
+                  <strong>Save:</strong> An edge function validates user limits,
+                  saves raw page content, and instantly returns a pending success
+                  status.
                 </li>
                 <li>
-                  <strong>Enrich:</strong> An asynchronous edge function samples
-                  the text, calls OpenAI to extract structured facts and vibe
-                  inferences, and geocodes the address using Nominatim. The
-                  status updates to done (or failed). If geocoding fails, the
-                  apartment remains saved without map coordinates.
+                  <strong>Enrich:</strong> An asynchronous edge function calls
+                  OpenAI to extract facts and inferences, uses Nominatim for
+                  geocoding, and updates the status to done.
                 </li>
                 <li>
                   <strong>Score:</strong> A comparison edge function evaluates
-                  the listing against the user's dream apartment description,
-                  writing a 0–100 score and rationale into a dedicated comparison
-                  table. Changing the dream apartment description triggers a
-                  re-scoring across the catalog.
+                  the listing against the user's "dream apartment" prompt,
+                  logging a 0–100 score and rationale. Updating the prompt
+                  triggers a catalog-wide rescore.
                 </li>
               </ol>
             </article>
