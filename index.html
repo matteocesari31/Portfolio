@@ -19,7 +19,7 @@
       rel="apple-touch-icon"
       href="assets/landing/apple-touch-icon.png?v=3"
     />
-    <link rel="stylesheet" href="styles.css?v=music-discs-9" />
+    <link rel="stylesheet" href="styles.css?v=film-scroll-hint-1" />
   </head>
   <body>
     <nav class="nav" aria-label="Primary">
@@ -214,7 +214,7 @@
           />
         </article>
 
-        <article class="film film--rem">
+        <article id="film-rem" class="film film--rem">
           <img
             class="film__ticket"
             src="assets/film/rem ticket.png"
@@ -312,6 +312,30 @@
           </div>
         </article>
       </div>
+
+      <button
+        type="button"
+        class="film__scroll-hint"
+        data-film-scroll-rem
+        aria-label="Scroll to REm"
+        hidden
+      >
+        <svg
+          class="film__scroll-hint-icon"
+          viewBox="0 0 24 24"
+          aria-hidden="true"
+          focusable="false"
+        >
+          <path
+            d="M6.5 9.5 12 15l5.5-5.5"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="1.8"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+          />
+        </svg>
+      </button>
     </section>
 
     <section id="music-production" class="page" data-page-section aria-hidden="true">
@@ -1116,7 +1140,7 @@
       </div>
     </div>
 
-    <script src="music.js?v=music-discs-8"></script>
-    <script src="main.js?v=music-discs-8"></script>
+    <script src="music.js?v=film-scroll-hint-1"></script>
+    <script src="main.js?v=film-scroll-hint-1"></script>
   </body>
 </html>

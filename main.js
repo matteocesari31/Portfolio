@@ -138,9 +138,47 @@ let lightboxRequestId = 0;
 
 const ticketScrim = document.querySelector("[data-ticket-scrim]");
 const filmTickets = [...document.querySelectorAll("[data-film-ticket]")];
+const filmPage = document.querySelector("#film");
+const filmRemSection = document.querySelector("#film-rem");
+const filmScrollHint = document.querySelector("[data-film-scroll-rem]");
 let ticketSession = null;
 let ticketCloseTimer = null;
 let ticketWatchTimer = null;
+
+function syncFilmScrollHint() {
+  if (!filmScrollHint || !filmPage) return;
+
+  const desktop = window.matchMedia("(min-width: 721px)").matches;
+  const onFilm = filmPage.classList.contains("is-active");
+  const nearTop = filmPage.scrollTop < 48;
+  filmScrollHint.hidden = !(desktop && onFilm && nearTop);
+}
+
+function scrollFilmToRem() {
+  if (!filmPage || !filmRemSection) return;
+
+  const pageRect = filmPage.getBoundingClientRect();
+  const remRect = filmRemSection.getBoundingClientRect();
+  const top = filmPage.scrollTop + (remRect.top - pageRect.top);
+
+  filmPage.scrollTo({ top, behavior: "smooth" });
+}
+
+filmScrollHint?.addEventListener("click", () => {
+  scrollFilmToRem();
+});
+
+filmPage?.addEventListener(
+  "scroll",
+  () => {
+    syncFilmScrollHint();
+  },
+  { passive: true }
+);
+
+window.addEventListener("resize", () => {
+  syncFilmScrollHint();
+});
 
 const TICKET_MOTION_MS = 520;
 const TICKET_MOTION_EASE = "cubic-bezier(0.22, 1, 0.36, 1)";
@@ -778,7 +816,9 @@ function revealPage(pageId) {
 
   activePageId = pageId;
   window.scrollTo(0, 0);
+  if (filmPage) filmPage.scrollTop = 0;
   placeAboutMe();
+  syncFilmScrollHint();
 }
 
 function afterNextPaint(callback) {
@@ -858,7 +898,10 @@ function syncNavPill(animate = false) {
   moveNavPill(active, animate);
 }
 
-requestAnimationFrame(() => syncNavPill(false));
+requestAnimationFrame(() => {
+  syncNavPill(false);
+  syncFilmScrollHint();
+});
 
 if (document.fonts?.ready) {
   document.fonts.ready.then(() => {
