@@ -159,12 +159,14 @@ function scrollFilmToRem() {
 
   const pageRect = filmPage.getBoundingClientRect();
   const remRect = filmRemSection.getBoundingClientRect();
-  const top = filmPage.scrollTop + (remRect.top - pageRect.top);
+  const top = Math.max(0, filmPage.scrollTop + (remRect.top - pageRect.top));
 
   filmPage.scrollTo({ top, behavior: "smooth" });
+  requestAnimationFrame(syncFilmScrollHint);
 }
 
-filmScrollHint?.addEventListener("click", () => {
+filmScrollHint?.addEventListener("click", (event) => {
+  event.preventDefault();
   scrollFilmToRem();
 });
 
