@@ -154,15 +154,38 @@ function syncFilmScrollHint() {
   filmScrollHint.hidden = !(desktop && onFilm && nearTop);
 }
 
+let filmScrollAnimation = 0;
+
 function scrollFilmToRem() {
   if (!filmPage || !filmRemSection) return;
 
   const pageRect = filmPage.getBoundingClientRect();
   const remRect = filmRemSection.getBoundingClientRect();
-  const top = Math.max(0, filmPage.scrollTop + (remRect.top - pageRect.top));
+  const to = Math.max(0, filmPage.scrollTop + (remRect.top - pageRect.top));
+  const from = filmPage.scrollTop;
+  const distance = to - from;
+  if (Math.abs(distance) < 1) return;
 
-  filmPage.scrollTo({ top, behavior: "smooth" });
-  requestAnimationFrame(syncFilmScrollHint);
+  const duration = 1100;
+  const start = performance.now();
+  const animId = ++filmScrollAnimation;
+
+  const easeInOutCubic = (t) =>
+    t < 0.5 ? 4 * t * t * t : 1 - Math.pow(-2 * t + 2, 3) / 2;
+
+  const step = (now) => {
+    if (animId !== filmScrollAnimation) return;
+
+    const progress = Math.min(1, (now - start) / duration);
+    filmPage.scrollTop = from + distance * easeInOutCubic(progress);
+    syncFilmScrollHint();
+
+    if (progress < 1) {
+      requestAnimationFrame(step);
+    }
+  };
+
+  requestAnimationFrame(step);
 }
 
 filmScrollHint?.addEventListener("click", (event) => {
