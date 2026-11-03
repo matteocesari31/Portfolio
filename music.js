@@ -181,29 +181,42 @@ progressTrack?.addEventListener("pointercancel", () => {
 
 const discButtons = [...document.querySelectorAll("[data-disc]")];
 const discAudio = document.querySelector("[data-disc-audio]");
-const discProgress = document.querySelector("[data-disc-progress]");
-const discProgressFill = document.querySelector("[data-disc-progress-fill]");
 const discSpins = new WeakMap();
 let activeDisc = null;
 
-function setDiscProgress(percent) {
-  const value = Math.max(0, Math.min(100, percent || 0));
-  if (discProgressFill) {
-    discProgressFill.style.width = `${value}%`;
-  }
-  discProgress?.setAttribute("aria-valuenow", String(Math.round(value)));
+function discProgressEls(button) {
+  return {
+    bar: button?.querySelector("[data-disc-progress]") || null,
+    fill: button?.querySelector("[data-disc-progress-fill]") || null,
+  };
 }
 
-function resetDiscProgress() {
-  setDiscProgress(0);
+function setDiscProgress(button, percent) {
+  const value = Math.max(0, Math.min(100, percent || 0));
+  const { bar, fill } = discProgressEls(button);
+  if (fill) fill.style.width = `${value}%`;
+  bar?.setAttribute("aria-valuenow", String(Math.round(value)));
+}
+
+function resetAllDiscProgress(exceptButton = null) {
+  discButtons.forEach((disc) => {
+    if (exceptButton && disc === exceptButton) return;
+    setDiscProgress(disc, 0);
+  });
 }
 
 function updateDiscProgress() {
+  if (!activeDisc) return;
+
   if (!discAudio?.duration) {
-    resetDiscProgress();
+    setDiscProgress(activeDisc, 0);
     return;
   }
-  setDiscProgress((discAudio.currentTime / discAudio.duration) * 100);
+
+  setDiscProgress(
+    activeDisc,
+    (discAudio.currentTime / discAudio.duration) * 100
+  );
 }
 
 function discArt(button) {
@@ -283,7 +296,7 @@ function setDiscPlaying(button, playing) {
 function stopDiscs() {
   discButtons.forEach((disc) => clearDiscSpin(disc));
   activeDisc = null;
-  resetDiscProgress();
+  resetAllDiscProgress();
 
   if (!discAudio) return;
 
@@ -330,16 +343,20 @@ async function playDisc(button) {
   const needsLoad = discAudio.dataset.trackSrc !== nextSrc;
 
   if (needsLoad) {
-    resetDiscProgress();
+    resetAllDiscProgress();
     discAudio.dataset.trackSrc = nextSrc;
     discAudio.src = encodeURI(nextSrc);
     discAudio.load();
+  } else if (discAudio.ended) {
+    discAudio.currentTime = 0;
+    setDiscProgress(button, 0);
   }
 
   try {
     await waitForDiscCanPlay(discAudio);
     await discAudio.play();
     setDiscPlaying(button, true);
+    updateDiscProgress();
   } catch {
     setDiscPlaying(button, false);
   }
@@ -355,8 +372,9 @@ discAudio?.addEventListener("timeupdate", updateDiscProgress);
 discAudio?.addEventListener("loadedmetadata", updateDiscProgress);
 
 discAudio?.addEventListener("ended", () => {
-  setDiscProgress(100);
-  setDiscPlaying(activeDisc, false);
+  const endedDisc = activeDisc;
+  if (endedDisc) setDiscProgress(endedDisc, 100);
+  setDiscPlaying(endedDisc, false);
 });
 
 window.musicPanel = {
