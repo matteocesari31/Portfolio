@@ -939,3 +939,139 @@ window.addEventListener("orientationchange", () => {
     syncNavPill(false);
   }, 200);
 });
+
+const FILM_CAROUSEL_INTERVAL_MS = 3800;
+const FILM_CAROUSEL_SWIPE_PX = 40;
+
+function setupFilmCarousel(carousel) {
+  const viewport = carousel.querySelector(".film__viewport");
+  const track = carousel.querySelector("[data-film-track]");
+  const thumb = carousel.querySelector("[data-film-progress-thumb]");
+  const slides = [...track.querySelectorAll(".film__slide")];
+  const count = slides.length;
+  if (!viewport || !track || count < 2) return;
+
+  // A copy of the first slide sits at the end so the loop keeps moving forward.
+  const loopClone = slides[0].cloneNode(true);
+  loopClone.setAttribute("aria-hidden", "true");
+  loopClone.tabIndex = -1;
+  loopClone.addEventListener("click", () => openLightbox(loopClone));
+  track.append(loopClone);
+
+  if (thumb) thumb.style.width = `${100 / count}%`;
+
+  let index = 0;
+  let timer = null;
+  let hovered = false;
+  let inView = false;
+
+  function render({ instant = false } = {}) {
+    track.classList.toggle("is-instant", instant);
+    track.style.transform = `translateX(${-index * 100}%)`;
+    if (thumb) {
+      thumb.classList.toggle("is-instant", instant);
+      thumb.style.transform = `translateX(${(index % count) * 100}%)`;
+    }
+    slides.forEach((slide, i) => {
+      slide.tabIndex = i === index % count ? 0 : -1;
+    });
+  }
+
+  function goTo(next, options) {
+    index = next;
+    render(options);
+  }
+
+  track.addEventListener("transitionend", (event) => {
+    if (event.target !== track || index !== count) return;
+    goTo(0, { instant: true });
+  });
+
+  function canPlay() {
+    return (
+      inView &&
+      !hovered &&
+      !document.hidden &&
+      lightbox?.hidden !== false &&
+      !ticketSession
+    );
+  }
+
+  function schedule() {
+    clearTimeout(timer);
+    timer = setTimeout(() => {
+      if (canPlay()) {
+        if (index === count) goTo(0, { instant: true });
+        // Let the instant reset paint before sliding on.
+        requestAnimationFrame(() => goTo(index + 1));
+      }
+      schedule();
+    }, FILM_CAROUSEL_INTERVAL_MS);
+  }
+
+  function step(delta) {
+    if (index === count) goTo(0, { instant: true });
+    const next = index + delta;
+    if (next < 0) {
+      goTo(count, { instant: true });
+      requestAnimationFrame(() => goTo(count - 1));
+    } else {
+      requestAnimationFrame(() => goTo(next));
+    }
+    schedule();
+  }
+
+  carousel.addEventListener("mouseenter", () => {
+    hovered = true;
+  });
+  carousel.addEventListener("mouseleave", () => {
+    hovered = false;
+    schedule();
+  });
+
+  let dragStartX = null;
+  let suppressClick = false;
+
+  viewport.addEventListener("pointerdown", (event) => {
+    if (event.pointerType === "mouse") return;
+    dragStartX = event.clientX;
+  });
+  viewport.addEventListener("pointerup", (event) => {
+    if (dragStartX === null) return;
+    const dx = event.clientX - dragStartX;
+    dragStartX = null;
+    if (Math.abs(dx) < FILM_CAROUSEL_SWIPE_PX) return;
+    suppressClick = true;
+    step(dx < 0 ? 1 : -1);
+  });
+  viewport.addEventListener("pointercancel", () => {
+    dragStartX = null;
+  });
+  viewport.addEventListener(
+    "click",
+    (event) => {
+      if (!suppressClick) return;
+      suppressClick = false;
+      event.stopPropagation();
+      event.preventDefault();
+    },
+    true,
+  );
+
+  if ("IntersectionObserver" in window) {
+    new IntersectionObserver(
+      (entries) => {
+        inView = entries.some((entry) => entry.isIntersecting);
+        if (inView) schedule();
+      },
+      { threshold: 0.4 },
+    ).observe(carousel);
+  } else {
+    inView = true;
+  }
+
+  render({ instant: true });
+  schedule();
+}
+
+document.querySelectorAll("[data-film-carousel]").forEach(setupFilmCarousel);
