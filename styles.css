@@ -582,14 +582,26 @@ body {
 }
 
 .landing__title {
-  display: block;
-  width: min(52rem, 96vw);
-  height: auto;
-  transform: translateY(clamp(0.45rem, calc(1.25rem * 96vw / 52rem), 1.25rem));
+  margin: 0 0 0.35em;
+  /* Negative tracking pulls the last letter past the box; pad it back so the
+     word stays optically centred. */
+  padding-right: 0.09em;
+  color: #000;
+  font-family: "ABC Areal", sans-serif;
+  font-weight: 600;
+  font-size: clamp(3.5rem, 7.4vw, 7.1rem);
+  letter-spacing: -0.09em;
+  line-height: 0.9;
+  text-transform: lowercase;
+  white-space: nowrap;
+}
+
+.landing__title-break {
+  display: none;
 }
 
 .landing__subtitle {
-  color: #000;
+  color: #6d6d6d;
   font-family: "ABC Areal", sans-serif;
   font-weight: 500;
   /* Scale with the title, but never smaller than 1.25rem. */
@@ -1547,8 +1559,13 @@ body {
   }
 
   .landing__title {
-    width: min(52rem, calc(100vw - 0.4rem));
-    transform: translateY(0.55rem);
+    margin-bottom: 0.1em;
+    font-size: 30vw;
+    line-height: 0.82;
+  }
+
+  .landing__title-break {
+    display: block;
   }
 
   .landing__subtitle {
