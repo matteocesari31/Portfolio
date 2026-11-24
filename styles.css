@@ -562,7 +562,7 @@ body {
 .landing__center {
   position: absolute;
   left: 50%;
-  top: 36%;
+  top: 42%;
   z-index: 2;
   display: flex;
   flex-direction: column;
@@ -1544,6 +1544,7 @@ body {
   }
 
   .landing__center {
+    top: 36%;
     padding: 0 0.25rem;
     gap: clamp(0.35rem, 2.5vw, 0.75rem);
   }
