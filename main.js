@@ -154,6 +154,23 @@ function syncFilmScrollHint() {
   filmScrollHint.hidden = !(desktop && onFilm && nearTop);
 }
 
+const filmDesktopQuery = window.matchMedia("(min-width: 901px)");
+
+// On desktop the two tickets live in the bottom corners of the screen. Show
+// the one for the film in view; the other slides down out of its corner.
+function syncFilmTickets() {
+  if (!filmPage || !filmRemSection) return;
+
+  const desktop = filmDesktopQuery.matches;
+  const midpoint = filmPage.scrollTop + filmPage.clientHeight / 2;
+  const showRem = midpoint >= filmRemSection.offsetTop;
+
+  filmTickets.forEach((ticket) => {
+    const isRem = Boolean(ticket.closest(".film--rem"));
+    ticket.classList.toggle("is-tucked", desktop && isRem !== showRem);
+  });
+}
+
 let filmScrollAnimation = 0;
 
 function scrollFilmToRem() {
@@ -179,6 +196,7 @@ function scrollFilmToRem() {
     const progress = Math.min(1, (now - start) / duration);
     filmPage.scrollTop = from + distance * easeInOutCubic(progress);
     syncFilmScrollHint();
+    syncFilmTickets();
 
     if (progress < 1) {
       requestAnimationFrame(step);
@@ -197,12 +215,14 @@ filmPage?.addEventListener(
   "scroll",
   () => {
     syncFilmScrollHint();
+    syncFilmTickets();
   },
   { passive: true }
 );
 
 window.addEventListener("resize", () => {
   syncFilmScrollHint();
+  syncFilmTickets();
 });
 
 const TICKET_MOTION_MS = 520;
@@ -235,7 +255,8 @@ function ticketMotionTransition() {
 }
 
 function ticketRestRotate(ticket) {
-  return ticket.closest(".film--rem") ? 17 : -17;
+  const tilt = filmDesktopQuery.matches ? 12 : 17;
+  return ticket.closest(".film--rem") ? tilt : -tilt;
 }
 
 function ticketAspect(ticket) {
@@ -346,7 +367,7 @@ function openTicketDetail(ticket) {
   const watchUrl = ticket.dataset.watchUrl;
 
   clone.classList.add("film__ticket-fly");
-  clone.classList.remove("is-origin-hidden");
+  clone.classList.remove("is-origin-hidden", "is-tucked");
   clone.removeAttribute("data-film-ticket");
   clone.removeAttribute("aria-hidden");
   clone.alt = ticket.dataset.ticketLabel || "Ticket";
@@ -835,6 +856,7 @@ function revealPage(pageId) {
   if (filmPage) filmPage.scrollTop = 0;
   placeAboutMe();
   syncFilmScrollHint();
+  syncFilmTickets();
 }
 
 function afterNextPaint(callback) {
@@ -917,6 +939,7 @@ function syncNavPill(animate = false) {
 requestAnimationFrame(() => {
   syncNavPill(false);
   syncFilmScrollHint();
+  syncFilmTickets();
 });
 
 if (document.fonts?.ready) {
