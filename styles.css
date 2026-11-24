@@ -647,14 +647,14 @@ body {
   min-height: 100dvh;
   padding: clamp(5.5rem, 10vw, 7rem) clamp(2rem, 5vw, 4rem)
     clamp(2rem, 5vw, 4rem);
-  padding-right: clamp(7rem, 20vw, 16rem);
+  padding-right: clamp(3rem, 8vw, 8rem);
   box-sizing: border-box;
   overflow: visible;
 }
 
 .film--rem {
   padding-right: clamp(2rem, 5vw, 4rem);
-  padding-left: clamp(7rem, 20vw, 16rem);
+  padding-left: clamp(3rem, 8vw, 8rem);
   grid-template-columns: minmax(22rem, 1fr) minmax(0, 1.4fr);
 }
 
