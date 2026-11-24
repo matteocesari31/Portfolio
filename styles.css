@@ -669,13 +669,14 @@ body {
   position: fixed;
   bottom: 0;
   z-index: 2;
-  width: clamp(10.5rem, 15.5vw, 14rem);
+  width: clamp(12rem, 17.5vw, 16rem);
   height: auto;
   user-select: none;
   cursor: zoom-in;
   filter: drop-shadow(0 18px 30px rgba(0, 0, 0, 0.16));
+  /* Slow slide in and out of the corner; hover reacts faster (below). */
   transition:
-    transform 0.6s cubic-bezier(0.22, 1, 0.36, 1),
+    transform 0.9s cubic-bezier(0.22, 1, 0.36, 1),
     filter 0.45s cubic-bezier(0.22, 1, 0.36, 1);
   will-change: transform;
 }
@@ -685,23 +686,27 @@ body {
   pointer-events: none;
 }
 
+.film__ticket:hover {
+  transition-duration: 0.45s;
+}
+
 .film:not(.film--rem) .film__ticket {
   right: -1rem;
-  transform: translate(20%, 20%) rotate(-12deg);
+  transform: translate(28%, 26%) rotate(-12deg);
 }
 
 .film:not(.film--rem) .film__ticket:hover {
-  transform: translate(20%, 13%) scale(1.06) rotate(-16deg);
+  transform: translate(28%, 21%) scale(1.06) rotate(-16deg);
   filter: drop-shadow(0 24px 36px rgba(0, 0, 0, 0.2));
 }
 
 .film--rem .film__ticket {
   left: -1rem;
-  transform: translate(-20%, 20%) rotate(12deg);
+  transform: translate(-28%, 26%) rotate(12deg);
 }
 
 .film--rem .film__ticket:hover {
-  transform: translate(-20%, 13%) scale(1.06) rotate(16deg);
+  transform: translate(-28%, 21%) scale(1.06) rotate(16deg);
   filter: drop-shadow(0 24px 36px rgba(0, 0, 0, 0.2));
 }
 
@@ -711,11 +716,11 @@ body {
   }
 
   .film:not(.film--rem) .film__ticket.is-tucked {
-    transform: translate(20%, 120%) rotate(-12deg);
+    transform: translate(28%, 120%) rotate(-12deg);
   }
 
   .film--rem .film__ticket.is-tucked {
-    transform: translate(-20%, 120%) rotate(12deg);
+    transform: translate(-28%, 120%) rotate(12deg);
   }
 }
 
