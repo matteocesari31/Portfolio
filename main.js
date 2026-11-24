@@ -865,8 +865,12 @@ function revealPage(pageId) {
 function slideInDocCard() {
   if (!docOpen || !filmDesktopQuery.matches) return;
 
-  docOpen.classList.add("is-tucked");
-  void docOpen.offsetWidth; // Render it tucked before letting it slide.
+  // Jump out of sight without animating (its resting spot may already have
+  // been laid out), then slide back up.
+  docOpen.classList.add("is-tucked", "is-instant");
+  void docOpen.offsetWidth;
+  docOpen.classList.remove("is-instant");
+  void docOpen.offsetWidth;
   requestAnimationFrame(() => docOpen.classList.remove("is-tucked"));
 }
 

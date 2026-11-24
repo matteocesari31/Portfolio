@@ -720,6 +720,10 @@ body {
     transform: translate(20%, 120%) rotate(-12deg);
   }
 
+  .app__doc.is-instant {
+    transition: none;
+  }
+
   .film:not(.film--rem) .film__ticket.is-tucked {
     transform: translate(28%, 120%) rotate(-12deg);
   }
