@@ -857,6 +857,17 @@ function revealPage(pageId) {
   placeAboutMe();
   syncFilmScrollHint();
   syncFilmTickets();
+  if (pageId === "app-development") slideInDocCard();
+}
+
+// Like the film tickets, the Flatlist card slides up out of its corner when
+// the apps page appears (desktop only; on phones it sits in the page flow).
+function slideInDocCard() {
+  if (!docOpen || !filmDesktopQuery.matches) return;
+
+  docOpen.classList.add("is-tucked");
+  void docOpen.offsetWidth; // Render it tucked before letting it slide.
+  requestAnimationFrame(() => docOpen.classList.remove("is-tucked"));
 }
 
 function afterNextPaint(callback) {
