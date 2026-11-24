@@ -1303,7 +1303,7 @@ body {
   max-width: 100%;
   color: #000;
   font-family: "ABC Areal", sans-serif;
-  font-size: clamp(1.5rem, 2.4vw, 2.25rem);
+  font-size: 30px;
   font-weight: 500;
   letter-spacing: -0.05em;
   line-height: 1.2;
