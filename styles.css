@@ -1,22 +1,22 @@
 @font-face {
-  font-family: "Figtree";
-  src: url("assets/fonts/Figtree-Regular.ttf") format("truetype");
+  font-family: "ABC Areal";
+  src: url("assets/fonts/ABCAreal-Regular.ttf") format("truetype");
   font-weight: 400;
   font-style: normal;
   font-display: swap;
 }
 
 @font-face {
-  font-family: "Figtree";
-  src: url("assets/fonts/Figtree-Medium.ttf") format("truetype");
+  font-family: "ABC Areal";
+  src: url("assets/fonts/ABCAreal-Medium.ttf") format("truetype");
   font-weight: 500;
   font-style: normal;
   font-display: swap;
 }
 
 @font-face {
-  font-family: "Figtree";
-  src: url("assets/fonts/Figtree-SemiBold.ttf") format("truetype");
+  font-family: "ABC Areal";
+  src: url("assets/fonts/ABCAreal-Bold.ttf") format("truetype");
   font-weight: 600;
   font-style: normal;
   font-display: swap;
@@ -38,7 +38,7 @@ body {
 body {
   background: #f0f0f0;
   color: #000;
-  font-family: "Figtree", -apple-system, BlinkMacSystemFont, "Helvetica Neue",
+  font-family: "ABC Areal", -apple-system, BlinkMacSystemFont, "Helvetica Neue",
     Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
 }
@@ -104,7 +104,7 @@ body {
   border: none;
   background: none;
   color: #000;
-  font-family: "Figtree", sans-serif;
+  font-family: "ABC Areal", sans-serif;
   font-weight: 400;
   font-size: clamp(0.95rem, 1.9vw, 1.2rem);
   letter-spacing: -0.05em;
@@ -186,7 +186,7 @@ body {
 }
 
 .about-me__label {
-  font-family: "Figtree", sans-serif;
+  font-family: "ABC Areal", sans-serif;
   font-size: clamp(0.95rem, 1.9vw, 1.2rem);
   font-weight: 400;
   letter-spacing: -0.05em;
@@ -255,7 +255,7 @@ body {
 .about-panel__text {
   margin: 0;
   color: #000;
-  font-family: "Figtree", sans-serif;
+  font-family: "ABC Areal", sans-serif;
   font-size: clamp(1.15rem, 2.4vw, 1.55rem);
   font-weight: 500;
   line-height: 1.35;
@@ -282,7 +282,7 @@ body {
   min-width: 0;
   margin: 0;
   color: #000;
-  font-family: "Figtree", sans-serif;
+  font-family: "ABC Areal", sans-serif;
   font-size: clamp(1.15rem, 2.4vw, 1.55rem);
   font-weight: 500;
   line-height: 1.35;
@@ -364,7 +364,7 @@ body {
 
 .doc-panel__doc {
   color: #000;
-  font-family: "Figtree", sans-serif;
+  font-family: "ABC Areal", sans-serif;
   font-size: clamp(1.05rem, 1.85vw, 1.2rem);
   font-weight: 400;
   line-height: 1.55;
@@ -373,7 +373,7 @@ body {
 
 .doc-panel__title {
   margin: 0 0 1.75rem;
-  font-family: "Figtree", sans-serif;
+  font-family: "ABC Areal", sans-serif;
   font-size: clamp(1.45rem, 3vw, 2rem);
   font-weight: 600;
   line-height: 1.2;
@@ -383,7 +383,7 @@ body {
 
 .doc-panel__heading {
   margin: 1.75rem 0 0.85rem;
-  font-family: "Figtree", sans-serif;
+  font-family: "ABC Areal", sans-serif;
   font-size: clamp(1.2rem, 2.2vw, 1.4rem);
   font-weight: 600;
   line-height: 1.25;
@@ -396,20 +396,20 @@ body {
 
 .doc-panel__doc p {
   margin: 0 0 0.9rem;
-  font-family: "Figtree", sans-serif;
+  font-family: "ABC Areal", sans-serif;
   letter-spacing: -0.05em;
 }
 
 .doc-panel__list {
   margin: 0 0 0.9rem;
   padding-left: 1.35rem;
-  font-family: "Figtree", sans-serif;
+  font-family: "ABC Areal", sans-serif;
   letter-spacing: -0.05em;
 }
 
 .doc-panel__list li {
   margin: 0 0 0.75rem;
-  font-family: "Figtree", sans-serif;
+  font-family: "ABC Areal", sans-serif;
   letter-spacing: -0.05em;
 }
 
@@ -418,13 +418,13 @@ body {
 }
 
 .doc-panel__doc strong {
-  font-family: "Figtree", sans-serif;
+  font-family: "ABC Areal", sans-serif;
   font-weight: 600;
   letter-spacing: -0.05em;
 }
 
 .doc-panel__doc em {
-  font-family: "Figtree", sans-serif;
+  font-family: "ABC Areal", sans-serif;
   font-style: italic;
   letter-spacing: -0.05em;
 }
@@ -449,7 +449,7 @@ body {
   border: 0;
   background: transparent;
   color: #000;
-  font-family: "Figtree", sans-serif;
+  font-family: "ABC Areal", sans-serif;
   font-size: 1.6rem;
   line-height: 1;
   letter-spacing: -0.05em;
@@ -496,7 +496,7 @@ body {
   margin: 0;
   flex: 0 0 auto;
   color: #fff;
-  font-family: "Figtree", sans-serif;
+  font-family: "ABC Areal", sans-serif;
   font-weight: 400;
   font-size: clamp(0.85rem, 1.7vw, 1.05rem);
   letter-spacing: -0.05em;
@@ -590,7 +590,7 @@ body {
 
 .landing__subtitle {
   color: #000;
-  font-family: "Figtree", sans-serif;
+  font-family: "ABC Areal", sans-serif;
   font-weight: 500;
   /* Scale with the title, but never smaller than 1.25rem. */
   font-size: clamp(1.25rem, calc(1.875rem * 96vw / 52rem), 1.875rem);
@@ -789,7 +789,7 @@ body {
   border-radius: 999px;
   background: #0073eb;
   color: #fff;
-  font-family: "Figtree", sans-serif;
+  font-family: "ABC Areal", sans-serif;
   font-weight: 400;
   font-size: clamp(0.85rem, 1.7vw, 1.05rem);
   letter-spacing: -0.05em;
@@ -878,7 +878,7 @@ body {
 .film__text {
   margin: 0;
   color: #6d6d6d;
-  font-family: "Figtree", sans-serif;
+  font-family: "ABC Areal", sans-serif;
   font-size: 30px;
   font-weight: 500;
   line-height: 1.25;
@@ -1009,7 +1009,7 @@ body {
 .design__text {
   margin: 0;
   color: #6d6d6d;
-  font-family: "Figtree", sans-serif;
+  font-family: "ABC Areal", sans-serif;
   font-size: 30px;
   font-weight: 500;
   line-height: 1.25;
@@ -1111,7 +1111,7 @@ body {
 .app__text {
   margin: 0;
   color: #6d6d6d;
-  font-family: "Figtree", sans-serif;
+  font-family: "ABC Areal", sans-serif;
   font-size: 30px;
   font-weight: 500;
   line-height: 1.25;
@@ -1164,7 +1164,7 @@ body {
 .discs__text {
   margin: 0;
   color: #6d6d6d;
-  font-family: "Figtree", sans-serif;
+  font-family: "ABC Areal", sans-serif;
   font-size: 30px;
   font-weight: 500;
   line-height: 1.25;
@@ -1236,7 +1236,7 @@ body {
 .disc__name {
   max-width: 100%;
   color: #000;
-  font-family: "Figtree", sans-serif;
+  font-family: "ABC Areal", sans-serif;
   font-size: clamp(0.95rem, 1.8vw, 1.15rem);
   font-weight: 400;
   letter-spacing: -0.05em;
