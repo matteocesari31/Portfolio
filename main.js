@@ -481,8 +481,6 @@ lightbox?.addEventListener("click", (event) => {
 
 const aboutOpen = document.querySelector("[data-about-open]");
 const aboutPanel = document.querySelector("[data-about-panel]");
-const aboutDesktopHost = document.querySelector("[data-about-desktop-host]");
-const aboutHomeSlot = document.querySelector("[data-about-home-slot]");
 const aboutMobileQuery = window.matchMedia("(max-width: 720px)");
 const aboutInactiveImg = aboutOpen?.querySelector(".about-me__img--inactive");
 const aboutActiveImg = aboutOpen?.querySelector(".about-me__img--active");
@@ -525,23 +523,16 @@ function startAboutMeSwap() {
   }, 900);
 }
 
+// The button sits under the home subtitle, so it only shows on the home page.
+// On touch screens it flips between its two drawings on its own.
 function placeAboutMe() {
-  if (!aboutOpen || !aboutDesktopHost || !aboutHomeSlot) return;
+  if (!aboutOpen) return;
 
-  if (aboutMobileQuery.matches) {
-    aboutOpen.classList.remove("is-fixed");
-    aboutHomeSlot.appendChild(aboutOpen);
-    if (activePageId === "home") {
-      startAboutMeSwap();
-    } else {
-      stopAboutMeSwap();
-    }
-    return;
+  if (aboutMobileQuery.matches && activePageId === "home") {
+    startAboutMeSwap();
+  } else {
+    stopAboutMeSwap();
   }
-
-  stopAboutMeSwap();
-  aboutOpen.classList.add("is-fixed");
-  aboutDesktopHost.appendChild(aboutOpen);
 }
 
 function setAboutExpanded(expanded) {

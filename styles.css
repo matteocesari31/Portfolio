@@ -139,12 +139,6 @@ body {
   -webkit-tap-highlight-color: transparent;
 }
 
-.about-me.is-fixed {
-  position: fixed;
-  top: clamp(0.85rem, 2.2vw, 1.35rem);
-  right: clamp(0.85rem, 2.8vw, 2rem);
-}
-
 .landing__center .about-me {
   position: relative;
   margin-top: 0.85rem;
@@ -1498,10 +1492,6 @@ body {
 }
 
 @media (max-width: 720px) {
-  .about-me.is-fixed {
-    display: none;
-  }
-
   .landing__center .about-me {
     display: flex;
     margin-top: 1rem;
