@@ -1266,7 +1266,7 @@ body {
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: clamp(1.25rem, 4vw, 3.5rem);
+  gap: clamp(1rem, 2vw, 1.75rem);
   height: 100%;
   border: 0;
   padding: 0;
@@ -1303,7 +1303,7 @@ body {
   max-width: 100%;
   color: #000;
   font-family: "ABC Areal", sans-serif;
-  font-size: 30px;
+  font-size: 26px;
   font-weight: 500;
   letter-spacing: -0.05em;
   line-height: 1.2;
