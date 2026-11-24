@@ -945,6 +945,9 @@ function setupCarousel(carousel) {
   const track = carousel.querySelector("[data-carousel-track]");
   const progress = carousel.querySelector("[data-carousel-progress]");
   const thumb = carousel.querySelector("[data-carousel-thumb]");
+  const prevButton = carousel.querySelector("[data-carousel-prev]");
+  const nextButton = carousel.querySelector("[data-carousel-next]");
+  const autoplay = carousel.dataset.carouselAutoplay !== "off";
   if (!viewport || !track) return;
 
   const slides = [...track.querySelectorAll(".carousel__slide")];
@@ -955,7 +958,9 @@ function setupCarousel(carousel) {
     const copy = slide.cloneNode(true);
     copy.setAttribute("aria-hidden", "true");
     copy.tabIndex = -1;
-    copy.addEventListener("click", () => openLightbox(copy));
+    if (copy.dataset.full) {
+      copy.addEventListener("click", () => openLightbox(copy));
+    }
     return copy;
   }
 
@@ -975,6 +980,7 @@ function setupCarousel(carousel) {
   let wheelTotal = 0;
   let wheelLastAt = 0;
   let wheelLockedUntil = 0;
+  let shownIndex = 0;
 
   const currentIndex = () => (position - 1 + count) % count;
 
@@ -989,6 +995,15 @@ function setupCarousel(carousel) {
     slides.forEach((slide, i) => {
       slide.tabIndex = i === currentIndex() ? 0 : -1;
     });
+
+    if (currentIndex() !== shownIndex) {
+      shownIndex = currentIndex();
+      carousel.dispatchEvent(
+        new CustomEvent("carousel:change", {
+          detail: { index: shownIndex, slide: slides[shownIndex] },
+        }),
+      );
+    }
   }
 
   // Swap a loop copy for the real image it mirrors, without animating.
@@ -1014,6 +1029,7 @@ function setupCarousel(carousel) {
 
   function restartAutoplay() {
     clearTimeout(timer);
+    if (!autoplay) return;
     timer = setTimeout(() => {
       if (canAutoplay()) step(1);
       else restartAutoplay();
@@ -1166,6 +1182,9 @@ function setupCarousel(carousel) {
   };
   progress?.addEventListener("pointerup", endScrub);
   progress?.addEventListener("pointercancel", endScrub);
+
+  prevButton?.addEventListener("click", () => step(-1));
+  nextButton?.addEventListener("click", () => step(1));
 
   carousel.addEventListener("keydown", (event) => {
     if (event.key !== "ArrowRight" && event.key !== "ArrowLeft") return;

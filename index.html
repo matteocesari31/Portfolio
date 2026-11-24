@@ -19,7 +19,7 @@
       rel="apple-touch-icon"
       href="assets/landing/apple-touch-icon.png?v=3"
     />
-    <link rel="stylesheet" href="styles.css?v=landing-lower-1" />
+    <link rel="stylesheet" href="styles.css?v=music-carousel-1" />
   </head>
   <body>
     <nav class="nav" aria-label="Primary">
@@ -319,7 +319,7 @@
 
       <button
         type="button"
-        class="film__scroll-hint"
+        class="glass-button film__scroll-hint"
         data-film-scroll-rem
         aria-label="Scroll to REm"
         hidden
@@ -608,145 +608,122 @@
 
     <section id="music" class="page" data-page-section aria-hidden="true">
       <div class="discs">
-        <div class="discs__grid">
-          <button
-            type="button"
-            class="disc"
-            data-disc
-            data-src="assets/music/portfolio/accident.mp3"
-            aria-label="Play accident"
-          >
-            <span class="disc__art">
-              <img src="assets/music/portfolio/cd.png" alt="" aria-hidden="true" />
-            </span>
-            <span class="disc__name">accident</span>
-            <span
-              class="disc__progress"
-              data-disc-progress
-              role="progressbar"
-              aria-label="Track progress"
-              aria-valuemin="0"
-              aria-valuemax="100"
-              aria-valuenow="0"
+        <div class="carousel discs__carousel" data-carousel data-carousel-autoplay="off">
+          <div class="discs__stage">
+            <button
+              type="button"
+              class="glass-button discs__arrow"
+              data-carousel-prev
+              aria-label="Previous track"
             >
-              <span class="disc__progress-fill" data-disc-progress-fill></span>
-            </span>
-          </button>
-          <button
-            type="button"
-            class="disc"
-            data-disc
-            data-src="assets/music/portfolio/dragon ball mountains.mp3"
-            aria-label="Play dragon ball mountains"
-          >
-            <span class="disc__art">
-              <img src="assets/music/portfolio/cd.png" alt="" aria-hidden="true" />
-            </span>
-            <span class="disc__name">dragon ball mountains</span>
-            <span
-              class="disc__progress"
-              data-disc-progress
-              role="progressbar"
-              aria-label="Track progress"
-              aria-valuemin="0"
-              aria-valuemax="100"
-              aria-valuenow="0"
+              <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+                <path
+                  d="M14.5 6.5 9 12l5.5 5.5"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="1.8"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                />
+              </svg>
+            </button>
+            <div class="carousel__viewport">
+              <div class="carousel__track" data-carousel-track>
+                <button
+                  type="button"
+                  class="disc carousel__slide"
+                  data-disc
+                  data-src="assets/music/portfolio/dragon ball mountains.mp3"
+                  aria-label="Play dragon ball mountains"
+                >
+                  <span class="disc__art">
+                    <img src="assets/music/portfolio/cd.png" alt="" aria-hidden="true" />
+                  </span>
+                  <span class="disc__name">dragon ball mountains</span>
+                </button>
+                <button
+                  type="button"
+                  class="disc carousel__slide"
+                  data-disc
+                  data-src="assets/music/portfolio/like water.mp3"
+                  aria-label="Play like water"
+                >
+                  <span class="disc__art">
+                    <img src="assets/music/portfolio/cd.png" alt="" aria-hidden="true" />
+                  </span>
+                  <span class="disc__name">like water</span>
+                </button>
+                <button
+                  type="button"
+                  class="disc carousel__slide"
+                  data-disc
+                  data-src="assets/music/portfolio/master shifu.mp3"
+                  aria-label="Play master shifu"
+                >
+                  <span class="disc__art">
+                    <img src="assets/music/portfolio/cd.png" alt="" aria-hidden="true" />
+                  </span>
+                  <span class="disc__name">master shifu</span>
+                </button>
+                <button
+                  type="button"
+                  class="disc carousel__slide"
+                  data-disc
+                  data-src="assets/music/portfolio/possibile - speed.mp3"
+                  aria-label="Play possibile - speed"
+                >
+                  <span class="disc__art">
+                    <img src="assets/music/portfolio/cd.png" alt="" aria-hidden="true" />
+                  </span>
+                  <span class="disc__name">possibile - speed</span>
+                </button>
+                <button
+                  type="button"
+                  class="disc carousel__slide"
+                  data-disc
+                  data-src="assets/music/portfolio/swap it out.mp3"
+                  aria-label="Play swap it out"
+                >
+                  <span class="disc__art">
+                    <img src="assets/music/portfolio/cd.png" alt="" aria-hidden="true" />
+                  </span>
+                  <span class="disc__name">swap it out</span>
+                </button>
+                <button
+                  type="button"
+                  class="disc carousel__slide"
+                  data-disc
+                  data-src="assets/music/portfolio/accident.mp3"
+                  aria-label="Play accident"
+                >
+                  <span class="disc__art">
+                    <img src="assets/music/portfolio/cd.png" alt="" aria-hidden="true" />
+                  </span>
+                  <span class="disc__name">accident</span>
+                </button>
+              </div>
+            </div>
+            <button
+              type="button"
+              class="glass-button discs__arrow"
+              data-carousel-next
+              aria-label="Next track"
             >
-              <span class="disc__progress-fill" data-disc-progress-fill></span>
-            </span>
-          </button>
-          <button
-            type="button"
-            class="disc"
-            data-disc
-            data-src="assets/music/portfolio/like water.mp3"
-            aria-label="Play like water"
-          >
-            <span class="disc__art">
-              <img src="assets/music/portfolio/cd.png" alt="" aria-hidden="true" />
-            </span>
-            <span class="disc__name">like water</span>
-            <span
-              class="disc__progress"
-              data-disc-progress
-              role="progressbar"
-              aria-label="Track progress"
-              aria-valuemin="0"
-              aria-valuemax="100"
-              aria-valuenow="0"
-            >
-              <span class="disc__progress-fill" data-disc-progress-fill></span>
-            </span>
-          </button>
-          <button
-            type="button"
-            class="disc"
-            data-disc
-            data-src="assets/music/portfolio/master shifu.mp3"
-            aria-label="Play master shifu"
-          >
-            <span class="disc__art">
-              <img src="assets/music/portfolio/cd.png" alt="" aria-hidden="true" />
-            </span>
-            <span class="disc__name">master shifu</span>
-            <span
-              class="disc__progress"
-              data-disc-progress
-              role="progressbar"
-              aria-label="Track progress"
-              aria-valuemin="0"
-              aria-valuemax="100"
-              aria-valuenow="0"
-            >
-              <span class="disc__progress-fill" data-disc-progress-fill></span>
-            </span>
-          </button>
-          <button
-            type="button"
-            class="disc"
-            data-disc
-            data-src="assets/music/portfolio/possibile - speed.mp3"
-            aria-label="Play possibile - speed"
-          >
-            <span class="disc__art">
-              <img src="assets/music/portfolio/cd.png" alt="" aria-hidden="true" />
-            </span>
-            <span class="disc__name">possibile - speed</span>
-            <span
-              class="disc__progress"
-              data-disc-progress
-              role="progressbar"
-              aria-label="Track progress"
-              aria-valuemin="0"
-              aria-valuemax="100"
-              aria-valuenow="0"
-            >
-              <span class="disc__progress-fill" data-disc-progress-fill></span>
-            </span>
-          </button>
-          <button
-            type="button"
-            class="disc"
-            data-disc
-            data-src="assets/music/portfolio/swap it out.mp3"
-            aria-label="Play swap it out"
-          >
-            <span class="disc__art">
-              <img src="assets/music/portfolio/cd.png" alt="" aria-hidden="true" />
-            </span>
-            <span class="disc__name">swap it out</span>
-            <span
-              class="disc__progress"
-              data-disc-progress
-              role="progressbar"
-              aria-label="Track progress"
-              aria-valuemin="0"
-              aria-valuemax="100"
-              aria-valuenow="0"
-            >
-              <span class="disc__progress-fill" data-disc-progress-fill></span>
-            </span>
-          </button>
+              <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+                <path
+                  d="M9.5 6.5 15 12l-5.5 5.5"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="1.8"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                />
+              </svg>
+            </button>
+          </div>
+          <div class="carousel__progress" data-carousel-progress aria-hidden="true">
+            <span class="carousel__progress-thumb" data-carousel-thumb></span>
+          </div>
         </div>
 
         <div class="discs__content">
@@ -1139,7 +1116,7 @@
       </div>
     </div>
 
-    <script src="music.js?v=film-scroll-hint-3"></script>
-    <script src="main.js?v=about-home-1"></script>
+    <script src="music.js?v=music-carousel-1"></script>
+    <script src="main.js?v=music-carousel-1"></script>
   </body>
 </html>

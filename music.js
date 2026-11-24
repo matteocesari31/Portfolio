@@ -184,41 +184,6 @@ const discAudio = document.querySelector("[data-disc-audio]");
 const discSpins = new WeakMap();
 let activeDisc = null;
 
-function discProgressEls(button) {
-  return {
-    bar: button?.querySelector("[data-disc-progress]") || null,
-    fill: button?.querySelector("[data-disc-progress-fill]") || null,
-  };
-}
-
-function setDiscProgress(button, percent) {
-  const value = Math.max(0, Math.min(100, percent || 0));
-  const { bar, fill } = discProgressEls(button);
-  if (fill) fill.style.width = `${value}%`;
-  bar?.setAttribute("aria-valuenow", String(Math.round(value)));
-}
-
-function resetAllDiscProgress(exceptButton = null) {
-  discButtons.forEach((disc) => {
-    if (exceptButton && disc === exceptButton) return;
-    setDiscProgress(disc, 0);
-  });
-}
-
-function updateDiscProgress() {
-  if (!activeDisc) return;
-
-  if (!discAudio?.duration) {
-    setDiscProgress(activeDisc, 0);
-    return;
-  }
-
-  setDiscProgress(
-    activeDisc,
-    (discAudio.currentTime / discAudio.duration) * 100
-  );
-}
-
 function discArt(button) {
   return button?.querySelector(".disc__art") || null;
 }
@@ -296,7 +261,6 @@ function setDiscPlaying(button, playing) {
 function stopDiscs() {
   discButtons.forEach((disc) => clearDiscSpin(disc));
   activeDisc = null;
-  resetAllDiscProgress();
 
   if (!discAudio) return;
 
@@ -343,20 +307,17 @@ async function playDisc(button) {
   const needsLoad = discAudio.dataset.trackSrc !== nextSrc;
 
   if (needsLoad) {
-    resetAllDiscProgress();
     discAudio.dataset.trackSrc = nextSrc;
     discAudio.src = encodeURI(nextSrc);
     discAudio.load();
   } else if (discAudio.ended) {
     discAudio.currentTime = 0;
-    setDiscProgress(button, 0);
   }
 
   try {
     await waitForDiscCanPlay(discAudio);
     await discAudio.play();
     setDiscPlaying(button, true);
-    updateDiscProgress();
   } catch {
     setDiscPlaying(button, false);
   }
@@ -368,14 +329,18 @@ discButtons.forEach((button) => {
   });
 });
 
-discAudio?.addEventListener("timeupdate", updateDiscProgress);
-discAudio?.addEventListener("loadedmetadata", updateDiscProgress);
-
 discAudio?.addEventListener("ended", () => {
-  const endedDisc = activeDisc;
-  if (endedDisc) setDiscProgress(endedDisc, 100);
-  setDiscPlaying(endedDisc, false);
+  setDiscPlaying(activeDisc, false);
 });
+
+// Scrolling the disc carousel away from the playing track pauses it.
+document
+  .querySelector(".discs__carousel")
+  ?.addEventListener("carousel:change", (event) => {
+    if (!activeDisc || activeDisc === event.detail.slide) return;
+    discAudio?.pause();
+    setDiscPlaying(activeDisc, false);
+  });
 
 window.musicPanel = {
   stop: () => {
