@@ -940,113 +940,179 @@ window.addEventListener("orientationchange", () => {
   }, 200);
 });
 
-const FILM_CAROUSEL_INTERVAL_MS = 3800;
-const FILM_CAROUSEL_SWIPE_PX = 40;
+const CAROUSEL_INTERVAL_MS = 3800;
+// Share of the image width a drag must cover to move to the next image.
+const CAROUSEL_DRAG_THRESHOLD = 0.18;
+const CAROUSEL_CLICK_SLOP_PX = 6;
+const CAROUSEL_WHEEL_THRESHOLD = 40;
+// A trackpad keeps sending wheel events while its momentum fades; ignore them
+// until they pause this long so one swipe moves one image.
+const CAROUSEL_WHEEL_GAP_MS = 250;
 
-function setupFilmCarousel(carousel) {
-  const viewport = carousel.querySelector(".film__viewport");
-  const track = carousel.querySelector("[data-film-track]");
-  const thumb = carousel.querySelector("[data-film-progress-thumb]");
-  const slides = [...track.querySelectorAll(".film__slide")];
+function setupCarousel(carousel) {
+  const viewport = carousel.querySelector(".carousel__viewport");
+  const track = carousel.querySelector("[data-carousel-track]");
+  const progress = carousel.querySelector("[data-carousel-progress]");
+  const thumb = carousel.querySelector("[data-carousel-thumb]");
+  if (!viewport || !track) return;
+
+  const slides = [...track.querySelectorAll(".carousel__slide")];
   const count = slides.length;
-  if (!viewport || !track || count < 2) return;
+  if (count < 2) return;
 
-  // A copy of the first slide sits at the end so the loop keeps moving forward.
-  const loopClone = slides[0].cloneNode(true);
-  loopClone.setAttribute("aria-hidden", "true");
-  loopClone.tabIndex = -1;
-  loopClone.addEventListener("click", () => openLightbox(loopClone));
-  track.append(loopClone);
+  function loopCopy(slide) {
+    const copy = slide.cloneNode(true);
+    copy.setAttribute("aria-hidden", "true");
+    copy.tabIndex = -1;
+    copy.addEventListener("click", () => openLightbox(copy));
+    return copy;
+  }
 
+  // Copies of the last and first images sit at each end so the loop can keep
+  // moving in either direction. Positions 1..count are the real images.
+  track.prepend(loopCopy(slides[count - 1]));
+  track.append(loopCopy(slides[0]));
   if (thumb) thumb.style.width = `${100 / count}%`;
 
-  let index = 0;
+  let position = 1;
   let timer = null;
   let hovered = false;
   let inView = false;
+  let drag = null;
+  let scrubbing = false;
+  let suppressClick = false;
+  let wheelTotal = 0;
+  let wheelLastAt = 0;
+  let wheelLockedUntil = 0;
 
-  function render({ instant = false } = {}) {
+  const currentIndex = () => (position - 1 + count) % count;
+
+  function render({ instant = false, offsetPx = 0 } = {}) {
     track.classList.toggle("is-instant", instant);
-    track.style.transform = `translateX(${-index * 100}%)`;
-    if (thumb) {
-      thumb.classList.toggle("is-instant", instant);
-      thumb.style.transform = `translateX(${(index % count) * 100}%)`;
-    }
+    thumb?.classList.toggle("is-instant", instant);
+    const base = -position * 100;
+    track.style.transform = offsetPx
+      ? `translateX(calc(${base}% + ${offsetPx}px))`
+      : `translateX(${base}%)`;
+    if (thumb) thumb.style.transform = `translateX(${currentIndex() * 100}%)`;
     slides.forEach((slide, i) => {
-      slide.tabIndex = i === index % count ? 0 : -1;
+      slide.tabIndex = i === currentIndex() ? 0 : -1;
     });
   }
 
-  function goTo(next, options) {
-    index = next;
-    render(options);
+  // Swap a loop copy for the real image it mirrors, without animating.
+  function leaveLoopCopy() {
+    if (position === 0) position = count;
+    else if (position === count + 1) position = 1;
+    else return;
+    render({ instant: true });
+    void track.offsetWidth; // Commit the jump before the next animated move.
   }
 
-  track.addEventListener("transitionend", (event) => {
-    if (event.target !== track || index !== count) return;
-    goTo(0, { instant: true });
-  });
-
-  function canPlay() {
+  function canAutoplay() {
     return (
       inView &&
       !hovered &&
+      !drag &&
+      !scrubbing &&
       !document.hidden &&
       lightbox?.hidden !== false &&
       !ticketSession
     );
   }
 
-  function schedule() {
+  function restartAutoplay() {
     clearTimeout(timer);
     timer = setTimeout(() => {
-      if (canPlay()) {
-        if (index === count) goTo(0, { instant: true });
-        // Let the instant reset paint before sliding on.
-        requestAnimationFrame(() => goTo(index + 1));
-      }
-      schedule();
-    }, FILM_CAROUSEL_INTERVAL_MS);
+      if (canAutoplay()) step(1);
+      else restartAutoplay();
+    }, CAROUSEL_INTERVAL_MS);
   }
 
   function step(delta) {
-    if (index === count) goTo(0, { instant: true });
-    const next = index + delta;
-    if (next < 0) {
-      goTo(count, { instant: true });
-      requestAnimationFrame(() => goTo(count - 1));
-    } else {
-      requestAnimationFrame(() => goTo(next));
-    }
-    schedule();
+    leaveLoopCopy();
+    position += delta;
+    render();
+    restartAutoplay();
   }
 
-  carousel.addEventListener("mouseenter", () => {
-    hovered = true;
-  });
-  carousel.addEventListener("mouseleave", () => {
-    hovered = false;
-    schedule();
+  function jumpTo(index) {
+    leaveLoopCopy();
+    position = index + 1;
+    render();
+    restartAutoplay();
+  }
+
+  track.addEventListener("transitionend", (event) => {
+    if (event.target === track) leaveLoopCopy();
   });
 
-  let dragStartX = null;
-  let suppressClick = false;
+  carousel.addEventListener("pointerenter", (event) => {
+    if (event.pointerType === "mouse") hovered = true;
+  });
+  carousel.addEventListener("pointerleave", (event) => {
+    if (event.pointerType !== "mouse") return;
+    hovered = false;
+    restartAutoplay();
+  });
+
+  // Drag with the mouse or swipe with a finger; the image follows the pointer.
+  viewport.addEventListener("dragstart", (event) => event.preventDefault());
 
   viewport.addEventListener("pointerdown", (event) => {
-    if (event.pointerType === "mouse") return;
-    dragStartX = event.clientX;
+    if (event.button !== 0) return;
+    suppressClick = false;
+    leaveLoopCopy();
+    drag = {
+      id: event.pointerId,
+      startX: event.clientX,
+      startY: event.clientY,
+      dx: 0,
+      active: false,
+      width: viewport.clientWidth,
+    };
   });
-  viewport.addEventListener("pointerup", (event) => {
-    if (dragStartX === null) return;
-    const dx = event.clientX - dragStartX;
-    dragStartX = null;
-    if (Math.abs(dx) < FILM_CAROUSEL_SWIPE_PX) return;
+
+  viewport.addEventListener("pointermove", (event) => {
+    if (!drag || event.pointerId !== drag.id) return;
+    const dx = event.clientX - drag.startX;
+    const dy = event.clientY - drag.startY;
+
+    if (!drag.active) {
+      if (Math.abs(dx) < CAROUSEL_CLICK_SLOP_PX) return;
+      if (Math.abs(dy) > Math.abs(dx)) {
+        drag = null; // Vertical gesture: let the page scroll.
+        return;
+      }
+      drag.active = true;
+      carousel.classList.add("is-dragging");
+      viewport.setPointerCapture(event.pointerId);
+    }
+
+    drag.dx = dx;
+    render({ instant: true, offsetPx: dx });
+  });
+
+  function endDrag(event) {
+    if (!drag || event.pointerId !== drag.id) return;
+    const { active, dx, width } = drag;
+    drag = null;
+    carousel.classList.remove("is-dragging");
+    if (!active) return;
+
     suppressClick = true;
-    step(dx < 0 ? 1 : -1);
-  });
-  viewport.addEventListener("pointercancel", () => {
-    dragStartX = null;
-  });
+    if (Math.abs(dx) > width * CAROUSEL_DRAG_THRESHOLD) {
+      step(dx < 0 ? 1 : -1);
+    } else {
+      render();
+      restartAutoplay();
+    }
+  }
+
+  viewport.addEventListener("pointerup", endDrag);
+  viewport.addEventListener("pointercancel", endDrag);
+
+  // A drag ends with a click on the image; don't open the lightbox for it.
   viewport.addEventListener(
     "click",
     (event) => {
@@ -1058,11 +1124,70 @@ function setupFilmCarousel(carousel) {
     true,
   );
 
+  // Two-finger horizontal scroll on a trackpad, or shift + mouse wheel.
+  viewport.addEventListener(
+    "wheel",
+    (event) => {
+      const dx = event.deltaX || (event.shiftKey ? event.deltaY : 0);
+      if (Math.abs(dx) <= Math.abs(event.shiftKey ? 0 : event.deltaY)) return;
+      event.preventDefault();
+
+      const now = performance.now();
+      if (now < wheelLockedUntil) {
+        wheelLockedUntil = now + CAROUSEL_WHEEL_GAP_MS;
+        return;
+      }
+      if (now - wheelLastAt > CAROUSEL_WHEEL_GAP_MS) wheelTotal = 0;
+      wheelLastAt = now;
+      wheelTotal += dx;
+      if (Math.abs(wheelTotal) < CAROUSEL_WHEEL_THRESHOLD) return;
+
+      step(wheelTotal > 0 ? 1 : -1);
+      wheelTotal = 0;
+      wheelLockedUntil = now + CAROUSEL_WHEEL_GAP_MS;
+    },
+    { passive: false },
+  );
+
+  // Click or drag along the progress bar to pick an image.
+  function indexAt(clientX) {
+    const rect = progress.getBoundingClientRect();
+    const fraction = (clientX - rect.left) / rect.width;
+    return Math.min(count - 1, Math.max(0, Math.floor(fraction * count)));
+  }
+
+  progress?.addEventListener("pointerdown", (event) => {
+    if (event.button !== 0) return;
+    event.preventDefault();
+    scrubbing = true;
+    progress.setPointerCapture(event.pointerId);
+    jumpTo(indexAt(event.clientX));
+  });
+  progress?.addEventListener("pointermove", (event) => {
+    if (!scrubbing) return;
+    const index = indexAt(event.clientX);
+    if (index !== currentIndex()) jumpTo(index);
+  });
+  const endScrub = () => {
+    if (!scrubbing) return;
+    scrubbing = false;
+    restartAutoplay();
+  };
+  progress?.addEventListener("pointerup", endScrub);
+  progress?.addEventListener("pointercancel", endScrub);
+
+  carousel.addEventListener("keydown", (event) => {
+    if (event.key !== "ArrowRight" && event.key !== "ArrowLeft") return;
+    event.preventDefault();
+    step(event.key === "ArrowRight" ? 1 : -1);
+    slides[currentIndex()].focus({ preventScroll: true });
+  });
+
   if ("IntersectionObserver" in window) {
     new IntersectionObserver(
       (entries) => {
         inView = entries.some((entry) => entry.isIntersecting);
-        if (inView) schedule();
+        if (inView) restartAutoplay();
       },
       { threshold: 0.4 },
     ).observe(carousel);
@@ -1070,8 +1195,12 @@ function setupFilmCarousel(carousel) {
     inView = true;
   }
 
+  document.addEventListener("visibilitychange", () => {
+    if (!document.hidden) restartAutoplay();
+  });
+
   render({ instant: true });
-  schedule();
+  restartAutoplay();
 }
 
-document.querySelectorAll("[data-film-carousel]").forEach(setupFilmCarousel);
+document.querySelectorAll("[data-carousel]").forEach(setupCarousel);
