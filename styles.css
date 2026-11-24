@@ -1155,7 +1155,7 @@ body {
   -webkit-appearance: none;
   -webkit-tap-highlight-color: transparent;
   filter: drop-shadow(0 18px 30px rgba(0, 0, 0, 0.16));
-  transform: translateY(27%) rotate(-12deg);
+  transform: translate(20%, 27%) rotate(-12deg);
   transition:
     transform 0.45s cubic-bezier(0.22, 1, 0.36, 1),
     filter 0.45s cubic-bezier(0.22, 1, 0.36, 1);
@@ -1163,7 +1163,7 @@ body {
 }
 
 .app__doc:hover {
-  transform: translateY(20%) scale(1.06) rotate(-16deg);
+  transform: translate(20%, 20%) scale(1.06) rotate(-16deg);
   filter: drop-shadow(0 24px 36px rgba(0, 0, 0, 0.2));
 }
 
