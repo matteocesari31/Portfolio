@@ -141,7 +141,7 @@ body {
 
 .landing__center .about-me {
   position: relative;
-  margin-top: 0.85rem;
+  margin-top: clamp(2rem, 4.4vw, 4.25rem);
 }
 
 .about-me__art {
@@ -562,7 +562,7 @@ body {
 .landing__center {
   position: absolute;
   left: 50%;
-  top: 42%;
+  top: 43%;
   z-index: 2;
   display: flex;
   flex-direction: column;
@@ -576,7 +576,7 @@ body {
 }
 
 .landing__title {
-  margin: 0 0 0.35em;
+  margin: 0 0 0.05em;
   /* Negative tracking pulls the last letter past the box; pad it back so the
      word stays optically centred. */
   padding-right: 0.09em;
