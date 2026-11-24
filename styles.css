@@ -1117,10 +1117,11 @@ body {
   min-height: 100vh;
   min-height: 100dvh;
   box-sizing: border-box;
-  overflow: visible;
+  /* The doc card hangs off the bottom-right corner; clip it at the page edge. */
+  overflow: clip;
   padding: clamp(5.5rem, 10vw, 7rem) clamp(2rem, 5vw, 4rem)
     clamp(2rem, 5vw, 3rem);
-  padding-right: clamp(6.5rem, 18vw, 14rem);
+  padding-right: clamp(3rem, 8vw, 8rem);
 }
 
 .app__media {
@@ -1141,8 +1142,8 @@ body {
 
 .app__doc {
   position: absolute;
-  top: 50%;
-  right: 0;
+  right: -1rem;
+  bottom: 0;
   z-index: 2;
   width: clamp(10.5rem, 15.5vw, 14rem);
   margin: 0;
@@ -1154,7 +1155,7 @@ body {
   -webkit-appearance: none;
   -webkit-tap-highlight-color: transparent;
   filter: drop-shadow(0 18px 30px rgba(0, 0, 0, 0.16));
-  transform: translate(22%, -52%) rotate(-17deg);
+  transform: translateY(27%) rotate(-12deg);
   transition:
     transform 0.45s cubic-bezier(0.22, 1, 0.36, 1),
     filter 0.45s cubic-bezier(0.22, 1, 0.36, 1);
@@ -1162,7 +1163,7 @@ body {
 }
 
 .app__doc:hover {
-  transform: translate(22%, -58%) scale(1.06) rotate(-22deg);
+  transform: translateY(20%) scale(1.06) rotate(-16deg);
   filter: drop-shadow(0 24px 36px rgba(0, 0, 0, 0.2));
 }
 
@@ -1706,8 +1707,8 @@ body {
 
   .app__doc {
     position: relative;
-    top: auto;
     right: auto;
+    bottom: auto;
     width: min(12.25rem, 52vw);
     margin: 1.75rem auto 0.25rem;
     justify-self: center;
