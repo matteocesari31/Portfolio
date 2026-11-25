@@ -470,8 +470,8 @@ body {
 .hire-bar__track {
   display: flex;
   width: max-content;
-  -webkit-animation: hire-marquee 52s linear infinite;
-  animation: hire-marquee 52s linear infinite;
+  -webkit-animation: hire-marquee 80s linear infinite;
+  animation: hire-marquee 80s linear infinite;
   will-change: transform;
 }
 
@@ -502,6 +502,13 @@ body {
 .hire-bar__mail:hover {
   text-decoration: underline;
   text-underline-offset: 0.15em;
+}
+
+/* Hold the ticker still while a link is under the pointer, so it's easy to click. */
+.hire-bar:has(.hire-bar__mail:hover) .hire-bar__track,
+.hire-bar:has(.hire-bar__mail:focus-visible) .hire-bar__track {
+  -webkit-animation-play-state: paused;
+  animation-play-state: paused;
 }
 
 @media (max-width: 720px) {
