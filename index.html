@@ -19,7 +19,7 @@
       rel="apple-touch-icon"
       href="assets/landing/apple-touch-icon.png?v=3"
     />
-    <link rel="stylesheet" href="styles.css?v=ticket-open-1" />
+    <link rel="stylesheet" href="styles.css?v=doc-arrows-1" />
   </head>
   <body>
     <nav class="nav" aria-label="Primary">
@@ -1003,142 +1003,161 @@
       aria-modal="true"
       aria-labelledby="doc-panel-title"
     >
-      <div class="doc-panel__card">
-        <div class="doc-panel__pages" data-doc-pages>
-          <section class="doc-panel__page is-active" data-doc-page>
-            <article class="doc-panel__doc">
-              <h2 id="doc-panel-title" class="visually-hidden">
-                Flatlist Product Thesis and Technical Architecture
-              </h2>
+      <div class="doc-panel__stage" data-doc-stage>
+        <button
+          type="button"
+          class="glass-button doc-panel__arrow doc-panel__arrow--prev"
+          data-doc-prev
+          aria-label="Previous page"
+        >
+          <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+            <path
+              d="M14.5 6.5 9 12l5.5 5.5"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="1.8"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+            />
+          </svg>
+        </button>
 
-              <h3 class="doc-panel__heading doc-panel__heading--lead">
-                Problem &amp; Thesis
-              </h3>
-              <p>
-                Apartment hunting is chaotic, relying on scattered tabs,
-                screenshots, and group chats across portals with inconsistent
-                formats. Flatlist isn't another rental portal; it’s a
-                <strong>unified private catalog</strong> that starts the moment
-                you save a listing. It captures fragmented listings, standardizes
-                their details, and ranks them against your ideal apartment
-                description. Built primarily for students and roommates, its
-                adaptable data model supports global currencies and metrics.
-              </p>
-            </article>
-          </section>
+        <div class="doc-panel__card">
+          <div class="doc-panel__pages" data-doc-pages>
+            <section class="doc-panel__page is-active" data-doc-page>
+              <article class="doc-panel__doc">
+                <h2 id="doc-panel-title" class="visually-hidden">
+                  Flatlist Product Thesis and Technical Architecture
+                </h2>
 
-          <section class="doc-panel__page" data-doc-page hidden>
-            <article class="doc-panel__doc">
-              <h3 class="doc-panel__heading doc-panel__heading--lead">
-                How the Product Works
-              </h3>
-              <ol class="doc-panel__list">
-                <li>
-                  <strong>One-Click Capture:</strong> A browser extension
-                  instantly extracts a listing's URL, text, and images directly
-                  from any existing portal.
-                </li>
-                <li>
-                  <strong>AI Enrichment:</strong> Background processes convert
-                  raw text into structured facts (price, layout) and inferred
-                  qualities (natural light, noise), retaining original excerpts
-                  as proof.
-                </li>
-                <li>
-                  <strong>The Dream Apartment Match:</strong> Users describe
-                  their ideal home in plain English. Flatlist scores every saved
-                  listing from 0–100 against this prompt and explains the
-                  rationale.
-                </li>
-                <li>
-                  <strong>Collaboration:</strong> Roommates can share catalogs,
-                  leave private notes, and compare match scores to make aligned
-                  decisions.
-                </li>
-              </ol>
-            </article>
-          </section>
+                <h3 class="doc-panel__heading doc-panel__heading--lead">
+                  Problem &amp; Thesis
+                </h3>
+                <p>
+                  Apartment hunting is chaotic, relying on scattered tabs,
+                  screenshots, and group chats across portals with inconsistent
+                  formats. Flatlist isn't another rental portal; it’s a
+                  <strong>unified private catalog</strong> that starts the moment
+                  you save a listing. It captures fragmented listings, standardizes
+                  their details, and ranks them against your ideal apartment
+                  description. Built primarily for students and roommates, its
+                  adaptable data model supports global currencies and metrics.
+                </p>
+              </article>
+            </section>
 
-          <section class="doc-panel__page" data-doc-page hidden>
-            <article class="doc-panel__doc">
-              <h3 class="doc-panel__heading doc-panel__heading--lead">
-                Core Engineering Principles
-              </h3>
-              <ul class="doc-panel__list">
-                <li>
-                  <strong>Raw Content is Canonical:</strong> Flatlist stores raw
-                  text and images. Structured metadata is a regenerable
-                  downstream projection, protecting against evolving portal
-                  layouts and AI prompts.
-                </li>
-                <li>
-                  <strong>Speed First:</strong> Saving feels instant because AI
-                  enrichment happens asynchronously in the background.
-                </li>
-                <li>
-                  <strong>Strict Security:</strong> Client access relies on
-                  Postgres Row-Level Security (RLS). Privileged background
-                  operations use Supabase service roles exclusively inside
-                  isolated edge functions.
-                </li>
-                <li>
-                  <strong>Deterministic Filtering:</strong> Natural-language
-                  searches translate into explicit filter parameters against
-                  stored metadata, preventing AI hallucinations.
-                </li>
-              </ul>
-            </article>
-          </section>
+            <section class="doc-panel__page" data-doc-page hidden>
+              <article class="doc-panel__doc">
+                <h3 class="doc-panel__heading doc-panel__heading--lead">
+                  How the Product Works
+                </h3>
+                <ol class="doc-panel__list">
+                  <li>
+                    <strong>One-Click Capture:</strong> A browser extension
+                    instantly extracts a listing's URL, text, and images directly
+                    from any existing portal.
+                  </li>
+                  <li>
+                    <strong>AI Enrichment:</strong> Background processes convert
+                    raw text into structured facts (price, layout) and inferred
+                    qualities (natural light, noise), retaining original excerpts
+                    as proof.
+                  </li>
+                  <li>
+                    <strong>The Dream Apartment Match:</strong> Users describe
+                    their ideal home in plain English. Flatlist scores every saved
+                    listing from 0–100 against this prompt and explains the
+                    rationale.
+                  </li>
+                  <li>
+                    <strong>Collaboration:</strong> Roommates can share catalogs,
+                    leave private notes, and compare match scores to make aligned
+                    decisions.
+                  </li>
+                </ol>
+              </article>
+            </section>
 
-          <section class="doc-panel__page" data-doc-page hidden>
-            <article class="doc-panel__doc">
-              <h3 class="doc-panel__heading doc-panel__heading--lead">
-                The Processing Pipeline
-              </h3>
-              <ol class="doc-panel__list">
-                <li>
-                  <strong>Save:</strong> An edge function validates user limits,
-                  saves raw page content, and instantly returns a pending success
-                  status.
-                </li>
-                <li>
-                  <strong>Enrich:</strong> An asynchronous edge function calls
-                  OpenAI to extract facts and inferences, uses Nominatim for
-                  geocoding, and updates the status to done.
-                </li>
-                <li>
-                  <strong>Score:</strong> A comparison edge function evaluates
-                  the listing against the user's "dream apartment" prompt,
-                  logging a 0–100 score and rationale. Updating the prompt
-                  triggers a catalog-wide rescore.
-                </li>
-              </ol>
-            </article>
-          </section>
+            <section class="doc-panel__page" data-doc-page hidden>
+              <article class="doc-panel__doc">
+                <h3 class="doc-panel__heading doc-panel__heading--lead">
+                  Core Engineering Principles
+                </h3>
+                <ul class="doc-panel__list">
+                  <li>
+                    <strong>Raw Content is Canonical:</strong> Flatlist stores raw
+                    text and images. Structured metadata is a regenerable
+                    downstream projection, protecting against evolving portal
+                    layouts and AI prompts.
+                  </li>
+                  <li>
+                    <strong>Speed First:</strong> Saving feels instant because AI
+                    enrichment happens asynchronously in the background.
+                  </li>
+                  <li>
+                    <strong>Strict Security:</strong> Client access relies on
+                    Postgres Row-Level Security (RLS). Privileged background
+                    operations use Supabase service roles exclusively inside
+                    isolated edge functions.
+                  </li>
+                  <li>
+                    <strong>Deterministic Filtering:</strong> Natural-language
+                    searches translate into explicit filter parameters against
+                    stored metadata, preventing AI hallucinations.
+                  </li>
+                </ul>
+              </article>
+            </section>
+
+            <section class="doc-panel__page" data-doc-page hidden>
+              <article class="doc-panel__doc">
+                <h3 class="doc-panel__heading doc-panel__heading--lead">
+                  The Processing Pipeline
+                </h3>
+                <ol class="doc-panel__list">
+                  <li>
+                    <strong>Save:</strong> An edge function validates user limits,
+                    saves raw page content, and instantly returns a pending success
+                    status.
+                  </li>
+                  <li>
+                    <strong>Enrich:</strong> An asynchronous edge function calls
+                    OpenAI to extract facts and inferences, uses Nominatim for
+                    geocoding, and updates the status to done.
+                  </li>
+                  <li>
+                    <strong>Score:</strong> A comparison edge function evaluates
+                    the listing against the user's "dream apartment" prompt,
+                    logging a 0–100 score and rationale. Updating the prompt
+                    triggers a catalog-wide rescore.
+                  </li>
+                </ol>
+              </article>
+            </section>
+          </div>
         </div>
 
-        <div class="doc-panel__nav">
-          <button
-            type="button"
-            class="doc-panel__arrow"
-            data-doc-prev
-            aria-label="Previous page"
-          >
-            ←
-          </button>
-          <button
-            type="button"
-            class="doc-panel__arrow"
-            data-doc-next
-            aria-label="Next page"
-          >
-            →
-          </button>
-        </div>
+        <button
+          type="button"
+          class="glass-button doc-panel__arrow doc-panel__arrow--next"
+          data-doc-next
+          aria-label="Next page"
+        >
+          <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+            <path
+              d="M9.5 6.5 15 12l-5.5 5.5"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="1.8"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+            />
+          </svg>
+        </button>
       </div>
     </div>
 
     <script src="music.js?v=music-carousel-1"></script>
-    <script src="main.js?v=ticket-open-1"></script>
+    <script src="main.js?v=doc-arrows-1"></script>
   </body>
 </html>

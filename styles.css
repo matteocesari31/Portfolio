@@ -423,42 +423,36 @@ body {
   letter-spacing: -0.05em;
 }
 
-.doc-panel__nav {
-  flex: 0 0 auto;
+/* Card with the glass page buttons on either side of it. */
+.doc-panel__stage {
   display: flex;
   align-items: center;
   justify-content: center;
-  gap: 1.5rem;
-  margin-top: 1.25rem;
-  padding-top: 0.85rem;
+  gap: clamp(1rem, 2.5vw, 2rem);
+  width: 100%;
 }
 
 .doc-panel__arrow {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  width: 2.5rem;
-  height: 2.5rem;
-  padding: 0;
-  border: 0;
-  background: transparent;
-  color: #000;
-  font-family: "ABC Areal", sans-serif;
-  font-size: 1.6rem;
-  line-height: 1;
-  letter-spacing: -0.05em;
-  cursor: pointer;
-  appearance: none;
-  -webkit-appearance: none;
-}
-
-.doc-panel__arrow:hover:not(:disabled) {
-  color: #0073eb;
+  flex: none;
+  transition: opacity 0.2s ease;
 }
 
 .doc-panel__arrow:disabled {
-  opacity: 0.28;
+  opacity: 0.35;
   cursor: default;
+}
+
+@media (max-width: 720px) {
+  /* No room beside the card on phones: put the buttons underneath. */
+  .doc-panel__stage {
+    flex-wrap: wrap;
+    gap: 1rem 1.5rem;
+  }
+
+  .doc-panel__card {
+    order: -1;
+    max-height: calc(88dvh - 4rem);
+  }
 }
 
 .hire-bar {

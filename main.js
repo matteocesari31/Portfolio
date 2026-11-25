@@ -702,8 +702,12 @@ docOpen?.addEventListener("click", () => {
   openDocPanel();
 });
 
+const docStage = document.querySelector("[data-doc-stage]");
+
 docPanel?.addEventListener("click", (event) => {
-  if (event.target === docPanel) {
+  // Clicks on the blurred backdrop (including the space around the buttons)
+  // close the doc.
+  if (event.target === docPanel || event.target === docStage) {
     closeDocPanel();
   }
 });
