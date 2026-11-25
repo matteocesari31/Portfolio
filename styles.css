@@ -720,6 +720,7 @@ body {
     transform: translate(20%, 120%) rotate(-12deg);
   }
 
+  .film__ticket.is-instant,
   .app__doc.is-instant {
     transition: none;
   }

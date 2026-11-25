@@ -162,13 +162,28 @@ function syncFilmTickets() {
   if (!filmPage || !filmRemSection) return;
 
   const desktop = filmDesktopQuery.matches;
+  // While the film page is hidden it measures 0, so keep both tucked.
+  const onFilm = filmPage.classList.contains("is-active");
   const midpoint = filmPage.scrollTop + filmPage.clientHeight / 2;
   const showRem = midpoint >= filmRemSection.offsetTop;
 
   filmTickets.forEach((ticket) => {
     const isRem = Boolean(ticket.closest(".film--rem"));
-    ticket.classList.toggle("is-tucked", desktop && isRem !== showRem);
+    const shown = onFilm && isRem === showRem;
+    ticket.classList.toggle("is-tucked", desktop && !shown);
   });
+}
+
+// When the film page opens, start both tickets tucked without animating, then
+// slide up the one for the section in view (Night Shift, at the top).
+function slideInFilmTicket() {
+  if (!filmPage || !filmDesktopQuery.matches) return;
+
+  filmTickets.forEach((ticket) => ticket.classList.add("is-tucked", "is-instant"));
+  void filmPage.offsetWidth;
+  filmTickets.forEach((ticket) => ticket.classList.remove("is-instant"));
+  void filmPage.offsetWidth;
+  requestAnimationFrame(syncFilmTickets);
 }
 
 let filmScrollAnimation = 0;
@@ -857,6 +872,7 @@ function revealPage(pageId) {
   placeAboutMe();
   syncFilmScrollHint();
   syncFilmTickets();
+  if (pageId === "film") slideInFilmTicket();
   if (pageId === "app-development") slideInDocCard();
 }
 
