@@ -470,8 +470,8 @@ body {
 .hire-bar__track {
   display: flex;
   width: max-content;
-  -webkit-animation: hire-marquee 40s linear infinite;
-  animation: hire-marquee 40s linear infinite;
+  -webkit-animation: hire-marquee 52s linear infinite;
+  animation: hire-marquee 52s linear infinite;
   will-change: transform;
 }
 
