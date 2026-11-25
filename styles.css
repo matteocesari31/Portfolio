@@ -504,6 +504,16 @@ body {
   text-underline-offset: 0.15em;
 }
 
+@media (max-width: 720px) {
+  .hire-bar {
+    padding: 0.6rem 0;
+  }
+
+  .hire-bar__chunk {
+    font-size: 0.75rem;
+  }
+}
+
 @-webkit-keyframes hire-marquee {
   from {
     -webkit-transform: translateX(0);
