@@ -1583,7 +1583,7 @@ body {
   }
 
   .landing__center {
-    top: 36%;
+    top: 40%;
     padding: 0 0.25rem;
     gap: clamp(0.35rem, 2.5vw, 0.75rem);
   }
