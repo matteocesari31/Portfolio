@@ -1244,6 +1244,8 @@ function setupCarousel(carousel) {
   prevButton?.addEventListener("click", () => step(-1));
   nextButton?.addEventListener("click", () => step(1));
 
+  carouselControls.push({ carousel, step });
+
   carousel.addEventListener("keydown", (event) => {
     if (event.key !== "ArrowRight" && event.key !== "ArrowLeft") return;
     event.preventDefault();
@@ -1271,4 +1273,57 @@ function setupCarousel(carousel) {
   restartAutoplay();
 }
 
+const carouselControls = [];
+
 document.querySelectorAll("[data-carousel]").forEach(setupCarousel);
+
+// The carousel on the current page closest to the middle of the screen (on the
+// film page, Night Shift or REm depending on the scroll).
+function carouselInView() {
+  const page = document.querySelector(".page.is-active");
+  const middle = window.innerHeight / 2;
+  let best = null;
+  let bestDistance = Infinity;
+
+  carouselControls.forEach((control) => {
+    if (!page?.contains(control.carousel)) return;
+    const rect = control.carousel.getBoundingClientRect();
+    if (!rect.height) return;
+    const distance = Math.abs(rect.top + rect.height / 2 - middle);
+    if (distance < bestDistance) {
+      best = control;
+      bestDistance = distance;
+    }
+  });
+
+  return best;
+}
+
+// Left/right arrow keys move the carousel in view from anywhere on the page.
+// (Inside a focused carousel or the open doc they're already handled.)
+document.addEventListener("keydown", (event) => {
+  if (event.defaultPrevented) return;
+  if (event.key !== "ArrowLeft" && event.key !== "ArrowRight") return;
+  if (event.altKey || event.ctrlKey || event.metaKey || event.shiftKey) return;
+
+  const target = event.target;
+  if (
+    target instanceof HTMLElement &&
+    (target.isContentEditable || /^(INPUT|TEXTAREA|SELECT)$/.test(target.tagName))
+  ) {
+    return;
+  }
+
+  const overlayOpen =
+    (docPanel && !docPanel.hidden) ||
+    (aboutPanel && !aboutPanel.hidden) ||
+    lightbox?.hidden === false ||
+    ticketSession;
+  if (overlayOpen) return;
+
+  const control = carouselInView();
+  if (!control) return;
+
+  event.preventDefault();
+  control.step(event.key === "ArrowRight" ? 1 : -1);
+});
